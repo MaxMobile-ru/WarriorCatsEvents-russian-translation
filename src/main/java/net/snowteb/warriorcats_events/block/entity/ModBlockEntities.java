@@ -41,6 +41,10 @@ public class ModBlockEntities {
                             ModBlocks.CORAL_BED.get(),
                             ModBlocks.GLOWBERRY_BED.get(),
                             ModBlocks.MUDDY_BED.get(),
+                            ModBlocks.KITTYPET_BED.get(),
+                            ModBlocks.ACORN_BED.get(),
+                            ModBlocks.NAUTILUS_BED.get(),
+                            ModBlocks.SUNFLOWER_BED.get(),
                             ModBlocks.CHERRY_BLOSSOM_BED.get()
                             )
                             .build(null)
@@ -89,6 +93,12 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("stickfire", () ->
                     BlockEntityType.Builder.of(StickfireBlockEntity::new,
                             ModBlocks.STICKFIRE.get()).build(null)
+            );
+
+    public static final Supplier<BlockEntityType<LizardEggBlockEntity>> LIZARD_EGG =
+            BLOCK_ENTITIES.register("lizard_egg", () ->
+                    BlockEntityType.Builder.of(LizardEggBlockEntity::new,
+                            ModBlocks.LIZARD_EGG_BLOCK.get()).build(null)
             );
 
 

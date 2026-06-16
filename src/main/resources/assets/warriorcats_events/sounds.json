@@ -233,5 +233,15 @@
       { "name": "warriorcats_events:entity/cat_cough/cat_cough_6", "volume": 0.7, "pitch": 1.1},
       { "name": "warriorcats_events:entity/cat_cough/cat_cough_7", "volume": 0.7, "pitch": 1.1}
     ]
+  },
+
+  "entity.lizard.ambient": {
+    "sounds": [
+      { "name": "warriorcats_events:entity/lizard/lizard_0", "volume": 1.0, "pitch": 1.0},
+      { "name": "warriorcats_events:entity/lizard/lizard_1", "volume": 1.0, "pitch": 1.0},
+      { "name": "warriorcats_events:entity/lizard/lizard_2", "volume": 1.0, "pitch": 1.0},
+      { "name": "warriorcats_events:entity/lizard/lizard_3", "volume": 1.0, "pitch": 1.0},
+      { "name": "warriorcats_events:entity/lizard/lizard_4", "volume": 1.0, "pitch": 1.0}
+    ]
   }
 }

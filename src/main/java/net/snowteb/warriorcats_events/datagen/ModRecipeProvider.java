@@ -326,6 +326,45 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_item", has(Items.MUD))
                 .save(pWriter);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.KITTYPET_BED.get(), 1)
+                .pattern("   ")
+                .pattern("BCB")
+                .pattern("BBB")
+                .define('B', Items.STICK)
+                .define('C', Items.BAMBOO_PLANKS)
+                .unlockedBy("has_item", has(Items.BAMBOO_PLANKS))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ACORN_BED.get(), 2)
+                .pattern("   ")
+                .pattern("DCD")
+                .pattern("BBB")
+                .define('B', ItemTags.LEAVES)
+                .define('C', ItemTags.LOGS_THAT_BURN)
+                .define('D', Items.SPRUCE_LEAVES)
+                .unlockedBy("has_item", has(Items.SPRUCE_LEAVES))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.NAUTILUS_BED.get(), 1)
+                .pattern("B B")
+                .pattern("BCB")
+                .pattern("BDB")
+                .define('B', Items.NAUTILUS_SHELL)
+                .define('C', Items.KELP)
+                .define('D', Items.HEART_OF_THE_SEA)
+                .unlockedBy("has_item", has(Items.SPRUCE_LEAVES))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SUNFLOWER_BED.get(), 2)
+                .pattern("   ")
+                .pattern("D D")
+                .pattern("BBB")
+                .define('B', Items.SUNFLOWER)
+                .define('D', ItemTags.LEAVES)
+                .unlockedBy("has_item", has(Items.SUNFLOWER))
+                .save(pWriter);
+
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MOONSTONE_BLOCK.get(), 1)
                 .pattern("   ")
                 .pattern("ACA")

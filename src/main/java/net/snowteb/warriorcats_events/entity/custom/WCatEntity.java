@@ -2459,7 +2459,12 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
     @Override
     protected void registerGoals() {
         this.preyTarget = new NearestAttackableTargetGoal<>(this, Animal.class, 10, false, false, (target) -> {
-            return mode == CatMode.WANDER && !this.returnHomeFlag && !this.onBorderPatrolFlag && (target instanceof MouseEntity || target instanceof PigeonEntity || target instanceof SquirrelEntity || target.getType().is(ModTags.EntityTypes.PREY_MOBS));
+            return mode == CatMode.WANDER && !this.returnHomeFlag && !this.onBorderPatrolFlag
+                    && (target instanceof MouseEntity
+                    || target instanceof PigeonEntity
+                    || target instanceof SquirrelEntity
+                    || (target instanceof LizardTailEntity || (target instanceof LizardEntity lizard && !lizard.isTame() && this.isBaby()))
+                    || target.getType().is(ModTags.EntityTypes.PREY_MOBS));
         });
 
         this.monsterTarget = new NearestAttackableTargetGoal<>(this, LivingEntity.class,

@@ -48,8 +48,19 @@
   "block.warriorcats_events.muddy_bed": "Muddy Nest",
   "block.warriorcats_events.muddy_bed.tooltip": "A nest made of mud and leaves packed together.",
 
+  "block.warriorcats_events.kittypet_bed": "Kittypet Nest",
+  "block.warriorcats_events.kittypet_bed.tooltip": "A nest made of wood, with a comfortable and soft blanket, made for kittypets.",
 
+  "block.warriorcats_events.acorn_bed": "Acorn Nest",
+  "block.warriorcats_events.acorn_bed.tooltip": "A pretty nest made of leaves, decorated with Acorn. The dream of any squirrel.",
 
+  "block.warriorcats_events.nautilus_bed": "Nautilus Nest",
+  "block.warriorcats_events.nautilus_bed.tooltip": "A luxury nest of the sea. Made of Nautilus shells and other findings from the sea.",
+
+  "block.warriorcats_events.sunflower_bed": "Sunflower Nest",
+  "block.warriorcats_events.sunflower_bed.tooltip": "A very colorful and pretty nest made of Sunflowers.",
+
+  "block.warriorcats_events.lizard_egg": "Lizard Egg",
 
 
   "block.warriorcats_events.moonstone": "Moonstone",
@@ -194,6 +205,8 @@
   "entity.warriorcats_events.pigeon": "Pigeon",
   "entity.warriorcats_events.badger": "Badger",
   "entity.warriorcats_events.golden_eagle": "Golden Eagle",
+  "entity.warriorcats_events.lizard": "Lizard",
+  "entity.warriorcats_events.lizard_tail": "Lizard Tail",
 
   "item.warriorcats_events.wildcat_spawn_egg": "Wild Cat Spawn Egg",
   "item.warriorcats_events.mouse_spawn_egg": "Mouse Spawn Egg",
@@ -201,6 +214,7 @@
   "item.warriorcats_events.pigeon_spawn_egg": "Pigeon Spawn Egg",
   "item.warriorcats_events.badger_spawn_egg": "Badger Spawn Egg",
   "item.warriorcats_events.golden_eagle_spawn_egg": "Golden Eagle Spawn Egg",
+  "item.warriorcats_events.lizard_spawn_egg": "Lizard Spawn Egg",
 
   "item.warriorcats_events.mouse": "Mouse",
   "item.warriorcats_events.squirrel": "Squirrel",

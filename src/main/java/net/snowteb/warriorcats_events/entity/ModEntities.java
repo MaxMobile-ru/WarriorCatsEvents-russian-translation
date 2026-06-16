@@ -50,6 +50,18 @@ public class ModEntities {
                             .sized(1f,1f)
                             .build(ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "golden_eagle").toString()));
 
+    public static final Supplier<EntityType<LizardEntity>> LIZARD =
+            ENTITY_TYPES.register("lizard",
+                    () -> EntityType.Builder.of(LizardEntity::new, MobCategory.CREATURE)
+                            .sized(0.30f,0.30f)
+                            .build(ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "lizard").toString()));
+
+    public static final Supplier<EntityType<LizardTailEntity>> LIZARD_TAIL =
+            ENTITY_TYPES.register("lizard_tail",
+                    () -> EntityType.Builder.of(LizardTailEntity::new, MobCategory.CREATURE)
+                            .sized(0.30f,0.30f)
+                            .build(ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "lizard_tail").toString()));
+
 
     public static final Supplier<EntityType<MossBallEntity>> MOSS_BALL =
             ENTITY_TYPES.register("moss_ball",

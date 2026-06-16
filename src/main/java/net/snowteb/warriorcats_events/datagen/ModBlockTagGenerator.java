@@ -44,6 +44,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 ModBlocks.CORAL_BED.get(),
                 ModBlocks.GLOWBERRY_BED.get(),
                 ModBlocks.MUDDY_BED.get(),
+                ModBlocks.KITTYPET_BED.get(),
+                ModBlocks.ACORN_BED.get(),
+                ModBlocks.NAUTILUS_BED.get(),
+                ModBlocks.SUNFLOWER_BED.get(),
                 ModBlocks.LAVENDER_BED.get()
         );
 

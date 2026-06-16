@@ -89,6 +89,16 @@ public class ModEvents {
                 RegisterSpawnPlacementsEvent.Operation.REPLACE
 
         );
+
+        event.register(
+                ModEntities.LIZARD.get(),
+                SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                (entityType, level, spawnReason, pos, random) ->
+                        level.getFluidState(pos).isEmpty() && level.getFluidState(pos.below()).isEmpty(),
+                RegisterSpawnPlacementsEvent.Operation.REPLACE
+        );
+
     }
 
     @SubscribeEvent
@@ -99,6 +109,8 @@ public class ModEvents {
         event.put(ModEntities.PIGEON.get(), PigeonEntity.setAttributes().build());
         event.put(ModEntities.BADGER.get(), BadgerEntity.setAttributes().build());
         event.put(ModEntities.EAGLE.get(), EagleEntity.setAttributes().build());
+        event.put(ModEntities.LIZARD.get(), LizardEntity.setAttributes().build());
+        event.put(ModEntities.LIZARD_TAIL.get(), LizardTailEntity.setAttributes().build());
 
     }
 

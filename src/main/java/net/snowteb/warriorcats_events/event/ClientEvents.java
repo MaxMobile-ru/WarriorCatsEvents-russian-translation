@@ -83,36 +83,6 @@ public class ClientEvents {
                 Minecraft.getInstance().setScreen(new WCEOptionsScreen());
             }
 
-//            boolean shiftDown =
-//                    InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ||
-//                            InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT);
-//
-//            if (event.getKey() == GLFW.GLFW_KEY_X &&
-//                    event.getAction() == GLFW.GLFW_PRESS &&
-//                    shiftDown) {
-//
-//                LocalPlayer player = Minecraft.getInstance().player;
-//
-//                if (player != null && player.hasPermissions(3) && WarriorCatsEvents.Collaborators.isContributor(player.getUUID())) {
-//
-//                    Entity entity = LeapClientState.getAnyEntityPlayerIsLookingAt(player, 5d);
-//
-//                    if (entity instanceof LivingEntity cat) {
-//                        player.displayClientMessage(Component.literal("Swaped!")
-//                                        .withStyle(ChatFormatting.GRAY)
-//                                        .withStyle(ChatFormatting.ITALIC),
-//                                true);
-//
-//                        ModPackets.sendToServer(new CtSSwapCatPacket(cat.getId()));
-//
-//                        player.setYBodyRot(cat.getYRot());
-//                        player.setYHeadRot(cat.getYRot());
-//                        player.setYRot(cat.getYRot());
-//                        player.setPos(cat.position());
-//                        player.setXRot(cat.getXRot());
-//                    }
-//                }
-//            }
 
         }
 
@@ -437,6 +407,8 @@ public class ClientEvents {
             event.registerEntityRenderer(ModEntities.PIGEON.get(), PigeonRenderer::new);
             event.registerEntityRenderer(ModEntities.BADGER.get(), BadgerRenderer::new);
             event.registerEntityRenderer(ModEntities.EAGLE.get(), EagleRenderer::new);
+            event.registerEntityRenderer(ModEntities.LIZARD.get(), LizardRenderer::new);
+            event.registerEntityRenderer(ModEntities.LIZARD_TAIL.get(), LizardTailRenderer::new);
 
             event.registerEntityRenderer(ModEntities.MOSS_BALL.get(), MossBallRenderer::new);
 

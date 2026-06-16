@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:sunflower"
+    },
+    "D": {
+      "tag": "minecraft:leaves"
+    }
+  },
+  "pattern": [
+    "   ",
+    "D D",
+    "BBB"
+  ],
+  "result": {
+    "count": 2,
+    "item": "warriorcats_events:sunflower_bed"
+  },
+  "show_notification": true
+}

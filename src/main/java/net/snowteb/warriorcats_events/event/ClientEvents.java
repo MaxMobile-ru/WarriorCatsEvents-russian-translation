@@ -453,6 +453,8 @@ public class ClientEvents {
             event.registerEntityRenderer(ModEntities.PIGEON.get(), PigeonRenderer::new);
             event.registerEntityRenderer(ModEntities.BADGER.get(), BadgerRenderer::new);
             event.registerEntityRenderer(ModEntities.EAGLE.get(), EagleRenderer::new);
+            event.registerEntityRenderer(ModEntities.LIZARD.get(), LizardRenderer::new);
+            event.registerEntityRenderer(ModEntities.LIZARD_TAIL.get(), LizardTailRenderer::new);
 
             event.registerEntityRenderer(ModEntities.MOSS_BALL.get(), MossBallRenderer::new);
 

@@ -16,10 +16,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.compat.CompatibilitiesClient;
+import net.snowteb.warriorcats_events.entity.custom.LizardEntity;
 import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
 import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
@@ -163,6 +165,7 @@ public class WCAccesoriesLayer extends GeoRenderLayer<WCatEntity> {
     private final AccessoryRenderer skullMaskRenderer;
     private final AccessoryRenderer pawWrapRenderer;
     private final AccessoryRenderer butterflyWingRenderer;
+    private final LizardRenderer lizRenderer;
 
 
     public WCAccesoriesLayer(GeoRenderer<WCatEntity> entityRendererIn, EntityRendererProvider.Context context) {
@@ -189,6 +192,8 @@ public class WCAccesoriesLayer extends GeoRenderLayer<WCatEntity> {
         this.elytraRenderer = new AccessoryRenderer(context, elytraModel);
         this.pawWrapRenderer = new AccessoryRenderer(context, pawWrapModel0);
         this.butterflyWingRenderer = new AccessoryRenderer(context, butterflyWingModel);
+        this.lizRenderer = new LizardRenderer(context);
+
     }
 
     @Override
@@ -1749,6 +1754,33 @@ public class WCAccesoriesLayer extends GeoRenderLayer<WCatEntity> {
 
                 poseStack.popPose();
                 buffer = bufferSource.getBuffer(renderType);
+            }
+        }
+
+        if (Minecraft.getInstance().level != null && Minecraft.getInstance().level.getPlayerByUUID(animatable.getPlayerBoundUuid()) != null) {
+            Player player = Minecraft.getInstance().level.getPlayerByUUID(animatable.getPlayerBoundUuid());
+
+            if (animatable.getFirstPassenger() instanceof LizardEntity lizardEntity) {
+
+                if (bone.getName().equals("head")) {
+
+                    poseStack.pushPose();
+
+                    poseStack.translate(-0.00D, 0.678D, -0.6D);
+                    float scale = 1.3f;
+                    poseStack.scale(scale, scale, scale);
+
+                    float interpolatedYaw = Mth.lerp(partialTick, animatable.yBodyRotO, animatable.yBodyRot);
+                    poseStack.mulPose(Axis.YP.rotationDegrees(interpolatedYaw + 180f));
+
+                    lizRenderer.isAccessory = true;
+                    lizRenderer.render(lizardEntity, 0, partialTick,
+                            poseStack, bufferSource, packedLight);
+                    lizRenderer.isAccessory = false;
+
+                    poseStack.popPose();
+                    buffer = bufferSource.getBuffer(renderType);
+                }
             }
         }
 

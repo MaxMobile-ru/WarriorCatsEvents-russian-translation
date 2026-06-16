@@ -10,6 +10,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
+import net.minecraft.world.level.block.TurtleEggBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -416,7 +417,37 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                 )
         );
 
+        this.dropSelf(ModBlocks.KITTYPET_BED.get());
 
+        this.add(ModBlocks.ACORN_BED.get(),
+                block -> createSingleItemTableWithSilkTouch(
+                        block,
+                        Items.SPRUCE_LEAVES,
+                        UniformGenerator.between(1.0F, 3.0F)
+                )
+        );
+
+        this.add(ModBlocks.NAUTILUS_BED.get(),
+                block -> LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .add(LootItem.lootTableItem(Items.HEART_OF_THE_SEA)
+                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
+                        )
+                        .withPool(LootPool.lootPool()
+                                .add(LootItem.lootTableItem(Items.NAUTILUS_SHELL)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 4.0F))))
+                        )
+        );
+
+        this.add(ModBlocks.SUNFLOWER_BED.get(),
+                block -> createSingleItemTableWithSilkTouch(
+                        block,
+                        Items.SUNFLOWER,
+                        UniformGenerator.between(1.0F, 2.0F)
+                )
+        );
+
+        this.dropWhenSilkTouch(ModBlocks.LIZARD_EGG_BLOCK.get());
 
         this.add(ModBlocks.STICKFIRE.get(),
                 block -> createSingleItemTableWithSilkTouch(

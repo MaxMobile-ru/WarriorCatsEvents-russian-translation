@@ -124,6 +124,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.TIGER_SWALLOWTAIL_WING);
         simpleItem(ModItems.MONARCH_WING);
 
+        simpleItem(ModItems.LIZARD_EGG_ITEM);
+
 //        simpleItem(ModItems.MOSS_BALL);
 
 
@@ -138,6 +140,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(ModItems.PIGEON_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.BADGER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GOLDEN_EAGLE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.LIZARD_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
 
         basicItem(ModItems.DOCK_LEAVES.get());

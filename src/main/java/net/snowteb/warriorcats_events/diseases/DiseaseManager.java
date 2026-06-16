@@ -1,11 +1,13 @@
 package net.snowteb.warriorcats_events.diseases;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -67,6 +69,8 @@ public class DiseaseManager {
         if (entity.tickCount % 80 != 0) return;
         if (!WCEServerConfig.SERVER.DISEASES.get()) return;
 
+
+        boolean gotSick = false;
         if (isInSnow(entity, sLevel)) {
             if (sLevel.getRandom().nextFloat() < 0.0003) {
                 if (sLevel.getRandom().nextFloat() < 0.2 || diseaseable.hasDisease(DiseaseTypes.WHITECOUGH)) {
@@ -74,15 +78,21 @@ public class DiseaseManager {
                 } else {
                     diseaseable.addDisease(DiseaseTypes.WHITECOUGH, true);
                 }
+                gotSick = true;
             }
 
 
             if (sLevel.getRandom().nextFloat() < 0.0005) {
                 diseaseable.addDisease(DiseaseTypes.CHILLS, true);
-                sLevel.getPlayers(Objects::nonNull).forEach(player -> {
-                    String name = entity.hasCustomName() ? entity.getCustomName().getString() : "somebody";
-                    player.sendSystemMessage(Component.literal(name +" has gotten sick"));
-                });
+                gotSick = true;
+            }
+        }
+
+        if (gotSick) {
+            if (entity instanceof WCatEntity cat && cat.getOwner() instanceof Player player) {
+                String name = "A clanmate";
+                player.sendSystemMessage(Component.literal(name + " has gotten sick.")
+                        .withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
             }
         }
 

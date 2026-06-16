@@ -103,6 +103,31 @@ public class ModBlocks {
                     BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).sound(SoundType.MUD).strength(0.2F).noOcclusion()
             ));
 
+    public static final RegistryObject<Block> KITTYPET_BED = BLOCKS.register("kittypet_bed",
+            () -> new KittypetNestBlock(
+                    BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).sound(SoundType.BAMBOO_WOOD).strength(0.4F).noOcclusion()
+            ));
+
+    public static final RegistryObject<Block> ACORN_BED = BLOCKS.register("acorn_bed",
+            () -> new NestBlock(
+                    BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).sound(SoundType.MOSS).strength(0.2F).noOcclusion()
+            ));
+
+    public static final RegistryObject<Block> NAUTILUS_BED = BLOCKS.register("nautilus_bed",
+            () -> new NautilusNestBlock(
+                    BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).sound(SoundType.CORAL_BLOCK).strength(0.4F).noOcclusion()
+            ));
+
+    public static final RegistryObject<Block> SUNFLOWER_BED = BLOCKS.register("sunflower_bed",
+            () -> new NestBlock(
+                    BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).sound(SoundType.MOSS).strength(0.2F).noOcclusion()
+            ));
+
+
+
+    public static final RegistryObject<Block> LIZARD_EGG_BLOCK = BLOCKS.register("lizard_egg",
+            () -> new LizardEggBlock(BlockBehaviour.Properties.copy(Blocks.TURTLE_EGG)));
+
 
 
     public static final RegistryObject<Block> MOONSTONE_BLOCK = BLOCKS.register("moonstone",

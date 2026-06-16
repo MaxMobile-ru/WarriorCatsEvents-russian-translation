@@ -210,6 +210,10 @@ public class WarriorCatsEvents {
             event.accept(ModBlocks.CORAL_BED);
             event.accept(ModBlocks.GLOWBERRY_BED);
             event.accept(ModBlocks.MUDDY_BED);
+            event.accept(ModBlocks.KITTYPET_BED);
+            event.accept(ModBlocks.ACORN_BED);
+            event.accept(ModBlocks.NAUTILUS_BED);
+            event.accept(ModBlocks.SUNFLOWER_BED);
 
         }
 

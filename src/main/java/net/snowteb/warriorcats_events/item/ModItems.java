@@ -167,10 +167,51 @@ public class ModItems {
                         }
                     });
 
+    public static final RegistryObject<Item> KITTYPET_BED_ITEM =
+            ITEMS.register("kittypet_bed",
+                    () -> new BlockItem(ModBlocks.KITTYPET_BED.get(), new Item.Properties()) {
+                        @Override
+                        public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+                            tooltip.add(Component.translatable("block.warriorcats_events.kittypet_bed.tooltip").withStyle(ChatFormatting.GRAY));
+                        }
+                    });
+
+    public static final RegistryObject<Item> ACORN_BED_ITEM =
+            ITEMS.register("acorn_bed",
+                    () -> new BlockItem(ModBlocks.ACORN_BED.get(), new Item.Properties()) {
+                        @Override
+                        public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+                            tooltip.add(Component.translatable("block.warriorcats_events.acorn_bed.tooltip").withStyle(ChatFormatting.GRAY));
+                        }
+                    });
+
+
+    public static final RegistryObject<Item> NAUTILUS_BED_ITEM =
+            ITEMS.register("nautilus_bed",
+                    () -> new BlockItem(ModBlocks.NAUTILUS_BED.get(), new Item.Properties()) {
+                        @Override
+                        public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+                            tooltip.add(Component.translatable("block.warriorcats_events.nautilus_bed.tooltip").withStyle(ChatFormatting.GRAY));
+                        }
+                    });
+
+    public static final RegistryObject<Item> SUNFLOWER_BED_ITEM =
+            ITEMS.register("sunflower_bed",
+                    () -> new BlockItem(ModBlocks.SUNFLOWER_BED.get(), new Item.Properties()) {
+                        @Override
+                        public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+                            tooltip.add(Component.translatable("block.warriorcats_events.sunflower_bed.tooltip").withStyle(ChatFormatting.GRAY));
+                        }
+                    });
 
 
 
 
+
+
+    public static final RegistryObject<Item> LIZARD_EGG_ITEM =
+            ITEMS.register("lizard_egg",
+                    () -> new BlockItem(ModBlocks.LIZARD_EGG_BLOCK.get(), new Item.Properties()));
 
 
     public static final RegistryObject<Item> MAKESHIFT_BED_ITEM =
@@ -286,6 +327,10 @@ public class ModItems {
     public static final RegistryObject<Item> GOLDEN_EAGLE_SPAWN_EGG = ITEMS.register("golden_eagle_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.EAGLE,0x33281c, 0x795925,
                     new Item.Properties()));
+    public static final RegistryObject<Item> LIZARD_SPAWN_EGG = ITEMS.register("lizard_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.LIZARD,0xE6A193, 0xFADEB9,
+                    new Item.Properties()));
+
 
     public static final RegistryObject<Item> WARRIORS_GUIDE = ITEMS.register("warriors_guide",
             () -> new Item(new Item.Properties().stacksTo(1)) {

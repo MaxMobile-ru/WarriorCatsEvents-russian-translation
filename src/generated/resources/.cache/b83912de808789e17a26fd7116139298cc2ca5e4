@@ -1,4 +1,4 @@
-// 1.20.1	2026-06-01T22:02:28.2296036	Item Models: warriorcats_events
+// 1.20.1	2026-06-09T17:09:02.3525331	Item Models: warriorcats_events
 708835a72e2f22ede2f26d05e662b8f2f9ac0af5 assets/warriorcats_events/models/item/acorn_lantern.json
 084f607aaae3e50de003da1d83a9a942a0dded77 assets/warriorcats_events/models/item/animal_teeth.json
 3a1487c1a290afb73915b37e63fad0e82c457db3 assets/warriorcats_events/models/item/animal_tooth.json
@@ -72,6 +72,8 @@ fb136dd7d3058b1432c6f758fdcf83404a9a97f7 assets/warriorcats_events/models/item/h
 bb7e981e9392365619ed547cda046fee7fb2c322 assets/warriorcats_events/models/item/leg_wrap.json
 8cdb45e8447972798af66475c184116df9ea44fa assets/warriorcats_events/models/item/lightblue_parrot_body_feathers.json
 67afd8aff98d64a781e58ebbce067596b0cce3bd assets/warriorcats_events/models/item/lightblue_parrot_feather.json
+b8e3b9290c3018695e0dc50142d6a08711ddd0c2 assets/warriorcats_events/models/item/lizard_egg.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/warriorcats_events/models/item/lizard_spawn_egg.json
 7a21684728f90668cbc08ea2de981a5e30ff1e33 assets/warriorcats_events/models/item/monarch_wing.json
 7ac4858b8d16631afb79e55e284908b1d7da7498 assets/warriorcats_events/models/item/mouse.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/warriorcats_events/models/item/mouse_spawn_egg.json

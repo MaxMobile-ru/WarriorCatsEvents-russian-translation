@@ -88,6 +88,9 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> EAGLE_CALL =
             registerSoundEvents("entity.eagle.call");
 
+    public static final RegistryObject<SoundEvent> LIZARD_AMBIENT =
+            registerSoundEvents("entity.lizard.ambient");
+
 
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {
         return SOUND_EVENTS.register(name,

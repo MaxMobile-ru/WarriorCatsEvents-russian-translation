@@ -49,7 +49,7 @@ public class SquirrelEntity extends Animal implements GeoEntity {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.3D));
         this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, LivingEntity.class,
-                6.0F, 1.2D, 1.5D,
+                4.0F, 1.2D, 1.5D,
                 e -> e instanceof Player || (e instanceof WCatEntity && shouldScareFrom((WCatEntity)e))));
         this.goalSelector.addGoal(4, new MoveToLogsGoal(this, 1.0D, 15));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.6D));

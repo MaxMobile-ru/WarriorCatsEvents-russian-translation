@@ -5,6 +5,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,6 +26,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.snowteb.warriorcats_events.item.ModItems;
+import net.snowteb.warriorcats_events.sound.ModSounds;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -51,7 +55,7 @@ public class PigeonEntity extends Parrot implements GeoEntity {
 
         private final Mob mob;
         private final double speed;
-        private final double range = 10;
+        private final double range = 9;
         private LivingEntity nearestThreat;
         private int checkCooldown = 0;
 
@@ -280,5 +284,20 @@ public class PigeonEntity extends Parrot implements GeoEntity {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
+    }
+
+    @Override
+    public @Nullable SoundEvent getAmbientSound() {
+        return ModSounds.PIGEON_AMBIENT.get();
+    }
+
+    @Override
+    protected @NotNull SoundEvent getDeathSound() {
+        return ModSounds.PIGEON_AMBIENT.get();
+    }
+
+    @Override
+    protected @NotNull SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.PIGEON_AMBIENT.get();
     }
 }

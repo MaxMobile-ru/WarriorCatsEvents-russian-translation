@@ -1,4 +1,4 @@
-// 1.20.1	2026-06-09T17:09:02.3525331	Item Models: warriorcats_events
+// 1.20.1	2026-06-21T11:01:28.6930478	Item Models: warriorcats_events
 708835a72e2f22ede2f26d05e662b8f2f9ac0af5 assets/warriorcats_events/models/item/acorn_lantern.json
 084f607aaae3e50de003da1d83a9a942a0dded77 assets/warriorcats_events/models/item/animal_teeth.json
 3a1487c1a290afb73915b37e63fad0e82c457db3 assets/warriorcats_events/models/item/animal_tooth.json
@@ -43,6 +43,7 @@ dbb43d7e5051a9bdb2d0870569fecc6243b6d7b2 assets/warriorcats_events/models/item/f
 564c104d2c18d09bf336b374d6f54db0354f16a6 assets/warriorcats_events/models/item/flower_armor.json
 01a51a9f409164e05d2c47cb55dd510a224149eb assets/warriorcats_events/models/item/flower_crown.json
 992f8db2076b4fc2a610f7a427d8aaf2a55116ec assets/warriorcats_events/models/item/freshkill_and_herbs.json
+2b9f82bde918db66c44f3e7eb6c8ca2245647cbb assets/warriorcats_events/models/item/frog.json
 26df1c4b4f82c9d1eeff2a209a29d2faa64177e7 assets/warriorcats_events/models/item/generations_music_disc.json
 b89b13b992a08e47103a810e0acd46f72089595c assets/warriorcats_events/models/item/glowshroom.json
 594ea76267af69d34a7804f049353f104ab53b54 assets/warriorcats_events/models/item/golden_eagle_meat.json
@@ -96,6 +97,7 @@ d34bfdef80d560bb7a4cbd2f2c5d6438437d3524 assets/warriorcats_events/models/item/s
 729162b695c2421e96d97c68818cacf657f1aca2 assets/warriorcats_events/models/item/squirrel_skull.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/warriorcats_events/models/item/squirrel_spawn_egg.json
 7eb97ef5d45badf2e852670ce8e77fe94106a1c0 assets/warriorcats_events/models/item/strange_shiny_stone.json
+f4a9fe797c922e77a66abbef8375c103caf22333 assets/warriorcats_events/models/item/suspicious_frog.json
 d9d42bbc17c2026138cbca21af17813203196c90 assets/warriorcats_events/models/item/suspicious_golden_eagle_meat.json
 d0abbbf99398bdd6b035c60d5dfe149660143ccf assets/warriorcats_events/models/item/suspicious_mouse.json
 3e59a7d5d26274c0c33448a21d4255b3ebe1bfd4 assets/warriorcats_events/models/item/suspicious_pigeon.json

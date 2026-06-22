@@ -43,26 +43,17 @@ public class WCatAbility<T extends LivingEntity> extends GenericShapeAbility<T>{
         }
 
         if (world.isNight()) {
-            player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 300, 0, true, false));
             world.playSound(null,player.blockPosition(), SoundEvents.CAT_PURREOW, SoundSource.PLAYERS, 0.7f,1f);
             world.playSound(null,player.blockPosition(), ModSounds.LONG_WOOSH.get(), SoundSource.PLAYERS, 0.9f,1f);
             ((ServerLevel) player.level()).sendParticles(ParticleTypes.CLOUD, player.getX(),player.getY(),player.getZ(),5,0.2,0.2,0.2,0.4);
-
-//            for (LivingEntity e : world.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(15))) {
-//                e.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40, 0, true, false));
-//            }
-
         } else {
             world.playSound(null,player.blockPosition(), SoundEvents.CAT_PURREOW, SoundSource.PLAYERS, 0.7f,1f);
             world.playSound(null,player.blockPosition(), ModSounds.LONG_WOOSH.get(), SoundSource.PLAYERS, 0.9f,1f);
-
-//            for (LivingEntity e : world.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(20))) {
-//                e.addEffect(new MobEffectInstance(MobEffects.GLOWING, 80, 0, true, false));
-//            }
         }
+        player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 300, 0, true, false));
 
         player.addEffect(new MobEffectInstance(ModEffects.SHARP_EYE.get(), 1100, 0, true, false));
-        player.addEffect(new MobEffectInstance(ModEffects.SHARP_SCENT.get(), 300, 0, true, false));
+        player.addEffect(new MobEffectInstance(ModEffects.SHARP_SCENT.get(), 500, 0, true, false));
 
     }
 

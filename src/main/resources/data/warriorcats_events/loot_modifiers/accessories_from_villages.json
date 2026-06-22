@@ -93,7 +93,12 @@
     "warriorcats_events:head_pink_bow",
     "warriorcats_events:head_red_bow",
     "warriorcats_events:black_bow",
-    "warriorcats_events:cat_hat"
+    "warriorcats_events:cat_hat",
+
+    "warriorcats_events:blue_morpho_wing",
+    "warriorcats_events:goliath_birdwing_wing",
+    "warriorcats_events:monarch_wing",
+    "warriorcats_events:tiger_swallowtail_wing"
   ],
   "chance": 0.35
 }

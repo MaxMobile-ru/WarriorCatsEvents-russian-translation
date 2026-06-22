@@ -29,12 +29,14 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.PIGEON_FOOD);
         simpleItem(ModItems.EAGLE_MEAT_FOOD);
         simpleItem(ModItems.SHREDDED_MEAT);
+        simpleItem(ModItems.FROG);
 
         simpleItem(ModItems.SUS_MOUSE_FOOD);
         simpleItem(ModItems.SUS_SQUIRREL_FOOD);
         simpleItem(ModItems.SUS_PIGEON_FOOD);
         simpleItem(ModItems.SUS_EAGLE_MEAT_FOOD);
         simpleItem(ModItems.SUS_SHREDDED_MEAT);
+        simpleItem(ModItems.SUS_FROG);
 
         simpleItem(ModItems.WARRIORNAMERANDOMIZER);
         simpleItem(ModItems.FRESHKILL_AND_HERBS_BUNDLE);

@@ -133,4 +133,7 @@ public class ModFoodHerbs {
 
     public static final FoodProperties SHREDDED_MEAT = new FoodProperties.Builder().meat()
             .nutrition(4).saturationMod(0.7f).build();
+
+    public static final FoodProperties FROG = new FoodProperties.Builder().meat()
+            .nutrition(8).saturationMod(0.9f).build();
 }

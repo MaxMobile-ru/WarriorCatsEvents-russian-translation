@@ -6,6 +6,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.WCEPlayerData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.diseases.DiseaseTypes;
+import net.snowteb.warriorcats_events.diseases.Diseaseable;
+import net.snowteb.warriorcats_events.diseases.kinds.BrokenPaw;
 import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
 import tocraft.walkers.api.PlayerShape;
 
@@ -36,17 +39,26 @@ public class SetPosePacket {
             ServerPlayer player = ctx.get().getSender();
             if (player == null) return;
 
-            int shapeData = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
-                    .map(WCEPlayerData::getVariantData).orElse(0);
-
             player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA).ifPresent(data -> {
                 LivingEntity shape = PlayerShape.getCurrentShape(player);
                 if (shape instanceof WCatEntity catShape) {
 
                     PlayerShape.updateShapes(player, null);
 
-                    catShape.setIdlePose(packet.pose);
-                    data.setIdlePose(packet.pose);
+                    if (packet.pose == 4) {
+                        boolean alreadyBrokenPaw = catShape.isBrokenPaw();
+                        boolean brokenPawByDisease = false;
+                        if (player instanceof Diseaseable<?> diseaseable) {
+                            if (diseaseable.getDisease(DiseaseTypes.BROKEN_PAW) instanceof BrokenPaw brokenPaw) {
+                                if (!brokenPaw.isBoneWrapped()) brokenPawByDisease = true;
+                            }
+                        }
+                        boolean brokenLeg = !alreadyBrokenPaw || brokenPawByDisease;
+                        catShape.setBrokenPaw(brokenLeg);
+                    } else {
+                        catShape.setIdlePose(packet.pose);
+                        data.setIdlePose(packet.pose);
+                    }
 
                     PlayerShape.updateShapes(player, catShape);
 

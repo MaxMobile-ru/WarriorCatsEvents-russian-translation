@@ -62,17 +62,6 @@ public class ButtonScrollList extends AbstractSelectionList<ButtonScrollList.Ent
             this.tooltip = tooltip;
         }
 
-//        @Override
-//        public List<? extends GuiEventListener> children() {
-//            return List.of(button);
-//        }
-//
-//        @Override
-//        public List<? extends NarratableEntry> narratables() {
-//            return List.of(button);
-//        }
-
-
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
             return this.button.mouseClicked(mouseX, mouseY, button);

@@ -487,6 +487,8 @@ public static final RegistryObject<Item> FLOWER_CROWN = ITEMS.register("flower_c
             () -> new Item(new Item.Properties().food(ModFoodHerbs.EAGLE_MEAT_FOOD)));
     public static final RegistryObject<Item> SHREDDED_MEAT = ITEMS.register("shredded_meat",
             () -> new Item(new Item.Properties().food(ModFoodHerbs.SHREDDED_MEAT)));
+    public static final RegistryObject<Item> FROG = ITEMS.register("frog",
+            () -> new Item(new Item.Properties().food(ModFoodHerbs.FROG)));
 
     public static final RegistryObject<Item> SUS_MOUSE_FOOD = ITEMS.register("suspicious_mouse",
             () -> new SuspiciousFoodItem(new Item.Properties().food(ModFoodHerbs.MOUSE_FOOD)));
@@ -498,6 +500,8 @@ public static final RegistryObject<Item> FLOWER_CROWN = ITEMS.register("flower_c
             () -> new SuspiciousFoodItem(new Item.Properties().food(ModFoodHerbs.EAGLE_MEAT_FOOD)));
     public static final RegistryObject<Item> SUS_SHREDDED_MEAT = ITEMS.register("suspicious_shredded_meat",
             () -> new SuspiciousFoodItem(new Item.Properties().food(ModFoodHerbs.SHREDDED_MEAT)));
+    public static final RegistryObject<Item> SUS_FROG = ITEMS.register("suspicious_frog",
+            () -> new SuspiciousFoodItem(new Item.Properties().food(ModFoodHerbs.FROG)));
 
     public static final RegistryObject<Item> WHISKERS = ITEMS.register("whiskers",
             () -> new WhiskersItem(new Item.Properties().stacksTo(1).durability(400),

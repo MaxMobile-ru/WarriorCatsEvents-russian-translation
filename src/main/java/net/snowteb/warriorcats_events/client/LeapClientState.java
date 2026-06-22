@@ -1,6 +1,5 @@
 package net.snowteb.warriorcats_events.client;
 
-import com.eliotlash.mclib.math.functions.limit.Min;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -23,11 +22,10 @@ import net.snowteb.warriorcats_events.clan.ClanData;
 import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.c2s.skilltree.CtSPerformLeapPacket;
-import net.snowteb.warriorcats_events.network.packet.s2c.skilltree.SyncSkillDataPacket;
 import net.snowteb.warriorcats_events.skills.ISkillData;
-import net.snowteb.warriorcats_events.skills.PlayerSkill;
 import net.snowteb.warriorcats_events.skills.PlayerSkillProvider;
 import net.snowteb.warriorcats_events.sound.ModSounds;
+import net.snowteb.warriorcats_events.util.ModKeybinds;
 import net.snowteb.warriorcats_events.zconfig.WCEClientConfig;
 import tocraft.walkers.api.PlayerShape;
 
@@ -48,6 +46,8 @@ public class LeapClientState {
     private static boolean wasLookKeyDown = false;
     private static boolean lockingTarget = false;
 
+    private static final int MAX_SNEAK_COUNTER = 300;
+
     public static void tick(boolean shifting) {
 
         if (!WCEClientConfig.CLIENT.LEAP.get()) return;
@@ -66,7 +66,7 @@ public class LeapClientState {
         if (shifting && Minecraft.getInstance().player.onGround() && !hasTool) {
             sprintingCounter = 0;
 
-            if (shiftKeyDownCounter > 142 || !Minecraft.getInstance().player.onGround()) return;
+            if (shiftKeyDownCounter > MAX_SNEAK_COUNTER + 2 || !Minecraft.getInstance().player.onGround()) return;
 
             boolean lookKeyDown = Minecraft.getInstance().options.keyUse.isDown();
             if (lookKeyDown && !wasLookKeyDown) {
@@ -85,14 +85,14 @@ public class LeapClientState {
                 }
             }
 
-            boolean attackDown = Minecraft.getInstance().options.keyAttack.isDown();
+            boolean attackDown = ModKeybinds.LEAP_KEY.isDown();
 
             shiftKeyDownCounter++;
 
             if (shiftKeyDownCounter >= 20 && !attackWasDown) {
                 leapPowerCounter+=2;
                 leapPowerCounter = Math.min(leapPowerCounter, 100);
-                if (shiftKeyDownCounter <= 140 && Minecraft.getInstance().player.onGround()) {
+                if (shiftKeyDownCounter <= MAX_SNEAK_COUNTER && Minecraft.getInstance().player.onGround()) {
                     Minecraft.getInstance().player.playSound(ModSounds.SHORT_WOOSH.get(), 0.3f, 0.7f);
                 } else {
                     leapPowerCounter = 0;
@@ -100,14 +100,12 @@ public class LeapClientState {
                 }
 
                 if (leapPowerCounter > 0) {
-                    if (shiftKeyDownCounter <= 140 && Minecraft.getInstance().player.onGround()
+                    if (shiftKeyDownCounter <= MAX_SNEAK_COUNTER && Minecraft.getInstance().player.onGround()
                             && attackDown && !attackWasDown) {
                         lockedLookEntity = null;
                         wasLookKeyDown = false;
                         lockingTarget = false;
                         ModPackets.sendToServer(new CtSPerformLeapPacket(leapPowerCounter));
-//                        Minecraft.getInstance().player.displayClientMessage(
-//                                Component.literal("Leap!").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC), true);
                         leapPowerCounter = 0;
                         shiftKeyDownCounter = 0;
                     }
@@ -142,7 +140,7 @@ public class LeapClientState {
                         if (sprintingCounter >= 280) {
                             leapPowerCounter = 100;
 
-                            if (Minecraft.getInstance().options.keyAttack.isDown()) {
+                            if (ModKeybinds.LEAP_KEY.isDown()) {
                                 sprintingCounter -= 40;
                                 ModPackets.sendToServer(new CtSPerformLeapPacket(leapPowerCounter));
                             }
@@ -271,7 +269,7 @@ public class LeapClientState {
     }
 
     public static boolean isLeapActive() {
-        return shiftKeyDownCounter < 144;
+        return shiftKeyDownCounter < MAX_SNEAK_COUNTER + 4;
     }
 
     public static boolean isLockingTarget() {
@@ -292,7 +290,7 @@ public class LeapClientState {
 
     @OnlyIn(Dist.CLIENT)
     public static void setCanceled(){
-        shiftKeyDownCounter = 150;
+        shiftKeyDownCounter = MAX_SNEAK_COUNTER + 100;
     }
 
     public static int getSprintCounterThreshold() {

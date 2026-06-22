@@ -156,6 +156,7 @@ public class CtSTeleportToLocationPacket {
 
 
                 persistent.putBoolean("warriorcats_events.starting_items", true);
+                if (player.isInvulnerable()) player.setInvulnerable(false);
             }
 
         });

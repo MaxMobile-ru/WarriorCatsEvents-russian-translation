@@ -21,20 +21,23 @@
       { "name": "warriorcats_events:entity/mouse/mouse_ambient_1", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/mouse/mouse_ambient_2", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/mouse/mouse_ambient_3", "volume": 0.7, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.mouse_ambient"
   },
 
   "entity.mouse.hurt": {
     "sounds": [
       { "name": "warriorcats_events:entity/mouse/mouse_hurt_1", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/mouse/mouse_hurt_2", "volume": 0.7, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.mouse_hurt"
   },
 
   "entity.mouse.death": {
     "sounds": [
       { "name": "warriorcats_events:entity/mouse/mouse_death", "volume": 0.7, "pitch": 0.9 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.mouse_hurt"
   },
 
 
@@ -43,7 +46,8 @@
       { "name": "warriorcats_events:entity/wildcat/wildcat_scream1", "volume": 0.7, "pitch": 1.4 },
       { "name": "warriorcats_events:entity/wildcat/wildcat_scream2", "volume": 0.7, "pitch": 1.4 },
       { "name": "warriorcats_events:entity/wildcat/wildcat_scream3", "volume": 0.7, "pitch": 1.4 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.wcat_hurt"
   },
 
   "entity.badger.ambient": {
@@ -51,21 +55,24 @@
       { "name": "warriorcats_events:entity/badger/badger_ambient_1", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/badger/badger_ambient_2", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/badger/badger_ambient_3", "volume": 0.7, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.badger_ambient"
   },
   "entity.badger.hurt_and_attack": {
     "sounds": [
       { "name": "warriorcats_events:entity/badger/badger_lowscreech_1", "volume": 1.3, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/badger/badger_lowscreech_2", "volume": 1.3, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/badger/badger_lowscreech_3", "volume": 1.3, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.badger_hurt"
   },
   "entity.badger.scream": {
     "sounds": [
       { "name": "warriorcats_events:entity/badger/badger_screech_1", "volume": 1.0, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/badger/badger_screech_2", "volume": 1.0, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/badger/badger_screech_3", "volume": 1.0, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.badger_hurt"
   },
 
   "entity.squirrel.ambient": {
@@ -75,7 +82,8 @@
       { "name": "warriorcats_events:entity/squirrel/squirrel_ambient_3", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/squirrel/squirrel_ambient_4", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/squirrel/squirrel_ambient_5", "volume": 0.7, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.squirrel_ambient"
   },
 
   "entity.squirrel.hurt": {
@@ -83,13 +91,15 @@
       { "name": "warriorcats_events:entity/squirrel/squirrel_hurt_1", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/squirrel/squirrel_hurt_2", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/squirrel/squirrel_hurt_3", "volume": 0.7, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.squirrel_hurt"
   },
   "entity.squirrel.death": {
     "sounds": [
       { "name": "warriorcats_events:entity/squirrel/squirrel_death_1", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/squirrel/squirrel_death_2", "volume": 0.7, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.squirrel_hurt"
   },
 
   "ambient.scraping_wood": {
@@ -101,7 +111,8 @@
       { "name": "warriorcats_events:mod_ambient/scraping_wood_5", "volume": 0.8, "pitch": 1.0 },
       { "name": "warriorcats_events:mod_ambient/scraping_wood_6", "volume": 0.8, "pitch": 1.0 },
       { "name": "warriorcats_events:mod_ambient/scraping_wood_7", "volume": 0.8, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.scraping_wood"
   },
   "ambient.short_woosh": {
     "sounds": [
@@ -129,7 +140,8 @@
     "sounds": [
       { "name": "warriorcats_events:mod_ambient/cat_call_1", "volume": 0.9, "pitch": 1.0 },
       { "name": "warriorcats_events:mod_ambient/cat_call_2", "volume": 0.9, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.wcat_call"
   },
 
   "menu.click": {
@@ -178,7 +190,8 @@
       { "name": "warriorcats_events:entity/eagle/eagle_call_1", "volume": 0.7, "pitch": 0.9 },
       { "name": "warriorcats_events:entity/eagle/eagle_call_2", "volume": 0.7, "pitch": 0.9 },
       { "name": "warriorcats_events:entity/eagle/eagle_ambient_0", "volume": 0.7, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.eagle_ambient"
   },
 
   "entity.eagle.hurt": {
@@ -189,13 +202,15 @@
       { "name": "warriorcats_events:entity/eagle/eagle_call_0", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/eagle/eagle_call_1", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/eagle/eagle_call_2", "volume": 0.7, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.eagle_hurt"
   },
   "entity.eagle.death": {
     "sounds": [
       { "name": "warriorcats_events:entity/eagle/eagle_death_0", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/eagle/eagle_death_1", "volume": 0.7, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.eagle_hurt"
   },
 
   "entity.eagle.attack": {
@@ -203,14 +218,16 @@
       { "name": "warriorcats_events:entity/eagle/eagle_attack_0", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/eagle/eagle_attack_1", "volume": 0.7, "pitch": 1.0 },
       { "name": "warriorcats_events:entity/eagle/eagle_attack_2", "volume": 0.7, "pitch": 1.0 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.eagle_hurt"
   },
   "entity.eagle.call": {
     "sounds": [
       { "name": "warriorcats_events:entity/eagle/eagle_call_0", "volume": 0.7, "pitch": 0.9 },
       { "name": "warriorcats_events:entity/eagle/eagle_call_1", "volume": 0.7, "pitch": 0.9 },
       { "name": "warriorcats_events:entity/eagle/eagle_call_2", "volume": 0.7, "pitch": 0.9 }
-    ]
+    ],
+    "subtitle": "subtitles.wce.eagle_call"
   },
 
   "entity.collar_bell": {
@@ -232,7 +249,8 @@
       { "name": "warriorcats_events:entity/cat_cough/cat_cough_5", "volume": 0.7, "pitch": 1.1},
       { "name": "warriorcats_events:entity/cat_cough/cat_cough_6", "volume": 0.7, "pitch": 1.1},
       { "name": "warriorcats_events:entity/cat_cough/cat_cough_7", "volume": 0.7, "pitch": 1.1}
-    ]
+    ],
+    "subtitle": "subtitles.wce.wcat_cough"
   },
 
   "entity.lizard.ambient": {
@@ -242,6 +260,21 @@
       { "name": "warriorcats_events:entity/lizard/lizard_2", "volume": 1.0, "pitch": 1.0},
       { "name": "warriorcats_events:entity/lizard/lizard_3", "volume": 1.0, "pitch": 1.0},
      { "name": "warriorcats_events:entity/lizard/lizard_4", "volume": 1.0, "pitch": 1.0}
-    ]
+    ],
+    "subtitle": "subtitles.wce.lizard_ambient"
+  },
+
+  "entity.pigeon.ambient": {
+    "sounds": [
+      { "name": "warriorcats_events:entity/pigeon/pigeon_0", "volume": 0.6, "pitch": 1.0},
+      { "name": "warriorcats_events:entity/pigeon/pigeon_1", "volume": 0.6, "pitch": 1.0},
+      { "name": "warriorcats_events:entity/pigeon/pigeon_2", "volume": 0.6, "pitch": 1.0},
+      { "name": "warriorcats_events:entity/pigeon/pigeon_3", "volume": 0.6, "pitch": 1.0},
+      { "name": "warriorcats_events:entity/pigeon/pigeon_4", "volume": 0.6, "pitch": 1.0},
+      { "name": "warriorcats_events:entity/pigeon/pigeon_5", "volume": 0.6, "pitch": 1.0},
+      { "name": "warriorcats_events:entity/pigeon/pigeon_6", "volume": 0.6, "pitch": 1.0},
+      { "name": "warriorcats_events:entity/pigeon/pigeon_7", "volume": 0.6, "pitch": 1.0}
+    ],
+    "subtitle": "subtitles.wce.pigeon_ambient"
   }
 }

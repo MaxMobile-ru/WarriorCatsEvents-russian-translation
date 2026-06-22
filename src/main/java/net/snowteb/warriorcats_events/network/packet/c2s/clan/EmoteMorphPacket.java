@@ -35,7 +35,7 @@ public class EmoteMorphPacket {
             ServerPlayer player = ctx.get().getSender();
             if (player == null) return;
 
-            if (packet.animIndex == -2 && !WarriorCatsEvents.Collaborators.isContributor(player.getUUID())) return;
+            if (packet.animIndex < -1 && !WarriorCatsEvents.Collaborators.isContributor(player.getUUID())) return;
 
             LivingEntity shape = PlayerShape.getCurrentShape(player);
             if (shape instanceof WCatEntity catShape) {

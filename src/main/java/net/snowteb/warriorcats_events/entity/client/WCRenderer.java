@@ -376,18 +376,18 @@ public class WCRenderer extends GeoEntityRenderer<WCatEntity> {
             case 3 -> 0.9f;
             case 4 -> 0.8f;
             case 5 -> 1.0f;
-            case 6 -> 1.1f;
-            case 7 -> 1.2f;
+            case 6 -> 1.0f;
+            case 7 -> 1.0f;
             case 8 -> 0.8f;
-            case 9 -> 1.1f;
+            case 9 -> 1.0f;
             case 10 -> 1.0f;
             case 11 -> 0.9f;
             case 12 -> 0.9f; //chestnutpatch
             case 13 -> 1.0f; //ratstar
             case 14 -> 0.8f; //twitchstream
-            case 15 -> 1.1f; //blazepit
+            case 15 -> 1.0f; //blazepit
             case 16 -> 1.0f; //bengalpelt
-            case 17 -> 1.1f; //sparrowstar
+            case 17 -> 1.0f; //sparrowstar
             case 18 -> 0.8f; //foxeater
             case 19 -> 1.0f; //willowsong
             case 20 -> 0.9f; //13
@@ -395,10 +395,10 @@ public class WCRenderer extends GeoEntityRenderer<WCatEntity> {
             case 22 -> 1.0f; //15
             case 23 -> 0.9f; //16
             case 24 -> 0.9f; //17
-            case 25 -> 1.1f; //18
+            case 25 -> 1.0f; //18
             case 26 -> 0.8f; //19
             case 27 -> 0.8f; //20
-            case 28 -> 1.2f; //21
+            case 28 -> 1.0f; //21
             case 29 -> 1.0f; //22
 
             case 30 -> 0.9f;
@@ -413,12 +413,12 @@ public class WCRenderer extends GeoEntityRenderer<WCatEntity> {
             case 39 -> 0.8f;
             case 40 -> 1.0f;
             case 41 -> 0.9f;
-            case 42 -> 1.1f;
+            case 42 -> 1.0f;
             case 43 -> 0.9f;
             case 44 -> 0.8f;
             case 45 -> 0.9f;
             case 46 -> 0.8f;
-            case 47 -> 1.1f;
+            case 47 -> 1.0f;
             case 48 -> 0.8f;
             case 49 -> 0.9f;
             case 50 -> 0.8f;

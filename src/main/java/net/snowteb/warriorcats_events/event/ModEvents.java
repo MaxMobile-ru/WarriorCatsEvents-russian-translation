@@ -1,7 +1,10 @@
 package net.snowteb.warriorcats_events.event;
 
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
@@ -89,7 +92,7 @@ public class ModEvents {
                     SpawnPlacements.Type.ON_GROUND,
                     Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     (entityType, level, spawnReason, pos, random) ->
-                            level.getFluidState(pos).isEmpty() && level.getFluidState(pos.below()).isEmpty()
+                            level.getFluidState(pos).isEmpty() && level.getFluidState(pos.below()).isEmpty() && !level.getBlockState(pos).is(Blocks.SNOW)
             );
 
         });

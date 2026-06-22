@@ -2964,10 +2964,18 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
                 }
             }
 
+            if (!this.getList().isEmpty()) {
+                Component msg = Component.empty()
+                        .append(this.hasCustomName() ? this.getCustomName().copy() : Component.literal("This cat"))
+                        .append(" cannot bring life while being sick.")
+                        ;
+                pPlayer.displayClientMessage(msg, true);
+                return InteractionResult.FAIL;
+            }
+
             if (!pPlayer.getAbilities().instabuild) itemstack.shrink(1);
 
             this.setInLove(pPlayer);
-
 
             return InteractionResult.SUCCESS;
         }
@@ -3163,7 +3171,6 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
         if (itemstack.getItem() == ModItems.WARRIOR_NAMETAG.get() && this.isTame()) {
 
             if (itemstack.hasCustomHoverName()) {
-                itemstack.shrink(1);
 
                 Component oldName = this.hasCustomName() ? this.getCustomName().copy() : Component.literal("A cat");
 
@@ -3221,6 +3228,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
                 this.updateMatesName();
                 this.updateNest();
 
+                itemstack.shrink(1);
             }
 
             return InteractionResult.sidedSuccess(this.level().isClientSide);
@@ -4375,7 +4383,12 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
             state.getController().setTransitionLength(0);
 
             if (!playerAnimPlayed) {
-                if (animIndex == -2) {
+                if (animIndex == -3) {
+                    state.getController().setAnimation(RawAnimation.begin()
+                            .then("animation.wcat.start_stand_premium", Animation.LoopType.PLAY_ONCE)
+                            .then("animation.wcat.stand_idle_premium", Animation.LoopType.LOOP));
+                    playerAnimPlayed = true;
+                } else if (animIndex == -2) {
                     state.getController().setAnimation(RawAnimation.begin()
                             .then("animation.wcat.silly", Animation.LoopType.PLAY_ONCE));
                     playerAnimPlayed = true;
@@ -4433,6 +4446,11 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
                     state.getController().setAnimation(RawAnimation.begin()
                             .then("animation.wcat.scared", Animation.LoopType.PLAY_ONCE)
                             .then("animation.wcat.scared_idle", Animation.LoopType.LOOP));
+                    playerAnimPlayed = true;
+                } else if (animIndex == 13) {
+                    state.getController().setAnimation(RawAnimation.begin()
+                            .then("animation.wcat.start_drop", Animation.LoopType.PLAY_ONCE)
+                            .then("animation.wcat.drop_idle", Animation.LoopType.LOOP));
                     playerAnimPlayed = true;
                 }
 
@@ -4628,7 +4646,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
 
             if ((speed > 0.2039) && !this.isInWater()) {
                 tAnimationState.getController().setAnimation(RawAnimation.begin().
-                        then("animation.wcat.sprint" + this.entityData.get(IDLE_POSE), Animation.LoopType.LOOP));
+                        then("animation.wcat.sprint" + this.getIdlePose(), Animation.LoopType.LOOP));
 
                 tAnimationState.getController().setAnimationSpeed(0.185 * Math.exp(9.91 * speed));
 
@@ -4638,7 +4656,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
                             then("animation.wcat.walk_limp", Animation.LoopType.LOOP));
                 } else {
                     tAnimationState.getController().setAnimation(RawAnimation.begin().
-                            then("animation.wcat.walk" + this.entityData.get(IDLE_POSE), Animation.LoopType.LOOP));
+                            then("animation.wcat.walk" + this.getIdlePose(), Animation.LoopType.LOOP));
                 }
                 tAnimationState.getController().setAnimationSpeed(animSpeed);
 
@@ -7105,6 +7123,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
 
     @Override
     public boolean isFood(ItemStack stack) {
+        if (this.isBaby()) return stack.is(ModTags.Items.PREY) || stack.is(ModTags.Items.ADDITIONAL_PREY);
         if (stack.is(ModItems.CATMINT.get())) {
             return !this.isExpectingKits() && this.isTame();
         }

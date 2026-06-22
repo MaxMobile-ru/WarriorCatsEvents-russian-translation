@@ -60,10 +60,10 @@ public class ServerLevelMixin {
 
                     int maxCount = 3;
 
-                    if (chanceOfType < 0.005) {
+                    if (chanceOfType < 0.004) {
                         type = ModEntities.EAGLE.get();
                         maxCount = 1;
-                    } else if (chanceOfType < 0.01) {
+                    } else if (chanceOfType < 0.008) {
                         int roll = random.nextInt(4);
                         if (roll == 0) {
                             type = EntityType.FOX;

@@ -495,6 +495,8 @@ public static final DeferredHolder<Item, Item> FLOWER_CROWN = ITEMS.register("fl
             () -> new Item(new Item.Properties().food(ModFoodHerbs.EAGLE_MEAT_FOOD)));
     public static final DeferredHolder<Item, Item> SHREDDED_MEAT = ITEMS.register("shredded_meat",
             () -> new Item(new Item.Properties().food(ModFoodHerbs.SHREDDED_MEAT)));
+    public static final DeferredHolder<Item, Item> FROG = ITEMS.register("frog",
+            () -> new Item(new Item.Properties().food(ModFoodHerbs.FROG)));
 
     public static final DeferredHolder<Item, Item> SUS_MOUSE_FOOD = ITEMS.register("suspicious_mouse",
             () -> new SuspiciousFoodItem(new Item.Properties().food(ModFoodHerbs.MOUSE_FOOD)));
@@ -506,6 +508,8 @@ public static final DeferredHolder<Item, Item> FLOWER_CROWN = ITEMS.register("fl
             () -> new SuspiciousFoodItem(new Item.Properties().food(ModFoodHerbs.EAGLE_MEAT_FOOD)));
     public static final DeferredHolder<Item, Item> SUS_SHREDDED_MEAT = ITEMS.register("suspicious_shredded_meat",
             () -> new SuspiciousFoodItem(new Item.Properties().food(ModFoodHerbs.SHREDDED_MEAT)));
+    public static final DeferredHolder<Item, Item> SUS_FROG = ITEMS.register("suspicious_frog",
+            () -> new SuspiciousFoodItem(new Item.Properties().food(ModFoodHerbs.FROG)));
 
     public static final DeferredHolder<Item, Item> WHISKERS = ITEMS.register("whiskers",
             () -> new WhiskersItem(new Item.Properties().stacksTo(1).durability(400),

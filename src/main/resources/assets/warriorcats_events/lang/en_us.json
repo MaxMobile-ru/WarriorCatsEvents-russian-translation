@@ -188,6 +188,7 @@
   "key.warriorcats_events.emotes": "Emote Wheel",
   "key.warriorcats_events.climb": "Climb",
   "key.warriorcats_events.options": "WCE Options",
+  "key.warriorcats_events.leap": "Launch Leap",
 
   "effect.warriorcats_events.numb": "Numb",
   "effect.warriorcats_events.deathberries": "Deathberries",
@@ -221,12 +222,14 @@
   "item.warriorcats_events.pigeon": "Pigeon",
   "item.warriorcats_events.golden_eagle_meat": "Golden Eagle Meat",
   "item.warriorcats_events.shredded_meat": "Shredded Meat",
+  "item.warriorcats_events.frog": "Frog",
 
   "item.warriorcats_events.suspicious_mouse": "Mouse",
   "item.warriorcats_events.suspicious_squirrel": "Squirrel",
   "item.warriorcats_events.suspicious_pigeon": "Pigeon",
   "item.warriorcats_events.suspicious_golden_eagle_meat": "Golden Eagle Meat",
   "item.warriorcats_events.suspicious_shredded_meat": "Shredded Meat",
+  "item.warriorcats_events.suspicious_frog": "Frog",
 
   "item.warriorcats_events.flower_crown": "Flower Crown",
   "item.warriorcats_events.flower_armor": "Flower Armor",
@@ -381,5 +384,22 @@
 
 
   "death.attack.deathberries": "%1$s has died poisoned by Deathberries",
-  "death.attack.deathberries.player": "%1$s has died poisoned by Deathberries while fighting %2$s"
+  "death.attack.deathberries.player": "%1$s has died poisoned by Deathberries while fighting %2$s",
+
+  "subtitles.wce.mouse_ambient": "Mouse sounds",
+  "subtitles.wce.mouse_hurt": "Mouse shriek",
+  "subtitles.wce.badger_ambient": "Badger sounds",
+  "subtitles.wce.badger_hurt": "Badger shriek",
+  "subtitles.wce.squirrel_ambient": "Squirrel sounds",
+  "subtitles.wce.squirrel_hurt": "Squirrel shriek",
+  "subtitles.wce.scraping_wood": "Scraping wood",
+  "subtitles.wce.eagle_ambient": "Eagle sounds",
+  "subtitles.wce.eagle_hurt": "Eagle shriek",
+  "subtitles.wce.eagle_call": "Eagle call",
+  "subtitles.wce.wcat_call": "Cat call",
+  "subtitles.wce.wcat_hurt": "Cat shriek",
+  "subtitles.wce.wcat_cough": "Cat cough",
+  "subtitles.wce.lizard_ambient": "Lizard call",
+  "subtitles.wce.pigeon_ambient": "Pigeon sounds"
+
 }

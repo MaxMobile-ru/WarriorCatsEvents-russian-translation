@@ -15,6 +15,7 @@ public class SetPoseMenu extends Screen {
     private Button setPose1;
     private Button setPose2;
     private Button setPose3;
+    private Button setPose4Limp;
     private Button close;
 
     public SetPoseMenu() {
@@ -64,6 +65,14 @@ public class SetPoseMenu extends Screen {
                 }
         ).bounds(10, y, 80, 18).build();
 
+        y += constant;
+
+        setPose4Limp = Button.builder(
+                Component.literal("Limping"),
+                btn -> {
+                    setPose(4);
+                }
+        ).bounds(10, y, 80, 18).build();
 
 
         close = Button.builder(
@@ -77,6 +86,7 @@ public class SetPoseMenu extends Screen {
         this.addRenderableWidget(setPose1);
         this.addRenderableWidget(setPose2);
         this.addRenderableWidget(setPose3);
+        this.addRenderableWidget(setPose4Limp);
         this.addRenderableWidget(close);
 
         super.init();

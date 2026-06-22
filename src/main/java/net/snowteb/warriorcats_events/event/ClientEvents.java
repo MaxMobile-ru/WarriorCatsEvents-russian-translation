@@ -95,9 +95,9 @@ public class ClientEvents {
                 emoteOffset -= (int) event.getScrollDeltaY();
 
                 if (WarriorCatsEvents.Collaborators.isContributor(Minecraft.getInstance().player.getUUID())) {
-                    emoteOffset = Mth.clamp(emoteOffset, -2, MAX_EMOTES);
+                    emoteOffset = Mth.clamp(emoteOffset, -3, EmoteIndexData.MAX_EMOTES);
                 } else {
-                    emoteOffset = Mth.clamp(emoteOffset, -1, MAX_EMOTES);
+                    emoteOffset = Mth.clamp(emoteOffset, -1, EmoteIndexData.MAX_EMOTES);
                 }
 
                 WCEClient.playLocalSound(ModSounds.MENU_CLICK.get(), SoundSource.NEUTRAL, 0.1f, 1.3f);
@@ -389,6 +389,8 @@ public class ClientEvents {
             event.register(ModKeybinds.WATERDRINK_KEY);
             event.register(ModKeybinds.CLIMB_KEY);
             event.register(WCEClient.EMOTES_HUD_MENU_KEY);
+            event.register(ModKeybinds.OPTIONS_KEY);
+            event.register(ModKeybinds.LEAP_KEY);
 //            event.register(ModKeybinds.SKILLMENU_KEY);
         }
 

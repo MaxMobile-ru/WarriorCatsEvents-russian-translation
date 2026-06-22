@@ -163,62 +163,52 @@ public class WCEChangelogScreen extends Screen {
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
 
+
     private void defineChangelogLines() {
-        lines.add("$(#) 1.9.3 | Support for Neoforge 1.21");
-        lines.add("From this version, WCE will now also be available for Neoforge 1.21.1. \n" +
-                "This is a quite important announcement since for so long WCE has stayed in Forge 1.20.1.\n" +
+        lines.add("$(##) Now available on Aternos!");
+        lines.add("$(#) Nests, Moonstone, Lizards, and more by Bem te vi!");
+        lines.add("Greetings! This update adds several new decorative and functional blocks, this thanks to the contribution by 'bem te vi' and his amazing talent with modeling. We all thank him for such beautiful pieces of art 💖  \n" +
                 "\n" +
-                "Neoforge as a mod loader offers better support, faster loading times, and better mod loading in general, so your game might be more stable.\n" +
+                "This is only the part 1 of the contributions made by 'bem te vi', there will be more to come in the future.\n" +
                 "\n" +
-                "And as for the version (1.21.1), this might help with availability for other mods and other mechanics Minecraft has implemented in newer versions.\n" +
+                "This update, aside from decorative blocks, accessories, and fixes, also includes the new Lizard!\n" +
+                "Lizards are very cute and useful creatures that can be tamed using Spider eyes. Kits usually hunt these down so better to be careful before taming.\n" +
+                "Once you have tamed a Lizard, you can Shift+Right-click to carry them on your head.\n" +
+                "Lizards will also occasionally dig up valuable items! From ores, to even valuable items such as Hearts of the sea.\n" +
+                "Lizards can be bred and will lay eggs in dark places once they have a mate.\n" +
                 "\n" +
-                "In the future, hopefully more versions will be supported.\n");
-        lines.add("$(##) Changelog");
-        lines.add("- Port to Neoforge 1.21.1");
-        lines.add("- Move the serene seasons season overlay");
-        lines.add("- Adjusted the territory overlay");
-        lines.add("- Player deputies can now send cats on patrol");
-        lines.add("- Added an options screen, displayed by pressing \"K\" by default. This will offer easy access to almost all GUIs and options from WCE.");
-        lines.add("- Other minor adjustements");
-        lines.add("");
-
-        lines.add("$(#) 1.9.0 | Diseases and more!");
-        lines.add("It has been requested and asked for so much... It took a while and a hard work but it's finally here...\n" +
-                "\n" +
-                "Allow me to introduce the diseases system!\n" +
-                "These will add a brand new level of complexity and challenge to the gameplay. \n" +
-                "\n" +
-                "Diseases will be obtained in different ways. Some are more common in certain environments, some others are caused by other circumstances such as falls or the presence of other conditions.\n" +
-                "\n" +
-                "The new diseases and conditions added for this update are: Greencough, Whitecough, Broken Leg, Chills, Deathberries Poisoning, Fever, Sore Pads.\n" +
-                "\n" +
-                "If you like to use the mod Serene Seasons, compatibility has been added for it so that Greencough might be a real issue during Leaf-bare...\n" +
-                "\n" +
-                "This update also adds a few more herbs and a few adjustements to the ones that were already in.\n" +
-                "\n" +
-                "You better start collecting herbs, because now those will be really needed.");
+                "Again, thanks to 'bem te vi' for contributing with basically all models and textures in this update.");
         lines.add("$(##) Changelog");
 
-        lines.add("- Added the new Diseases system. Check the Warrior's Guide in game or the Wiki for more information.");
-        lines.add("- Added Server config for Diseases system. You can also use `/gamerule wceDiseases`");
-        lines.add("- The Serene Seasons season will now be displayed on the upper left side of the screen. You can disable this through the client config.");
-        lines.add("- Added new Crafting Rock recipes for Comfrey poultice, leg wrap, poppy seeds, and yarrow poultice.");
-        lines.add("- Reworked and improved the Changelog screen.");
-        lines.add("- Reworked the Deathberries. It is no longer an effect, and will now be a disease. This will make Deathberries poisoning now actually deadly unless its treated.");
-        lines.add("- Balanced some skills from the skill tree. Nerfed the Jump skill, you will now jump high only when sprinting.");
-        lines.add("- Prey spawns for territory slightly balanced");
-        lines.add("- Added `/wce disease ` commands.");
-        lines.add("- Added `/wce changelog` command.");
-        lines.add("- Fixed player morphs not showing correctly in the clan manage screen.");
-        lines.add("- Fixed tree stumps not changing the clan name when a clan is renamed.");
-        lines.add("- Added Feverfew, Feverfew leaves, Juniper, Juniper berries, Poppy seeds, Comfrey, Comfrey leaves, Comfrey root, Yarrow poultice, Comfrey poultice, Cobweb on a stick, Leg wrap.");
-        lines.add("- Spiders now have a chance to drop Cobweb.");
-        lines.add("- Added suspicious prey, mixed on a Crafting Rock using any wce prey or meat and deathberries. This prey will cause the same effect as eating Deathberries. Hold shift while hovering a prey item in your inventory to see if it is poisoned.");
-        lines.add("- Added preview for kits spawned through the Kit item.");
-        lines.add("- Boosted vanilla rabbit spawns.");
-        lines.add("- Whiskers will now repair through time when they are in your inventory and are not being used. \n");
-        lines.add("- Improved Claws and Whiskers tooltips. You can now view all their usages in the item itself when holding shift while hovering it in your inventory.");
-        lines.add("- Other minor adjustments");
+        lines.add("- Added: Cherry Blossom Nest, Driftwood Nest, Daisy Nest, Acacia Nest, Terracotta Nest, Bamboo Nest, Berry Nest, Coral Nest, Glowberry Nest, Muddy Nest, Kittypet Nest, Acorn Nest, Nautilus Nest, Sunflower Nest.");
+        lines.add("- Added Glowrocks, found in caves, can be tinted of different colors. Many can be placed together.");
+        lines.add("- Added Moonstone, a block intended to be a replacement for the Enchanting table. Surrounding it with Glowrocks will cause the same effect as surrounding an Enchanting table with Bookshelfs.");
+        lines.add("- Added accessories: Blue Morpho Wing, Goliath Birdwing Wing, Monarch Wing, Tiger Swallowtail Wing. As for now (until future updates), these can be found in village chests. ");
+        lines.add("- Added Acorn Lantern, Daisy Chain, Lavender Chain. ");
+        lines.add("- Added Stickfire, as a replacement for furnaces.");
+        lines.add("- Added Lizards! Lizards can be found around the world, and can be tamed using Spider eyes. Lizards can ocassionally dig valuable items for you. You can carry a lizard on your head by using Shift+Right-Click on a tamed lizard. ");
+        lines.add("- Added drop to vanilla frogs. They will now drop a respective food item.");
+        lines.add("- Added back the old config system for additional items (through .toml). This change wont be reverted, and will be the new average in the future.");
+        lines.add("- Removed some limitations for Leaping.");
+        lines.add("- Adjusted some diseases, fixed some values.");
+        lines.add("- Fixed an issue that caused players to be kicked out of their clans, and reset some character data.");
+        lines.add("- Fixed an issue with Warrior Nametags.");
+        lines.add("- Reduced chance of breaking paws.");
+        lines.add("- Reduced chance of sore pads.");
+        lines.add("- Fishing will now spawn an actual fish instead of an item, looks very cute :3");
+        lines.add("- The Leaping button can now be configured. Will stay as Left Click by default.");
+        lines.add("- Added sounds specific for Pigeons.");
+        lines.add("- Added subtitles to most sounds for accessibility settings.");
+        lines.add("- Slightly reduced enemy spawns in territory.");
+        lines.add("- Other fixes and adjustements to Wild Cats.");
+        lines.add("- Minor adjustements to prey.");
+        lines.add("- Removed naturally spawned too massive Wild Cats");
+        lines.add("- Increased the time to charge leap from up to 8 secs, to 15 secs.");
+        lines.add("- Increased the hitbox for leaping.");
+        lines.add("- Added an op command to invite players to clans.");
+        lines.add("- Added new public emote.");
+        lines.add("- Added new exclusive emote for contributors");
+        lines.add("- Other minor adjustements.");
 
         lines.add("$(/#) Thank you for reading 🐈");
     }
@@ -241,9 +231,14 @@ public class WCEChangelogScreen extends Screen {
 //        lines.add("");
 //        lines.add("");
 //        lines.add("");
+//        lines.add("");
+//        lines.add("");
+//        lines.add("");
+//        lines.add("");
 //
 //        lines.add("$(/#) Thank you for reading 🐈");
 //    }
+
 
 
 

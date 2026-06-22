@@ -36,6 +36,13 @@ public class ModLootModifiers {
                     () -> AddItemPoolModifier.CODEC
             );
 
+    public static final DeferredHolder<MapCodec<? extends IGlobalLootModifier>,
+            MapCodec<? extends IGlobalLootModifier>> ADD_ITEM_TO_DROP =
+            LOOT_MODIFIERS.register(
+                    "add_drop",
+                    () -> AddItemToDrop.CODEC
+            );
+
     public static void register(IEventBus bus) {
         LOOT_MODIFIERS.register(bus);
     }

@@ -688,6 +688,14 @@ public class LizardEntity extends TamableAnimal implements GeoEntity {
             return super.canContinueToUse() && lizard.canDigItem();
         }
 
+        @Override
+        public void stop() {
+            super.stop();
+            if (this.lizard.isDigging()) {
+                this.lizard.setDigging(false);
+            }
+        }
+
         public void tick() {
             super.tick();
             BlockPos blockpos = this.lizard.blockPosition();

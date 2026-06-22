@@ -1415,7 +1415,7 @@ public class CreateMorphGeneticsScreen extends Screen {
             );
             setLeftEyeBlindButton = new GradientToggleButton(
                     centerX - 158, centerY + 95, 30, 15,
-                    Component.literal("Blind"),
+                    Component.literal("Foggy"),
                     btn -> {
                         selectLeftEye(setLeftEyeBlindButton);
                         eyeColorRight = setEyeBlind;
@@ -1468,7 +1468,7 @@ public class CreateMorphGeneticsScreen extends Screen {
             );
             setRightEyeBlindButton = new GradientToggleButton(
                     centerX - 122, centerY + 95, 30, 15,
-                    Component.literal("Blind"),
+                    Component.literal("Foggy"),
                     btn -> {
                         selectRightEye(setRightEyeBlindButton);
                         eyeColorLeft = setEyeBlind;

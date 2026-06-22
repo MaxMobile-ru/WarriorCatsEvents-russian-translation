@@ -45,11 +45,11 @@ public class EmoteMenu {
 
 
                 int minIndex = -1;
-                if (WarriorCatsEvents.Collaborators.isContributor(Minecraft.getInstance().player.getUUID())) minIndex = -2;
+                if (WarriorCatsEvents.Collaborators.isContributor(Minecraft.getInstance().player.getUUID())) minIndex = -3;
 
 
 
-                WCEClient.emoteOffset = Mth.clamp(WCEClient.emoteOffset, minIndex, WCEClient.MAX_EMOTES);
+                WCEClient.emoteOffset = Mth.clamp(WCEClient.emoteOffset, minIndex, WCEClient.EmoteIndexData.MAX_EMOTES);
 
                 if (WCEClient.emoteOffset != 0) showHelper = false;
 
@@ -60,7 +60,7 @@ public class EmoteMenu {
 
                     int index = WCEClient.emoteOffset + i;
 
-                    if (index >= minIndex && index < WCEClient.MAX_EMOTES + 1) {
+                    if (index >= minIndex && index < WCEClient.EmoteIndexData.MAX_EMOTES + 1) {
 
                         int drawX = centerX + (i * 50);
                         int drawY = centerY;

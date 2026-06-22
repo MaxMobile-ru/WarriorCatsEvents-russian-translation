@@ -3,6 +3,7 @@ package net.snowteb.warriorcats_events.event;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -95,7 +96,7 @@ public class ModEvents {
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 (entityType, level, spawnReason, pos, random) ->
-                        level.getFluidState(pos).isEmpty() && level.getFluidState(pos.below()).isEmpty(),
+                        level.getFluidState(pos).isEmpty() && level.getFluidState(pos.below()).isEmpty() && !level.getBlockState(pos).is(Blocks.SNOW),
                 RegisterSpawnPlacementsEvent.Operation.REPLACE
         );
 

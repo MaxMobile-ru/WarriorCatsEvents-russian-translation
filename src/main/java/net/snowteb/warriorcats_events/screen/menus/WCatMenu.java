@@ -12,7 +12,7 @@ import net.snowteb.warriorcats_events.util.WCatArmorSlots;
 
 public class WCatMenu extends AbstractContainerMenu {
     private final Level level;
-    private final WCatEntity cat;
+    public final WCatEntity cat;
 
     public WCatMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
         this(id, playerInv, (WCatEntity) playerInv.player.level().getEntity(buf.readInt()));

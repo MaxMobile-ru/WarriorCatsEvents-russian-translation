@@ -51,7 +51,6 @@ public class WCEClient {
 
     public static boolean isRenderingEmoteMenu = false;
     public static int emoteOffset = 0;
-    public static final int MAX_EMOTES = 12;
     public static final KeyMapping EMOTES_HUD_MENU_KEY = new KeyMapping("key.warriorcats_events.emotes", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Y, "key.category.warriorcats_events.key");
 
     public static final ResourceLocation WCE_TITLE = ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/gui/wce_title_hd.png");
@@ -66,6 +65,7 @@ public class WCEClient {
     );
 
     public static class EmoteIndexData {
+        public static final int MAX_EMOTES = 13;
 
         private static final ResourceLocation ICON_NONE = ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/emotes/none_icon.png");
         private static final ResourceLocation ICON_MORPH = ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/emotes/morph_icon.png");
@@ -82,9 +82,12 @@ public class WCEClient {
         private static final ResourceLocation ICON_DEAD = ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/emotes/dead_icon.png");
         private static final ResourceLocation ICON_ROLL = ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/emotes/roll_icon.png");
         private static final ResourceLocation ICON_SCARED = ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/emotes/scared_icon.png");
+        private static final ResourceLocation ICON_PREMIUM_STAND = ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/emotes/twoleg_stand_icon.png");
+        private static final ResourceLocation ICON_DROP = ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/emotes/drop_icon.png");
 
         public static ResourceLocation getIcon(int index) {
             return switch (index) {
+                case -3 -> ICON_PREMIUM_STAND;
                 case -2 -> ICON_BACKFLIP;
                 case -1 -> ICON_MORPH;
                 case 0 -> ICON_NONE;
@@ -100,12 +103,14 @@ public class WCEClient {
                 case 10 -> ICON_DEAD;
                 case 11 -> ICON_ROLL;
                 case 12 -> ICON_SCARED;
+                case 13 -> ICON_DROP;
                 default -> ICON_NONE;
             };
         }
 
         public static String getText(int index) {
             return switch (index) {
+                case -3 -> "Twoleg Stand";
                 case -2 -> "Backflip";
                 case -1 -> "Morph";
                 case 0 -> "";
@@ -121,6 +126,7 @@ public class WCEClient {
                 case 10 -> "Play dead";
                 case 11 -> "Roll";
                 case 12 -> "Scared";
+                case 13 -> "Drop";
                 default -> "Unnamed";
             };
         }

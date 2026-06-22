@@ -47,7 +47,7 @@ public class MouseEntity extends Animal implements GeoEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.5D));
-        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Player.class, 6.0f, 1.2D, 1.5D));
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Player.class, 4.0f, 1.2D, 1.5D));
         this.goalSelector.addGoal(4, new MoveToGrassGoal(this, 1.0D, 15));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.6D));
 

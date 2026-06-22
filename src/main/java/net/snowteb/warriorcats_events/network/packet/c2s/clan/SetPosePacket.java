@@ -10,6 +10,9 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.attachments.CapabilityManager;
 import net.snowteb.warriorcats_events.attachments.ModAttachments;
+import net.snowteb.warriorcats_events.diseases.DiseaseTypes;
+import net.snowteb.warriorcats_events.diseases.Diseaseable;
+import net.snowteb.warriorcats_events.diseases.kinds.BrokenPaw;
 import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
 import tocraft.walkers.api.PlayerShape;
 
@@ -43,8 +46,20 @@ public class SetPosePacket implements CustomPacketPayload {
 
                     PlayerShape.updateShapes(player, null);
 
-                    catShape.setIdlePose(packet.pose);
-                    cap.setIdlePose(packet.pose);
+                    if (packet.pose == 4) {
+                        boolean alreadyBrokenPaw = catShape.isBrokenPaw();
+                        boolean brokenPawByDisease = false;
+                        if (player instanceof Diseaseable<?> diseaseable) {
+                            if (diseaseable.getDisease(DiseaseTypes.BROKEN_PAW) instanceof BrokenPaw brokenPaw) {
+                                if (!brokenPaw.isBoneWrapped()) brokenPawByDisease = true;
+                            }
+                        }
+                        boolean brokenLeg = !alreadyBrokenPaw || brokenPawByDisease;
+                        catShape.setBrokenPaw(brokenLeg);
+                    } else {
+                        catShape.setIdlePose(packet.pose);
+                        cap.setIdlePose(packet.pose);
+                    }
 
                     PlayerShape.updateShapes(player, catShape);
 

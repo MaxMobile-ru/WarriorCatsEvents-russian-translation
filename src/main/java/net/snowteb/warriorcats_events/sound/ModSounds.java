@@ -90,6 +90,8 @@ public class ModSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> LIZARD_AMBIENT =
             registerSoundEvents("entity.lizard.ambient");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> PIGEON_AMBIENT =
+            registerSoundEvents("entity.pigeon.ambient");
 
 
     private static DeferredHolder<SoundEvent, SoundEvent> registerSoundEvents(String name) {

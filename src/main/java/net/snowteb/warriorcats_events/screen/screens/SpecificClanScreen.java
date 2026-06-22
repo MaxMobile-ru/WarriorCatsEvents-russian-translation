@@ -242,7 +242,7 @@ public class SpecificClanScreen extends Screen {
         if (clan.canManage) pGuiGraphics.drawString(Minecraft.getInstance().font,
                 Component.literal("Manager").withStyle(ChatFormatting.GRAY), 2, 2, 0xFFFFFF);
         if (Minecraft.getInstance().player != null) {
-            if (WarriorCatsEvents.Collaborators.isContributor(Minecraft.getInstance().player.getUUID())) {
+            {
                 pGuiGraphics.pose().pushPose();
                 pGuiGraphics.pose().translate(centerX, this.height-8, 0);
                 pGuiGraphics.pose().scale(0.7f,0.7f,0.8f);

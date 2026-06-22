@@ -217,7 +217,7 @@ public class ModEvents2 {
         ManageClanCommand.register(event.getDispatcher());
         ChangeMemberPermissionCommand.register(event.getDispatcher());
         OpenMorphCreateCommand.register(event.getDispatcher());
-        OpDeleteClanCommand.register(event.getDispatcher());
+        OpClanCommands.register(event.getDispatcher());
         CarryRequestAcceptCommand.register(event.getDispatcher());
         CarryRequestDenyCommand.register(event.getDispatcher());
         ToggleChatMorphName.register(event.getDispatcher());
@@ -468,7 +468,7 @@ public class ModEvents2 {
 
                 int damagePowerMultiplier = cap.getLeapPower()/100;
 
-                AABB hitbox = event.getEntity().getBoundingBox().inflate(0.6D);
+                AABB hitbox = event.getEntity().getBoundingBox().inflate(0.8D);
 
                 List<LivingEntity> targets = event.getEntity().level().getEntitiesOfClass(
                         LivingEntity.class,
@@ -719,10 +719,12 @@ public class ModEvents2 {
         }
 
         if (persistent.getBoolean("warriorcats_events.starting_items")) {
+            if (player.isInvulnerable()) player.setInvulnerable(false);
             return;
         }
 
         if (player instanceof ServerPlayer sPlayer) {
+            sPlayer.setInvulnerable(true);
 
             CapabilityManager.attachmentProvider(sPlayer, ModAttachments.PLAYER_WCE_DATA, cap -> {
                 ModPackets.sendToPlayer(new S2CSyncClanDataPacket(cap), sPlayer);

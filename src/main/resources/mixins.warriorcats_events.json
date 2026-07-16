@@ -5,6 +5,7 @@
   "refmap": "mixins.warriorcats_events.refmap.json",
   "minVersion": "0.8",
   "client": [
+    "ChatRestrictionMixin",
     "ChatScreenMixin",
     "ClientChatPacketMixin",
     "EntityTeamColorMixin",

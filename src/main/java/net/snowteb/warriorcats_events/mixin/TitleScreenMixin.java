@@ -97,6 +97,10 @@ public class TitleScreenMixin {
             pGuiGraphics.drawString(font,
                     Component.literal("New WCE version available: " + UpdateCheck.latestVersion).withStyle(Style.EMPTY.withColor(0xfffb00))
                     , 2, 2, 0);
+        } else {
+            pGuiGraphics.drawString(font,
+                    Component.translatable("wce.translation_credits").withStyle(Style.EMPTY.withColor(0x5EA6FF))
+                    , 2, 2, 0);
         }
     }
 }

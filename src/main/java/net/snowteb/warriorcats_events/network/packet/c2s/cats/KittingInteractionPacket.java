@@ -15,7 +15,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.WCEPlayerData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
 
@@ -79,8 +79,10 @@ public class KittingInteractionPacket {
 //            }
 
             if (kittingCooldown > 0) {
-                Component name = cat.hasCustomName() ? cat.getCustomName() : Component.literal("This cat");
-                player.sendSystemMessage(Component.empty().append(name.copy().withStyle(ChatFormatting.GRAY)).append(Component.literal(" already had kits recently!").withStyle(ChatFormatting.GRAY)));
+                Component name = cat.hasCustomName() ? cat.getCustomName() : Component.translatable("generic.this_cat");
+                player.sendSystemMessage(Component.translatable("generic.cat_had_kits_recently",
+                                name)
+                        .withStyle(ChatFormatting.GRAY));
                 return;
             }
 
@@ -106,13 +108,12 @@ public class KittingInteractionPacket {
             level.sendParticles(ParticleTypes.HEART, cat.getX(), cat.getY(), cat.getZ(),
                     3, 0.2f,0.2f,0.2f,0.2f);
             player.sendSystemMessage(
-                    Component.empty()
-                            .append(Component.literal(morphName).withStyle(ChatFormatting.GOLD))
-                            .append(Component.literal(" and ").withStyle(ChatFormatting.WHITE))
-                            .append(cat.hasCustomName()
+                    Component.translatable("generic.kits_brought_to_world",
+                            Component.literal(morphName).withStyle(ChatFormatting.GOLD),
+                            cat.hasCustomName()
                                     ? cat.getCustomName().copy().withStyle(ChatFormatting.GOLD)
-                                    : Component.literal("this cat").withStyle(ChatFormatting.WHITE))
-                            .append(Component.literal(" have brought kits to the world!").withStyle(ChatFormatting.WHITE))
+                                    : Component.translatable("generic.this_cat").withStyle(ChatFormatting.WHITE)
+                            )
             );
 
         });

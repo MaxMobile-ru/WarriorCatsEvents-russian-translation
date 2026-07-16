@@ -49,8 +49,8 @@ public class MossBedRenderer implements BlockEntityRenderer<NestBlockEntity> {
         Matrix4f matrix = pPoseStack.last().pose();
 
         Component occupiedText = pBlockEntity.getAssignedUUID().equals(ClanData.EMPTY_UUID) ?
-                Component.literal("Free").withStyle(ChatFormatting.GREEN)
-                : Component.literal("Occupied").withStyle(ChatFormatting.GOLD);
+                Component.translatable("blockentity.nestblock.free").withStyle(ChatFormatting.GREEN)
+                : Component.translatable("blockentity.nestblock.occupied").withStyle(ChatFormatting.GOLD);
         String text = pBlockEntity.getCatName();
 
         float x = -font.width(text) / 2f;

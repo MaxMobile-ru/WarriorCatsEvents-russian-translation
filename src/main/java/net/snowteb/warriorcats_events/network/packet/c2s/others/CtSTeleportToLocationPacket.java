@@ -129,9 +129,9 @@ public class CtSTeleportToLocationPacket {
                 player.getInventory().add(new ItemStack(ModItems.CLAWS.get()));
                 player.getInventory().add(new ItemStack(ModItems.WHISKERS.get()));
                 player.getInventory().add(new ItemStack(Items.COD));
-                player.sendSystemMessage(Component.literal("You have received your own [Claws] and [A Warrior's Guide]!").withStyle(ChatFormatting.YELLOW));
-                player.sendSystemMessage(Component.literal("Get support and stay tuned for future updates: ").append(
-                        Component.literal("[Discord]")
+                player.sendSystemMessage(Component.translatable("wce.received_claws_and_guide").withStyle(ChatFormatting.YELLOW));
+                player.sendSystemMessage(Component.translatable("wce.get_support").append(
+                        Component.literal(" [Discord]")
                                 .withStyle(style -> style
                                         .withColor(0x579dff)
                                         .withUnderlined(true)
@@ -139,8 +139,8 @@ public class CtSTeleportToLocationPacket {
                                 )
                 ));
 
-                player.sendSystemMessage(Component.literal("If you ever feel lost, you can always check the ").append(
-                        Component.literal("[Wiki]")
+                player.sendSystemMessage(Component.translatable("wce.wiki_link").append(
+                        Component.literal(" [Wiki]")
                                 .withStyle(style -> style
                                         .withColor(0xfc8e4a)
                                         .withUnderlined(true)
@@ -151,7 +151,7 @@ public class CtSTeleportToLocationPacket {
                 );
 
                 player.sendSystemMessage(Component.literal(""));
-                player.sendSystemMessage(Component.literal("Your journey begins now...")
+                player.sendSystemMessage(Component.translatable("wce.journey_begins")
                         .withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
 
 
@@ -249,8 +249,6 @@ public class CtSTeleportToLocationPacket {
 
         BlockPos origin = player.blockPosition();
 
-        player.sendSystemMessage(Component.literal("Teleporting...").withStyle(ChatFormatting.DARK_GRAY));
-
         WarriorCatsEvents.singleThreadExecutor.execute(() -> {
             Optional<BlockPos> optional = findBiome(level, origin, biome, 4000);
             level.getServer().execute(() -> optional.ifPresentOrElse(
@@ -259,7 +257,7 @@ public class CtSTeleportToLocationPacket {
                         teleportPlayer(player, pos);
                         summonParticles(level, player);
                     },
-                    () -> player.sendSystemMessage(Component.literal("Couldn't find a nearby location.").withStyle(ChatFormatting.RED))
+                    () -> player.sendSystemMessage(Component.translatable("wce.no_nearby_location").withStyle(ChatFormatting.RED))
             ));
         });
 

@@ -57,11 +57,6 @@ public class ModBlockEntities {
                             .build(null)
             );
 
-    public static final RegistryObject<BlockEntityType<StoneCraftingTableBlockEntity>> STONE_TABLE =
-            BLOCK_ENTITIES.register("stone_table", () ->
-                    BlockEntityType.Builder.of(StoneCraftingTableBlockEntity::new,
-                            ModBlocks.STONE_CRAFTING_TABLE.get()).build(null)
-            );
 
     public static final RegistryObject<BlockEntityType<TreeStumpBlockEntity>> TREE_STUMP =
             BLOCK_ENTITIES.register("tree_stump", () ->
@@ -99,6 +94,12 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("lizard_egg", () ->
                     BlockEntityType.Builder.of(LizardEggBlockEntity::new,
                             ModBlocks.LIZARD_EGG_BLOCK.get()).build(null)
+            );
+
+    public static final RegistryObject<BlockEntityType<HerbMixingRockBlockEntity>> HERB_MIXING_ROCK =
+            BLOCK_ENTITIES.register("herb_mixing_rock", () ->
+                    BlockEntityType.Builder.of(HerbMixingRockBlockEntity::new,
+                            ModBlocks.HERB_MIXING_ROCK.get()).build(null)
             );
 
     public static void register(IEventBus eventBus) {

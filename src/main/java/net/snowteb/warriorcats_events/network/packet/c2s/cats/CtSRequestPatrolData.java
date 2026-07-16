@@ -9,7 +9,7 @@ import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.ClanData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.s2c.cats.StCOpenPatrolScreenPacket;
 
@@ -48,7 +48,7 @@ public class CtSRequestPatrolData {
                     .map(WCEPlayerData::getCurrentClanUUID).orElse(ClanData.EMPTY_UUID);
 
             if (clanUUID.equals(ClanData.EMPTY_UUID)) {
-                player.sendSystemMessage(Component.literal("You are not in a clan.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.RED));
                 return;
             }
 

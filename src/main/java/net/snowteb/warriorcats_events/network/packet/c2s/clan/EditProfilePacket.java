@@ -3,12 +3,9 @@ package net.snowteb.warriorcats_events.network.packet.c2s.clan;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.network.NetworkEvent;
-import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.clan.WCEPlayerDataUtils;
 import tocraft.walkers.api.PlayerShape;
 
 import java.util.function.Supplier;
@@ -55,7 +52,7 @@ public class EditProfilePacket {
                     player.sendSystemMessage(Component.literal("Invalid key provided."));
                 }
 
-                PlayerShape.updateShapes(player, cap.createMorph(player, player.serverLevel()));
+                PlayerShape.updateShapes(player, WCEPlayerDataUtils.createShape(player, player.serverLevel()));
             });
 
 

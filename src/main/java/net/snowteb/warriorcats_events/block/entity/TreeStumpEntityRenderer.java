@@ -29,16 +29,7 @@ public class TreeStumpEntityRenderer implements BlockEntityRenderer<TreeStumpBlo
         Font font = mc.font;
 
         if (mc.player == null) return;
-//        if (!mc.player.isShiftKeyDown()) return;
         if (mc.player.distanceToSqr(pBlockEntity.getBlockPos().getCenter()) > 3*3) return;
-//        HitResult hit = mc.hitResult;
-//
-//        if (!(hit instanceof BlockHitResult blockHitResult)) return;
-//        Vec3 hitPos = blockHitResult.getLocation();
-//        AABB box = new AABB(pBlockEntity.getBlockPos())
-//                .inflate(0.6);
-//
-//        if (!box.contains(hitPos)) return;
 
         String clanName = pBlockEntity.getOwnerClanName();
 
@@ -56,7 +47,8 @@ public class TreeStumpEntityRenderer implements BlockEntityRenderer<TreeStumpBlo
 
         Matrix4f matrix = pPoseStack.last().pose();
 
-        Component name = Component.literal(clanName + " territory").withStyle(Style.EMPTY.withColor(clanColor));
+        Component name1 = Component.translatable("blockentity.clan.clanterritory", clanName);
+        Component name = name1.copy().withStyle(Style.EMPTY.withColor(clanColor));
         String territoryName = pBlockEntity.getTerritoryName();
 
         String text = name.getString();
@@ -69,7 +61,7 @@ public class TreeStumpEntityRenderer implements BlockEntityRenderer<TreeStumpBlo
             isOnCooldown = true;
             toReclaimText = Component.literal(timeToReclaim/20 + "s").withStyle(ChatFormatting.YELLOW);
         } else {
-            toReclaimText = Component.literal("Hold shift to remark scent").withStyle(ChatFormatting.GRAY);
+            toReclaimText = Component.translatable("blockentity.tree_stump.hold_shift").withStyle(ChatFormatting.GRAY);
         }
 
         int progressToClaim = pBlockEntity.getProgressToReclaim();

@@ -1,7 +1,9 @@
 package net.snowteb.warriorcats_events.managers;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.HashMap;
@@ -34,7 +36,7 @@ public class CarryPlayerRequestManager {
         if (request.tick()) {
             requests.remove(player.getUUID());
             player.sendSystemMessage(
-                    Component.literal("The request has expired").withStyle(ChatFormatting.GRAY)
+                    Component.translatable("managers.request_expired").withStyle(ChatFormatting.GRAY)
             );
         }
     }
@@ -56,6 +58,55 @@ public class CarryPlayerRequestManager {
             return ticksLeft <= 0;
         }
 
+    }
+
+    public static Component getMessage() {
+        return Component.empty()
+                .append(
+                        Component.translatable("commands.button.accept")
+                                .withStyle(style -> style
+                                        .withColor(ChatFormatting.GREEN)
+                                        .withItalic(true)
+                                        .withUnderlined(true)
+                                        .withClickEvent(
+                                                new ClickEvent(
+                                                        ClickEvent.Action.RUN_COMMAND,
+                                                        "/wce carryRequest accept"
+                                                )
+                                        )
+                                        .withHoverEvent(
+                                                new HoverEvent(
+                                                        HoverEvent.Action.SHOW_TEXT,
+                                                        Component.translatable("managers.accept_carry_tip")
+                                                                .withStyle(ChatFormatting.GREEN)
+                                                )
+                                        )
+                                )
+                )
+
+                .append("       ")
+
+                .append(
+                        Component.translatable("commands.button.deny")
+                                .withStyle(style -> style
+                                        .withColor(ChatFormatting.RED)
+                                        .withItalic(true)
+                                        .withUnderlined(true)
+                                        .withClickEvent(
+                                                new ClickEvent(
+                                                        ClickEvent.Action.RUN_COMMAND,
+                                                        "/wce carryRequest deny"
+                                                )
+                                        )
+                                        .withHoverEvent(
+                                                new HoverEvent(
+                                                        HoverEvent.Action.SHOW_TEXT,
+                                                        Component.translatable("managers.deny_carry_tip")
+                                                                .withStyle(ChatFormatting.RED)
+                                                )
+                                        )
+                                )
+                );
     }
 
 }

@@ -71,7 +71,7 @@ public class WaterPacket {
 
             } else {
 
-                player.displayClientMessage(Component.literal("That's not water!").withStyle(ChatFormatting.RED), true);
+                player.displayClientMessage(Component.translatable("generic.not_water").withStyle(ChatFormatting.RED), true);
                 player.getCapability(PlayerThirstProvider.PLAYER_THIRST).ifPresent(thirst -> {
                     ModPackets.sendToPlayer(new ThirstDataSyncStCPacket(thirst.getThirst()), player);
                 });
@@ -248,7 +248,7 @@ public class WaterPacket {
                 if (thirstLevel >= 20f) return;
 
                 if (mossBall.getWater() <= 0) {
-                    player.displayClientMessage(Component.literal("This doesn't have water").withStyle(ChatFormatting.GRAY), true);
+                    player.displayClientMessage(Component.translatable("generic.doesnt_have_water").withStyle(ChatFormatting.GRAY), true);
                     return;
                 }
 

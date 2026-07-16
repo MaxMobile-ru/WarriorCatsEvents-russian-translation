@@ -89,8 +89,8 @@
     {
       "type": "patchouli:crafting",
       "title": "Cat Collar",
-      "recipe": "warriorcats_events:black_cat_collar",
-      "text": "Collar + 1 Bell = Collar with bell$(br)Collar + 1 Iron ingot = Collar with spikes$(br)Collar + 1 Glowstone Dust/Glowshroom/Glowberry = Glowing Collar$(br)"
+      "recipe": "warriorcats_events:cat_collar",
+      "text": "$(br)Dyeable like leather armors. $(br)Collar + 1 Bell = Collar with bell$(br)Collar + 1 Iron ingot = Collar with spikes$(br)Collar + 1 Glowstone Dust/Glowshroom/Glowberry = Glowing Collar$(br)"
     },
     {
       "type": "patchouli:crafting",

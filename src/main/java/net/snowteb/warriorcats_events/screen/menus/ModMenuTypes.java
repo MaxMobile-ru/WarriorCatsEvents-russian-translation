@@ -26,6 +26,8 @@ public class ModMenuTypes {
     public static final RegistryObject<MenuType<WCatMenu>> WCAT_INVENTORY =
             registerMenuType("wcat_inventory", WCatMenu::new);
 
+    public static final RegistryObject<MenuType<HerbMixingMenu>> HERB_MIXING =
+            registerMenuType("herb_mixing_menu", HerbMixingMenu::new);
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>>
     registerMenuType(String name, IContainerFactory<T> factory) {

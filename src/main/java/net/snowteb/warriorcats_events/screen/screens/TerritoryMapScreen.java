@@ -44,7 +44,7 @@ public class TerritoryMapScreen extends Screen {
         int centerY = height / 2;
 
         clanList.clear();
-        clanList.add(Component.literal("- Clan List -"));
+        clanList.add(Component.translatable("screen.map.clanlist"));
         clanList.add(Component.empty());
         territoryMap.clear();
 
@@ -78,12 +78,12 @@ public class TerritoryMapScreen extends Screen {
 
         scaleSlider = new FloatSliderButton(centerX + 50, centerY - 110,
                 100, 20,
-                0.6f, 1.5f, 1f, "Scale");
+                0.6f, 1.5f, 1f, Component.translatable("screen.map.scale").getString());
 
         backButton = new GradientButton(
                 centerX - 150, centerY + 75,
                 50, 15,
-                Component.literal("Return"),
+                Component.translatable("screen.map.return"),
                 btn -> {
                     this.onClose();
                 }, ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/empty.png"),
@@ -175,7 +175,7 @@ public class TerritoryMapScreen extends Screen {
                     0xbb008888);
             pGuiGraphics.renderOutline(0 - 2, 0 - 2, 4, 4, 0xbbbb0000);
             pGuiGraphics.pose().scale(0.5f, 0.5f, 0.5f);
-            pGuiGraphics.drawString(this.font, "You are here", 0, -8, 0xFFFFFFFF);
+            pGuiGraphics.drawString(this.font, Component.translatable("screen.patrol.you_are_here"), 0, -8, 0xFFFFFFFF);
 
             pGuiGraphics.pose().popPose();
 
@@ -194,7 +194,7 @@ public class TerritoryMapScreen extends Screen {
         pGuiGraphics.pose().translate(centerX - 150, centerY - 110, 0);
         float scale = 1.2f;
         pGuiGraphics.pose().scale(scale, scale, scale);
-        pGuiGraphics.drawString(this.font, "Territory Map", 0, 0, 0xFFFFFFFF);
+        pGuiGraphics.drawString(this.font, Component.translatable("screen.map"), 0, 0, 0xFFFFFFFF);
 
         pGuiGraphics.pose().popPose();
 
@@ -204,7 +204,7 @@ public class TerritoryMapScreen extends Screen {
 
         boolean shouldShowList = pMouseX > centerX - 62 && pMouseX < centerX - 12
                                  && pMouseY > centerY - 113 && pMouseY < centerY - 97;
-        pGuiGraphics.renderTooltip(this.font, Component.literal("Clan List"), centerX - 70, centerY - 97);
+        pGuiGraphics.renderTooltip(this.font, Component.translatable("screen.map.clanlist_u"), centerX - 70, centerY - 97);
 
         pGuiGraphics.pose().translate(centerX - 70, centerY - 97, 0);
         float tooltipScale = 0.8f;

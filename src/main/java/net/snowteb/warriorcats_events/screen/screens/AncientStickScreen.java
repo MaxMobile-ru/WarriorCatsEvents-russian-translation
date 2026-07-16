@@ -9,7 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.entity.custom.EagleEntity;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.c2s.cats.CommandCatsPacket;
 import net.snowteb.warriorcats_events.network.packet.c2s.others.CallEaglesPacket;
@@ -68,7 +68,7 @@ public class AncientStickScreen extends Screen {
                 100,40
         );
         pGuiGraphics.drawCenteredString(Minecraft.getInstance().font,
-                "Available Cats",
+                Component.translatable("screen.ancientstick.available_cats"),
                 centerx, 5, 0xFFFFFF);
 
         int lessWidth1 = 0;
@@ -85,8 +85,10 @@ public class AncientStickScreen extends Screen {
 
         pGuiGraphics.renderOutline(9,139, 118 - lessWidth2, 82, 0xFFF2AE11);
 
-        pGuiGraphics.drawString(Minecraft.getInstance().font, "Clanmates in range", 10, 15, 0xFFFFFF);
-        pGuiGraphics.drawString(Minecraft.getInstance().font, "Clanmates selected", 10, 125, ChatFormatting.GOLD.getColor());
+        pGuiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("screen.ancientstick.clanmates_in_range"),
+                10, 15, 0xFFFFFF);
+        pGuiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("screen.ancientstick.clanmates_selected"),
+                10, 125, ChatFormatting.GOLD.getColor());
 
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
 
@@ -95,11 +97,10 @@ public class AncientStickScreen extends Screen {
 //                    "No specific cats selected",
 //                    centerx, centery + 60, 0xFFFF0000);
 
-            String textString = "No specific cats have been selected";
-            Component text = Component.literal(textString).withStyle(ChatFormatting.RED);
+            Component text = Component.translatable("screen.ancientstick.no_cats_selected").withStyle(ChatFormatting.RED);
 
             pGuiGraphics.renderTooltip(Minecraft.getInstance().font,
-                    text, (int) (centerx - Minecraft.getInstance().font.width(textString)/1.8), centery + 60);
+                    text, (int) (centerx - Minecraft.getInstance().font.width(text)/1.8), centery + 60);
         }
 
         if (shouldShowAllCats) pGuiGraphics.renderTooltip(Minecraft.getInstance().font, catListNames,
@@ -162,7 +163,7 @@ public class AncientStickScreen extends Screen {
         }
 
         setAllToFollow = Button.builder(
-                Component.literal("Call all to follow"),
+                Component.translatable("screen.ancientstick.follow"),
                 btn -> {
                     this.onClose();
                     ModPackets.sendToServer(new CommandCatsPacket(idsInRange, catsScrollListSelected.getSelectedIds(), "all", "follow"));
@@ -170,7 +171,7 @@ public class AncientStickScreen extends Screen {
         ).bounds(this.width - 110, 10, 100, 20).build();
 
         setAllToStay = Button.builder(
-                Component.literal("Call all to stay"),
+                Component.translatable("screen.ancientstick.stay"),
                 btn -> {
                     this.onClose();
                     ModPackets.sendToServer(new CommandCatsPacket(idsInRange, catsScrollListSelected.getSelectedIds(), "all", "stay"));
@@ -178,7 +179,7 @@ public class AncientStickScreen extends Screen {
         ).bounds(this.width - 110, 35, 100, 20).build();
 
         dismissAll = Button.builder(
-                Component.literal("Dismiss all"),
+                Component.translatable("screen.ancientstick.dismiss"),
                 btn -> {
                     this.onClose();
                     ModPackets.sendToServer(new CommandCatsPacket(idsInRange, catsScrollListSelected.getSelectedIds(), "all", "wander"));
@@ -189,7 +190,7 @@ public class AncientStickScreen extends Screen {
 
 
         setSpecificToFollow = Button.builder(
-                Component.literal("Call selected to follow"),
+                Component.translatable("screen.ancientstick.follow_selected"),
                 btn -> {
                     if (!catsScrollListSelected.getSelectedIds().isEmpty()) {
                         this.onClose();
@@ -203,7 +204,7 @@ public class AncientStickScreen extends Screen {
         ).bounds(this.width - 140, 10 + 120, 130, 20).build();
 
         setSpecificToStay = Button.builder(
-                Component.literal("Call selected to stay"),
+                Component.translatable("screen.ancientstick.stay_selected"),
                 btn -> {
                     if (!catsScrollListSelected.getSelectedIds().isEmpty()) {
                         this.onClose();
@@ -217,7 +218,7 @@ public class AncientStickScreen extends Screen {
         ).bounds(this.width - 140, 35 + 120, 130, 20).build();
 
         dismissSpecific = Button.builder(
-                Component.literal("Dismiss selected"),
+                Component.translatable("screen.ancientstick.dismiss_selected"),
                 btn -> {
                     if (!catsScrollListSelected.getSelectedIds().isEmpty()) {
                         this.onClose();
@@ -231,15 +232,15 @@ public class AncientStickScreen extends Screen {
         ).bounds(this.width - 140, 60 + 120, 130, 20).build();
 
 
-        String eaglesText;
+        Component eaglesText;
         if (eaglesInRange.size() > 1) {
-            eaglesText = "Call Eagles";
+            eaglesText = Component.translatable("screen.ancientstick.call_eagles");
         } else {
-            eaglesText = "Call Eagle";
+            eaglesText = Component.translatable("screen.ancientstick.call_eagle");
         }
 
         callEagles = Button.builder(
-                Component.literal(eaglesText),
+                eaglesText,
                 btn -> {
                     if (!eaglesInRange.isEmpty()) {
                         this.onClose();

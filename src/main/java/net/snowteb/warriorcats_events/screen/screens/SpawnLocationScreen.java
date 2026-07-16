@@ -41,6 +41,7 @@ public class SpawnLocationScreen extends Screen {
 
     public SpawnLocationScreen() {
         super(Component.literal("Spawn Location"));
+        menuX = 500;
     }
 
 
@@ -79,37 +80,37 @@ public class SpawnLocationScreen extends Screen {
         pGuiGraphics.pose().translate(menuX, 0, 0);
 
         pGuiGraphics.blit(WCEClient.WCE_TITLE,
-                centerX - 200 - this.width,
+                centerX - 250 - this.width,
                 centerY - 62, 0, 0,
                 250, 125,250,125);
 
         String morphName = ClientClanData.get().getMorphName();
-        String genderWord;
+        Component journeyText;
         int genderValue = ClientClanData.get().getGenderData();
 
         if (genderValue == 0) {
-            genderWord = "his";
+            journeyText = Component.translatable("screen.spawn.began_journey_male", morphName);
         } else if (genderValue == 1) {
-            genderWord = "her";
+            journeyText = Component.translatable("screen.spawn.began_journey_female", morphName);
         } else {
-            genderWord = "their";
+            journeyText = Component.translatable("screen.spawn.began_journey_their", morphName);
         }
 
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().translate(centerX, centerY - 35, 0);
         pGuiGraphics.pose().scale(1.2f, 1.2f, 1.2f);
         pGuiGraphics.drawCenteredString(Minecraft.getInstance().font,
-                morphName + " began " + genderWord + " journey at...",
+                journeyText,
                 0, 0, 0xFFFFFFFF);
         pGuiGraphics.pose().popPose();
 
         if (textCooldown > 0) {
-            pGuiGraphics.drawString(Minecraft.getInstance().font, "Some fields are empty",
+            pGuiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("screen.spawn.fields_empty"),
                     centerX - 55, centerY + 75, 0xFFFF0000);
         }
 
         if (somewhereTooltip) pGuiGraphics.renderTooltip(Minecraft.getInstance().font,
-                Component.literal("This option wont change your current location.")
+                Component.translatable("screen.spawn.default_loc_tip")
                         .withStyle(ChatFormatting.GRAY)
                 , pMouseX, pMouseY);
 
@@ -143,7 +144,6 @@ public class SpawnLocationScreen extends Screen {
 
     @Override
     protected void init() {
-        menuX = 500;
 
         int centerX = this.width / 2;
         int centerY = this.height / 2;
@@ -153,47 +153,47 @@ public class SpawnLocationScreen extends Screen {
 
         somewhereButton = new ToggleButton(
                 centerX - 230 + offsetX, centerY - 20 + offsetY, 80, 20,
-                "Somewhere",
+                Component.translatable("screen.spawn.somewhere").getString(),
                 btn -> selectLocation(somewhereButton)
         );
         taigaButton = new ToggleButton(
                 centerX - 145 + offsetX, centerY - 20 + offsetY, 80, 20,
-                "Taiga",
+                Component.translatable("biome.minecraft.taiga").getString(),
                 btn -> selectLocation(taigaButton)
         );
         plainsButton = new ToggleButton(
                 centerX - 60 + offsetX, centerY - 20 + offsetY, 80, 20,
-                "Plains",
+                Component.translatable("biome.minecraft.plains").getString(),
                 btn -> selectLocation(plainsButton)
         );
         savannahButton = new ToggleButton(
                 centerX - 230 + offsetX, centerY + 5 + offsetY, 80, 20,
-                "Savannah",
+                Component.translatable("biome.minecraft.savanna").getString(),
                 btn -> selectLocation(savannahButton)
         );
         forestButton = new ToggleButton(
                 centerX - 145 + offsetX, centerY + 5 + offsetY, 80, 20,
-                "Forest",
+                Component.translatable("biome.minecraft.forest").getString(),
                 btn -> selectLocation(forestButton)
         );
         taigaVillageButton = new ToggleButton(
                 centerX - 60 + offsetX, centerY + 5 + offsetY, 80, 20,
-                "Taiga Village",
+                Component.translatable("screen.spawn.taiga_village").getString(),
                 btn -> selectLocation(taigaVillageButton)
         );
         plainsVillageButton = new ToggleButton(
                 centerX - 230 + offsetX, centerY + 30 + offsetY, 80, 20,
-                "Plains Village",
+                Component.translatable("screen.spawn.plains_village").getString(),
                 btn -> selectLocation(plainsVillageButton)
         );
         savannahVillageButton = new ToggleButton(
                 centerX - 145 + offsetX, centerY + 30 + offsetY, 80, 20,
-                "Savannah Village",
+                Component.translatable("screen.spawn.savannah_village").getString(),
                 btn -> selectLocation(savannahVillageButton)
         );
         junglePyramidButton = new ToggleButton(
                 centerX - 60 + offsetX, centerY + 30 + offsetY, 80, 20,
-                "Jungle Pyramid",
+                Component.translatable("screen.spawn.jungle_pyramid").getString(),
                 btn -> selectLocation(junglePyramidButton)
         );
 
@@ -209,7 +209,7 @@ public class SpawnLocationScreen extends Screen {
 
 
         saveButton = Button.builder(
-                Component.literal("Finish"),
+                Component.translatable("screen.spawn.finish"),
                 btn -> onFinish()
         ).bounds(centerX - 40, centerY + 85, 80, 20).build();
 
@@ -284,7 +284,7 @@ public class SpawnLocationScreen extends Screen {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
             if (locationValue != 0) {
-                player.sendSystemMessage(Component.literal("Teleporting! This might take a little.")
+                player.sendSystemMessage(Component.translatable("screen.spawn.teleporting")
                         .withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
                 player.sendSystemMessage(Component.literal(""));
             }

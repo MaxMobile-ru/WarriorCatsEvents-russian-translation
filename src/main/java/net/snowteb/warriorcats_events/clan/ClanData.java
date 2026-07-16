@@ -11,15 +11,15 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.block.entity.TreeStumpBlockEntity;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.s2c.clan.S2CSyncClanDataPacket;
 import net.snowteb.warriorcats_events.network.packet.s2c.clan.SyncTerritoryToClients;
@@ -105,42 +105,43 @@ public class ClanData extends SavedData {
             ClanCat clanCat = new ClanCat();
 
             clanCat.catUUID = cat.getUUID();
-            clanCat.catGender = cat.getGender() == 0 ? "Tom-cat" : "She-cat";
-            clanCat.catName = cat.hasCustomName() ? cat.getCustomName() : Component.literal("Unnamed");
+            clanCat.catGender = cat.getGender() == 0 ? Component.translatable("generic.wcat.tomcat").getString()
+                    : Component.translatable("generic.wcat.shecat").getString();
+            clanCat.catName = cat.hasCustomName() ? cat.getCustomName() : Component.translatable("generic.wcat.unnamedcat");
             clanCat.catVariant = cat.getVariant();
-            clanCat.catAge = cat.getAge() < 0 ?
-                    Component.literal(String.format("%.2f moons", cat.getAgeInMoons()))
-                    : Component.literal("Fully grown");
+            clanCat.catAge = cat.getAge() < 0
+                    ? Component.translatable("generic.wcat.age_moons",
+                    String.format("%.2f", cat.getAgeInMoons()))
+                    : Component.translatable("generic.wcat.fully_grown");
+
             clanCat.catRank = cat.getRank().name();
 
 
             clanCat.onGeneticalSkin = cat.isOnGeneticalSkin();
-            clanCat.genetics = cat.getGenetics();
-            clanCat.chimeraGenetics = cat.getChimeraGenetics();
-            clanCat.variants = cat.getGenVariants();
-            clanCat.chimeraVariants = cat.getChimeraGenVariants();
+            clanCat.genetics = cat.getGeneticsModule().getGenetics();
+            clanCat.chimeraGenetics = cat.getGeneticsModule().getChimeraGenetics();
+            clanCat.variants = cat.getGeneticsModule().getGenVariants();
+            clanCat.chimeraVariants = cat.getGeneticsModule().getChimeraGenVariants();
 
             Component parentsText;
             Component catMother = cat.getMother();
             Component catFather = cat.getFather();
 
             if (catMother.getString().equals("None") && catFather.getString().equals("None")) {
-                parentsText = Component.literal("Parents: Parents unknown");
+                parentsText = Component.translatable("generic.wcat.parents_unknown");
             } else {
                 if (catMother.getString().equals("None") && !catFather.getString().equals("None")) {
-                    parentsText = Component.empty()
-                            .append(Component.literal("Parents: ").withStyle(ChatFormatting.WHITE))
-                            .append(catFather.copy().withStyle(ChatFormatting.AQUA));
+                    parentsText = Component.translatable("generic.wcat.parents_1",
+                            catFather.copy().withStyle(ChatFormatting.AQUA));
+
                 } else if (!catMother.getString().equals("None") && catFather.getString().equals("None")) {
-                    parentsText = Component.empty()
-                            .append(Component.literal("Parents: ").withStyle(ChatFormatting.WHITE))
-                            .append(catMother.copy().withStyle(ChatFormatting.AQUA));
+                    parentsText = Component.translatable("generic.wcat.parents_1",
+                            catMother.copy().withStyle(ChatFormatting.AQUA));
                 } else {
-                    parentsText = Component.empty()
-                            .append(Component.literal("Parents: ").withStyle(ChatFormatting.WHITE))
-                            .append(catMother.copy().withStyle(ChatFormatting.AQUA))
-                            .append(Component.literal(" & ").withStyle(ChatFormatting.WHITE))
-                            .append(catFather.copy().withStyle(ChatFormatting.AQUA));
+                    parentsText = Component.translatable("generic.wcat.parents_2",
+                            catMother.copy().withStyle(ChatFormatting.AQUA),
+                            catFather.copy().withStyle(ChatFormatting.AQUA)
+                            );
                 }
             }
 
@@ -186,8 +187,8 @@ public class ClanData extends SavedData {
                 geneticsTag.putString("EyesAnomaly", genetics.eyesAnomaly);
                 geneticsTag.putString("Silver", genetics.silver);
 
-                geneticsTag.putInt("Rufousing", genetics.rufousing);
-                geneticsTag.putInt("BlueRufousing", genetics.blueRufousing);
+                geneticsTag.putInt("Rufousing", variants.rufousingVariant);
+                geneticsTag.putInt("BlueRufousing", variants.blueRufousingVariant);
                 geneticsTag.putInt("OrangeBaseVariant", variants.orangeVar);
                 geneticsTag.putInt("WhiteRatioVariant", variants.whiteVar);
                 geneticsTag.putInt("AlbinoVariant", variants.albinoVar);
@@ -199,6 +200,7 @@ public class ClanData extends SavedData {
                 geneticsTag.putInt("Noise", variants.noise);
                 geneticsTag.putFloat("Size", variants.size);
                 geneticsTag.putFloat("Scars", variants.scars);
+                geneticsTag.putInt("SkinColor", variants.skin_color);
 
                 geneticsTag.putString("BaseChimera", chimeraGenetics.base);
                 geneticsTag.putString("OrangeBaseChimera", chimeraGenetics.orangeBase);
@@ -208,8 +210,8 @@ public class ClanData extends SavedData {
                 geneticsTag.putString("AgoutiChimera", chimeraGenetics.agouti);
                 geneticsTag.putString("TabbyStripesChimera", chimeraGenetics.tabbyStripes);
 
-                geneticsTag.putInt("RufousingChimera", chimeraGenetics.rufousing);
-                geneticsTag.putInt("BlueRufousingChimera", chimeraGenetics.blueRufousing);
+                geneticsTag.putInt("RufousingChimera", chimeraVariants.rufousingVariant);
+                geneticsTag.putInt("BlueRufousingChimera", chimeraVariants.blueRufousingVariant);
                 geneticsTag.putInt("OrangeBaseVariantChimera", chimeraVariants.orangeVar);
                 geneticsTag.putInt("WhiteRatioVariantChimera", chimeraVariants.whiteVar);
                 geneticsTag.putInt("AlbinoVariantChimera", chimeraVariants.albinoVar);
@@ -264,9 +266,6 @@ public class ClanData extends SavedData {
                             geneticsTag.getString("TabbyStripes"),
                             geneticsTag.getString("EyesAnomaly"),
 
-                            geneticsTag.getInt("Rufousing"),
-                            geneticsTag.getInt("BlueRufousing"),
-                            geneticsTag.getInt("Noise"),
                             geneticsTag.getString("Chimera"),
                             geneticsTag.getString("Silver")
                     );
@@ -290,9 +289,6 @@ public class ClanData extends SavedData {
                             geneticsTag.getString("TabbyStripesChimera"),
                             geneticsTag.getString("EyesAnomalyChimera"),
 
-                            geneticsTag.getInt("RufousingChimera"),
-                            geneticsTag.getInt("BlueRufousingChimera"),
-                            geneticsTag.getInt("NoiseChimera"),
                             geneticsTag.getString("Chimera"),
                             geneticsTag.getString("SilverChimera")
                     );
@@ -316,6 +312,8 @@ public class ClanData extends SavedData {
                     cat.variants.size = geneticsTag.getFloat("Size");
                     cat.variants.silverVar = geneticsTag.getInt("SilverVariant");
                     cat.variants.scars = geneticsTag.getInt("Scars");
+                    cat.variants.skin_color = geneticsTag.getInt("SkinColor");
+
 
                     cat.chimeraVariants.orangeVar = geneticsTag.getInt("OrangeBaseVariantChimera");
                     cat.chimeraVariants.whiteVar = geneticsTag.getInt("WhiteRatioVariantChimera");
@@ -841,13 +839,17 @@ public class ClanData extends SavedData {
         Clan clan = getClan(clanUUID);
         if (clan == null) return false;
 
-        Component catLeftClanLog = Component.empty()
-                .append(cat.hasCustomName() ? cat.getCustomName().copy() : Component.literal("A Cat"))
-                .append(" has left ")
-                .append(Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
+//        Component catLeftClanLog = Component.empty()
+//                .append(cat.hasCustomName() ? cat.getCustomName().copy() : Component.literal("A Cat"))
+//                .append(" has left ")
+//                .append(Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
+
+        Component catLeftClanLog1 = Component.translatable("clan.cat_left_clan",
+                cat.hasCustomName() ? cat.getCustomName().copy() : Component.translatable("generic.catname"),
+                Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
 
         if (cat.level() instanceof ServerLevel serverLevel) {
-            this.registerLog(serverLevel, clan.clanUUID, catLeftClanLog);
+            this.registerLog(serverLevel, clan.clanUUID, catLeftClanLog1);
         }
 
         clan.clanCats.remove(cat.getUUID());
@@ -865,19 +867,23 @@ public class ClanData extends SavedData {
 
         clan.memberPerms.put(playerUUID, permissions);
 
-        Component playerJoinedLog = Component.empty()
-                .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.YELLOW))
-                .append(" has been made ")
-                .append(Component.literal(permissions.name()).withStyle(ChatFormatting.RED));
+//        Component playerJoinedLog = Component.empty()
+//                .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.YELLOW))
+//                .append(" has been made ")
+//                .append(Component.literal(permissions.name()).withStyle(ChatFormatting.RED));
 
-        this.registerLog(player.serverLevel().getServer().overworld(), clan.clanUUID, playerJoinedLog);
+        Component playerJoinedLog1 = Component.translatable("clan.member_perms",
+                Component.literal(player.getName().getString()).withStyle(ChatFormatting.YELLOW),
+                Component.literal(permissions.name()).withStyle(ChatFormatting.RED));
 
-        player.sendSystemMessage(
-                Component.empty()
-                        .append(Component.literal("You have been made ").withStyle(ChatFormatting.YELLOW))
-                        .append(Component.literal(permissions.name()).withStyle(ChatFormatting.RED))
-                        .append(" of ")
-                        .append(Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color))));
+        this.registerLog(player.serverLevel().getServer().overworld(), clan.clanUUID, playerJoinedLog1);
+
+        Component message = Component.translatable("clan.player_set_perms",
+                Component.literal(permissions.name()).withStyle(ChatFormatting.RED),
+                Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color))
+                );
+
+        player.sendSystemMessage(message);
 
         setDirty();
 
@@ -923,21 +929,17 @@ public class ClanData extends SavedData {
 
             ModPackets.sendToPlayer(new S2CSyncClanDataPacket(cap), player);
 
-            Component playerJoinedLog = Component.empty()
-                    .append(Component.literal(cap.getMorphName()).withStyle(ChatFormatting.AQUA))
-                    .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(")").withStyle(ChatFormatting.GRAY))
-                    .append(" has joined ")
-                    .append(Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)))
-                    .append("!");
+            Component playerJoinedLog =  Component.translatable("clan.player_joined_log",
+                    logFormattedPlayerName(player),
+                    Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color))
+            );
 
             this.registerLog(player.serverLevel().getServer().overworld(), clan.clanUUID, playerJoinedLog);
         });
-        player.sendSystemMessage(Component.empty()
-                .append("You now belong to ")
-                .append(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
+        Component message = Component.translatable("clan.client_clan_joined",
+                Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
 
+        player.sendSystemMessage(message);
 
 
 
@@ -973,17 +975,14 @@ public class ClanData extends SavedData {
 
             ModPackets.sendToPlayer(new S2CSyncClanDataPacket(cap), player);
 
-            Component playerLeftLog = Component.empty()
-                    .append(Component.literal(cap.getMorphName()).withStyle(ChatFormatting.AQUA))
-                    .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(")").withStyle(ChatFormatting.GRAY))
-                    .append(" has left ")
-                    .append(Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
+            Component playerLeftLog =  Component.translatable("clan.cat_left_clan",
+                    logFormattedPlayerName(player),
+                    Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color))
+            );
 
             this.registerLog(player.serverLevel().getServer().overworld(), clan.clanUUID, playerLeftLog);
         });
-        player.sendSystemMessage(Component.literal("You have been removed from your clan.").withStyle(ChatFormatting.YELLOW));
+        player.sendSystemMessage(Component.translatable("clan.client_clan_left").withStyle(ChatFormatting.YELLOW));
 
         if (clan.members.isEmpty()) {
             deleteClan(player.serverLevel().getServer().overworld(), clanUUID);
@@ -1017,16 +1016,10 @@ public class ClanData extends SavedData {
         UUID playerUUID = player.getUUID();
         if (!clan.members.containsKey(playerUUID)) return false;
 
-        String morphName = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
-                .map(WCEPlayerData::getMorphName).orElse(player.getName().getString());
-
-        Component playerRankChangeLog = Component.empty()
-                .append(Component.literal(morphName).withStyle(ChatFormatting.AQUA))
-                .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.GRAY))
-                .append(Component.literal(")").withStyle(ChatFormatting.GRAY))
-                .append(" has been made a ")
-                .append(Component.literal(newRank.name()).withStyle(ChatFormatting.GOLD));
+        Component playerRankChangeLog = Component.translatable("clan.player_changerank_log",
+                logFormattedPlayerName(player),
+                Component.literal(newRank.name()).withStyle(ChatFormatting.GOLD)
+                );
 
         this.registerLog(player.serverLevel().getServer().overworld(), clan.clanUUID, playerRankChangeLog);
 
@@ -1066,7 +1059,7 @@ public class ClanData extends SavedData {
                         if (clanUUID.equals(cap.getCurrentClanUUID())) {
                             cap.setCurrentClanUUID(EMPTY_UUID);
                             cap.setClanName("None");
-                            player.sendSystemMessage(Component.literal("You have been removed from your clan.").withStyle(ChatFormatting.YELLOW));
+                            player.sendSystemMessage(Component.translatable("clan.client_clan_left").withStyle(ChatFormatting.YELLOW));
                             ModPackets.sendToPlayer(new S2CSyncClanDataPacket(cap), player);
                         }
                     }
@@ -1439,6 +1432,18 @@ public class ClanData extends SavedData {
                 clanIterator.remove();
             }
         }
+    }
+
+
+    public static Component logFormattedPlayerName(Player player) {
+        String morphName = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
+                .map(WCEPlayerData::getMorphName).orElse("");
+
+        return Component.empty()
+                .append(Component.literal(morphName).withStyle(ChatFormatting.AQUA))
+                .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
+                .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.GRAY))
+                .append(Component.literal(")").withStyle(ChatFormatting.GRAY));
     }
 
 }

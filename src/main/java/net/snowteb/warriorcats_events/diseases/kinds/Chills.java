@@ -21,7 +21,7 @@ public class Chills extends Disease<Chills> {
     public <T extends LivingEntity> void onAdd(Diseaseable<T> tDiseaseable, boolean organic) {
 
         if (tDiseaseable.getEntity() instanceof ServerPlayer player) {
-            player.displayClientMessage(Component.literal("You got chills").withStyle(ChatFormatting.AQUA),
+            player.displayClientMessage(Component.translatable("managers.disease_got_chills").withStyle(ChatFormatting.AQUA),
                     false);
         }
 
@@ -64,7 +64,7 @@ public class Chills extends Disease<Chills> {
                 if (heal(ent)) {
                     if (isHealed() && ent instanceof ServerPlayer player) {
                         player.sendSystemMessage(
-                                Component.literal("You no longer have " + getType().getName().getString())
+                                Component.translatable("managers.disease_no_longer_has", getType().getName().getString())
                                         .withStyle(ChatFormatting.GREEN)
                         );
                     }
@@ -89,7 +89,7 @@ public class Chills extends Disease<Chills> {
                     this.shouldHeal = true;
                     if (entity instanceof ServerPlayer player) {
                         player.displayClientMessage(
-                                Component.literal("You start to feel calmer")
+                                Component.translatable("managers.disease_chills_feel_calmer")
                                         .withStyle(ChatFormatting.ITALIC)
                                         .withStyle(ChatFormatting.GRAY)
                                 , true);

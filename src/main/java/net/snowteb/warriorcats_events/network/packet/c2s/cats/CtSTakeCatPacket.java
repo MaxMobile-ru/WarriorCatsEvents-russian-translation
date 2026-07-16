@@ -1,7 +1,6 @@
 package net.snowteb.warriorcats_events.network.packet.c2s.cats;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -10,12 +9,8 @@ import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.ClanData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
-import net.snowteb.warriorcats_events.network.ModPackets;
-import net.snowteb.warriorcats_events.network.packet.s2c.cats.StCOpenPatrolScreenPacket;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -47,7 +42,7 @@ public class CtSTakeCatPacket {
                     .map(WCEPlayerData::getCurrentClanUUID).orElse(ClanData.EMPTY_UUID);
 
             if (clanUUID.equals(ClanData.EMPTY_UUID)) {
-                player.sendSystemMessage(Component.literal("You are not in a clan.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -59,7 +54,7 @@ public class CtSTakeCatPacket {
             }
 
             if (!data.canCommandWarriors(clan, player.getUUID())) {
-                player.sendSystemMessage(Component.literal("You need member permissions to take cats.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("clan.member_perms_requiered").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -76,21 +71,17 @@ public class CtSTakeCatPacket {
                 String morphName = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
                         .map(WCEPlayerData::getMorphName).orElse(player.getName().getString());
 
-                Component message = Component.empty()
-                        .append(Component.literal(morphName).withStyle(ChatFormatting.AQUA))
-                        .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal(")").withStyle(ChatFormatting.GRAY))
-                        .append(" has taken ")
-                        .append(cat.hasCustomName() ? cat.getCustomName().copy() : Component.literal("a cat"));
+                Component message = Component.translatable("clan.player_took_cat",
+                        ClanData.logFormattedPlayerName(player),
+                        cat.hasCustomName() ? cat.getCustomName().copy() : Component.translatable("generic.catname"));
+
                 cat.registerClanLog(message);
 
 
-                Component catName = cat.hasCustomName() ? cat.getCustomName() : Component.literal("This cat");
+                Component catName = cat.hasCustomName() ? cat.getCustomName() : Component.translatable("generic.catname");
 
-                player.displayClientMessage(Component.empty()
-                        .append(catName.copy())
-                        .append(" will now listen to you."), true);
+                player.displayClientMessage(Component.translatable("generic.cat_will_now_listen",
+                                catName), true);
             }
 
 

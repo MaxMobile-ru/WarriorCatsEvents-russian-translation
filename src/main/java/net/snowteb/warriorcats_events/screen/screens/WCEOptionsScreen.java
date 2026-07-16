@@ -9,8 +9,10 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FastColor;
+import net.snowteb.warriorcats_events.flappycat.FlappyCatScreen;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.c2s.skilltree.ReqSkillDataPacket;
+import net.snowteb.warriorcats_events.screen.screens.createmorph.CreateMorphScreen;
 import net.snowteb.warriorcats_events.screen.widgets.ButtonScrollList;
 import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
@@ -35,43 +37,46 @@ public class WCEOptionsScreen extends Screen {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player == null) return;
 
-        list.addButton("Profile", () -> {
+        list.addButton(Component.translatable("screen.options.profile"), () -> {
             player.connection.sendCommand("wce info profile");
-        }, "Open your character profile, change your gender, your bio, and see your current health status.");
-        list.addButton("Skill Tree", () -> {
+        }, Component.translatable("screen.options.profile.tip"));
+        list.addButton(Component.translatable("screen.options.skill_tree"), () -> {
             Minecraft.getInstance().setScreen(new SkillScreen());
             ModPackets.sendToServer(new ReqSkillDataPacket());
-        }, "Access the Skill Tree. Improve your skills and abilities.");
-        list.addButton("Edit Morph", () -> {
-            Minecraft.getInstance().setScreen(new CreateMorphGeneticsScreen(false));
-        }, "Create a new morph, edit your current morph, and manage your saved morphs.");
-        list.addButton("Edit Character", () -> {
+        }, Component.translatable("screen.options.skill_tree.tip"));
+        list.addButton(Component.translatable("screen.options.edit_morph"), () -> {
+            Minecraft.getInstance().setScreen(new CreateMorphScreen(false));
+        }, Component.translatable("screen.options.edit_morph.tip"));
+        list.addButton(Component.translatable("screen.options.info_setup"), () -> {
             player.connection.sendCommand("wce info setup");
-        }, "Edit your character name, gender, and age.");
-        list.addButton("Morph Pose", () -> {
+        }, Component.translatable("screen.options.info_setup.tip"));
+        list.addButton(Component.translatable("screen.options.morph_pose"), () -> {
             player.connection.sendCommand("wce info morphPose");
-        }, "Edit your character current pose.");
-        list.addButton("Manage Clan", () -> {
+        }, Component.translatable("screen.options.morph_pose.tip"));
+        list.addButton(Component.translatable("screen.options.manage_clan"), () -> {
             player.connection.sendCommand("wce clan manage");
-        }, "Manage your clan, change the name of your clan, and claim and unclaim territory.");
-        list.addButton("Territory Map", () -> {
+        }, Component.translatable("screen.options.manage_clan.tip"));
+        list.addButton(Component.translatable("screen.options.territory_map"), () -> {
             player.connection.sendCommand("wce clan map");
-        }, "See the territory map in the area you are.");
-        list.addButton("My Clan", () -> {
+        }, Component.translatable("screen.options.territory_map.tip"));
+        list.addButton(Component.translatable("screen.options.my_clan"), () -> {
             player.connection.sendCommand("wce clan");
-        }, "Open your clan screen. See the clan logs, see the members, and the clan profile.");
-        list.addButton("Clan List", () -> {
+        }, Component.translatable("screen.options.my_clan.tip"));
+        list.addButton(Component.translatable("screen.options.clan_list"), () -> {
             player.connection.sendCommand("wce clan list");
-        }, "See the clans that are currently in the server.");
-        list.addButton("Register Clan", () -> {
+        }, Component.translatable("screen.options.clan_list.tip"));
+        list.addButton(Component.translatable("screen.options.register_clan"), () -> {
             player.connection.sendCommand("wce clan register");
-        }, "Register a clan of your own.");
-        list.addButton("Changelog", () -> {
+        }, Component.translatable("screen.options.register_clan.tip"));
+        list.addButton(Component.translatable("screen.options.changelog"), () -> {
             Minecraft.getInstance().setScreen(new WCEChangelogScreen(this));
-        }, "See the latest Warrior Cats Events changelog.");
-        list.addButton("Config", () -> {
+        }, Component.translatable("screen.options.changelog.tip"));
+        list.addButton(Component.translatable("screen.options.config"), () -> {
             Minecraft.getInstance().setScreen(new WCEConfigScreen(this));
-        }, "Edit your client configuration.");
+        }, Component.translatable("screen.options.config.tip"));
+        list.addButton(Component.translatable("screen.options.flappycat"), () -> {
+            Minecraft.getInstance().setScreen(new FlappyCatScreen(this));
+        }, Component.translatable("screen.options.flappycat.tip"));
 
 
         list.setRenderSelection(false);
@@ -79,7 +84,7 @@ public class WCEOptionsScreen extends Screen {
         list.setLeftPos(0);
 
 
-        close = Button.builder(Component.literal("Close"), button -> {
+        close = Button.builder(Component.translatable("screen.options.close"), button -> {
             this.onClose();
         }).bounds(this.width - 65, this.height - 25, 60, 20)
                 .build();
@@ -105,7 +110,7 @@ public class WCEOptionsScreen extends Screen {
         float scale = 1.1f;
         pGuiGraphics.pose().translate(10, 5, 0);
         pGuiGraphics.pose().scale(scale, scale, scale);
-        pGuiGraphics.drawString(this.font, "Options", 0, 0, 0xFFaaaaaa);
+        pGuiGraphics.drawString(this.font, Component.translatable("key.warriorcats_events.options"), 0, 0, 0xFFaaaaaa);
         pGuiGraphics.pose().popPose();
 
         pGuiGraphics.enableScissor(0,0, (int) (120 + menuX),this.height);

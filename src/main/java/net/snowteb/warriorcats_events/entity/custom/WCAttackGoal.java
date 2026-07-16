@@ -10,6 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.level.block.Blocks;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
 /**
  * This is the same as BadgerAttackGoal, read that one to understand.

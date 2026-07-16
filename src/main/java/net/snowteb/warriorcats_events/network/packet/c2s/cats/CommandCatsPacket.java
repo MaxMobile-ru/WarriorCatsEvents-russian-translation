@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.WCEPlayerData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.sound.ModSounds;
 
@@ -100,7 +100,7 @@ public class CommandCatsPacket {
                     .toList();
 
             if (cats.isEmpty() && mode != WCatEntity.CatMode.WANDER) {
-                player.displayClientMessage(Component.literal("No clanmates in range.").withStyle(ChatFormatting.GRAY), true);
+                player.displayClientMessage(Component.translatable("generic.no_clanmates_in_range").withStyle(ChatFormatting.GRAY), true);
                 return;
             }
 
@@ -133,7 +133,7 @@ public class CommandCatsPacket {
                     .map(e -> (WCatEntity) e)
                     .toList();
             if (cats.isEmpty() && mode != WCatEntity.CatMode.WANDER) {
-                player.displayClientMessage(Component.literal("No clanmates in range.").withStyle(ChatFormatting.GRAY), true);
+                player.displayClientMessage(Component.translatable("generic.no_clanmates_in_range").withStyle(ChatFormatting.GRAY), true);
                 return;
             }
 
@@ -182,10 +182,11 @@ public class CommandCatsPacket {
             }
         }
 
-        player.displayClientMessage(Component.empty()
-                .append(Component.literal(String.valueOf(catsAffected)).withStyle(ChatFormatting.GOLD))
-                .append(Component.literal(" cats set to ").withStyle(ChatFormatting.GREEN))
-                .append(Component.literal(keyMode).withStyle(ChatFormatting.GREEN)),true
+        player.displayClientMessage(
+                Component.translatable("generic.cats_set_to",
+                        Component.literal(String.valueOf(catsAffected)).withStyle(ChatFormatting.GOLD),
+                        Component.literal(keyMode).withStyle(ChatFormatting.GREEN))
+                ,true
         );
 
     }

@@ -2,21 +2,13 @@ package net.snowteb.warriorcats_events.network.packet.c2s.others;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
-import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.effect.ModEffects;
-import net.snowteb.warriorcats_events.entity.custom.EagleEntity;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
-import tocraft.walkers.api.PlayerShape;
 
 import java.util.function.Supplier;
 

@@ -1,36 +1,15 @@
 package net.snowteb.warriorcats_events.network.packet.c2s.cats;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
-import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.entity.ModEntities;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
-import net.snowteb.warriorcats_events.item.ModItems;
-import net.snowteb.warriorcats_events.util.GeneticsForVariant;
-import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
-import java.util.UUID;
 import java.util.function.Supplier;
-
-import static net.snowteb.warriorcats_events.entity.custom.WCatEntity.Rank.KIT;
 
 public class CtSNameKitPacket {
     private final String kitPrefix;
@@ -81,6 +60,20 @@ public class CtSNameKitPacket {
                     kit.setPrefix(Component.literal(kitPrefix));
 
                     kit.setNameColor(kit.getRank());
+
+                    Component messageLog = Component.translatable("item.warriorcats_events.kit.kit_born",
+                            Component.literal(finalName).withStyle(ChatFormatting.GREEN),
+                            Component.literal("(").withStyle(ChatFormatting.GRAY)
+                                    .append(Component.literal(sPlayer.getName().getString()).withStyle(ChatFormatting.GRAY))
+                                    .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
+
+                    kit.registerClanLog(messageLog);
+
+                    sPlayer.sendSystemMessage(
+                            Component.translatable("item.warriorcats_events.kit.kit_born",
+                                    Component.literal(finalName).withStyle(ChatFormatting.GREEN),
+                                    Component.empty())
+                    );
 
                 }
 

@@ -19,7 +19,7 @@ import net.snowteb.warriorcats_events.diseases.Disease;
 import net.snowteb.warriorcats_events.diseases.DiseaseTypes;
 import net.snowteb.warriorcats_events.diseases.Diseaseable;
 import net.snowteb.warriorcats_events.effect.ModEffects;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.sound.ModSounds;
 import tocraft.walkers.api.PlayerShape;
@@ -114,7 +114,7 @@ public class BrokenPaw extends Disease<BrokenPaw> {
 
         if (isHealed() && entity instanceof ServerPlayer player) {
             player.sendSystemMessage(
-                    Component.literal("You no longer have a " + getType().getName().getString())
+                    Component.translatable("managers.disease_no_longer_has_a", getType().getName().getString())
                             .withStyle(ChatFormatting.GREEN)
             );
         }
@@ -164,7 +164,7 @@ public class BrokenPaw extends Disease<BrokenPaw> {
                 1f, 1f);
 
         if (entity instanceof ServerPlayer player) {
-            player.displayClientMessage(Component.literal("You have broken a bone!").withStyle(ChatFormatting.RED),
+            player.displayClientMessage(Component.translatable("managers.disease_broken_bone").withStyle(ChatFormatting.RED),
                     false);
             if (PlayerShape.getCurrentShape(player) instanceof WCatEntity cat) {
                 cat.setAnimIndex(10);
@@ -194,7 +194,7 @@ public class BrokenPaw extends Disease<BrokenPaw> {
     @Override
     public boolean allowClimb(Diseaseable<?> tDiseaseable) {
         if (tDiseaseable.getEntity() instanceof Player player) {
-            player.displayClientMessage(Component.literal("You can't climb with a broken paw!")
+            player.displayClientMessage(Component.translatable("managers.disease_cant_climb_broken_paw")
                     .withStyle(ChatFormatting.YELLOW), true);
             return false;
         }
@@ -204,7 +204,7 @@ public class BrokenPaw extends Disease<BrokenPaw> {
     @Override
     public boolean allowLeap(Diseaseable<?> tDiseaseable) {
         if (tDiseaseable.getEntity() instanceof Player player) {
-            player.displayClientMessage(Component.literal("You can't leap with a broken paw!")
+            player.displayClientMessage(Component.translatable("managers.disease_cant_leap_broken_paw")
                     .withStyle(ChatFormatting.YELLOW), true);
             return false;
         }

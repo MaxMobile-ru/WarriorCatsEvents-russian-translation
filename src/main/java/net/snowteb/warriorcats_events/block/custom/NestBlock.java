@@ -41,7 +41,7 @@ import net.snowteb.warriorcats_events.block.entity.NestBlockEntity;
 import net.snowteb.warriorcats_events.clan.ClanData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.particles.WCEParticles;
 import net.snowteb.warriorcats_events.sound.ModSounds;
@@ -75,11 +75,17 @@ public class NestBlock extends BedBlock {
                         if (entity instanceof WCatEntity cat) {
                             cat.setHomePosition(BlockPos.ZERO);
                             if (cat.getOwner() instanceof Player owner && owner != player) {
-                                owner.displayClientMessage(
-                                            Component.empty()
-                                                    .append(cat.hasCustomName() ? cat.getCustomName() : Component.literal("A cat")).withStyle(ChatFormatting.YELLOW)
-                                                    .append(Component.literal("'s nest was cleaned").withStyle(ChatFormatting.YELLOW)), true
-                                );
+//                                owner.displayClientMessage(
+//                                            Component.empty()
+//                                                    .append(cat.hasCustomName() ? cat.getCustomName() : Component.literal("A cat")).withStyle(ChatFormatting.YELLOW)
+//                                                    .append(Component.literal("'s nest was cleaned").withStyle(ChatFormatting.YELLOW)), true
+//                                );
+
+                                Component message = Component.translatable("blockinteraction.nestblock.clean",
+                                        cat.hasCustomName() ? cat.getCustomName() : Component.translatable("generic.catname"));
+
+                                owner.displayClientMessage(message.copy().withStyle(ChatFormatting.YELLOW), true);
+
                             }
                             nestBlockEntity.resetAssigned();
                             if (!player.getAbilities().instabuild) player.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
@@ -99,7 +105,7 @@ public class NestBlock extends BedBlock {
                             }
                         }
                         if (entity instanceof Player other && other != player) {
-                            player.displayClientMessage(Component.literal("You can't reset another player's nest.").withStyle(ChatFormatting.GRAY), true);
+                            player.displayClientMessage(Component.translatable("blockinteraction.nestblock.reset_another_player").withStyle(ChatFormatting.GRAY), true);
                         } else {
                             nestBlockEntity.resetAssigned();
                             if (!player.getAbilities().instabuild) player.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
@@ -154,10 +160,10 @@ public class NestBlock extends BedBlock {
                             }
                         }
                         if (entity instanceof Player) {
-                            player.displayClientMessage(Component.literal("You can't call players.").withStyle(ChatFormatting.GRAY), false);
+                            player.displayClientMessage(Component.translatable("blockinteraction.nestblock.callplayers").withStyle(ChatFormatting.GRAY), false);
                         }
                     } else {
-                        player.displayClientMessage(Component.literal("No entity found in range.").withStyle(ChatFormatting.GRAY), false);
+                        player.displayClientMessage(Component.translatable("blockinteraction.nestblock.no_cat_found").withStyle(ChatFormatting.GRAY), false);
                     }
                     return InteractionResult.SUCCESS;
                 }
@@ -169,7 +175,7 @@ public class NestBlock extends BedBlock {
             if (!mbEntity.getAssignedUUID().equals(ClanData.EMPTY_UUID)) {
                 if (!level.isClientSide) {
                     if (mbEntity.getAssignedEntity(level) != player) {
-                        player.displayClientMessage(Component.literal("This nest is already owned.")
+                        player.displayClientMessage(Component.translatable("blockinteraction.nestblock.already_owned")
                                 .withStyle(ChatFormatting.RED), true);
                         return InteractionResult.FAIL;
                     }
@@ -224,7 +230,7 @@ public class NestBlock extends BedBlock {
 
                     mbEntity.setCatName(morphName + " (" + player.getName().getString() +")");
 
-                    player.displayClientMessage(Component.literal("You have claimed this nest")
+                    player.displayClientMessage(Component.translatable("blockinteraction.nestblock.claim")
                             .withStyle(ChatFormatting.GREEN), true);
 
                     if (level instanceof ServerLevel sLevel) {
@@ -314,17 +320,18 @@ public class NestBlock extends BedBlock {
                     cat.setHomePosition(BlockPos.ZERO);
                     if (cat.getOwner() instanceof Player player) {
                         if (!pLevel.isClientSide) {
-                            player.sendSystemMessage(
-                                    Component.empty()
-                                            .append(cat.hasCustomName() ? cat.getCustomName() : Component.literal("A cat")).withStyle(ChatFormatting.YELLOW)
-                                            .append(Component.literal(" has lost their nest.").withStyle(ChatFormatting.YELLOW))
-                            );
+
+                            Component message = Component.translatable("blockinteraction.nestblock.cat_lost_nest",
+                                    cat.hasCustomName() ? cat.getCustomName() : Component.translatable("generic.catname") );
+
+                            player.sendSystemMessage(message.copy().withStyle(ChatFormatting.YELLOW));
+
                         }
                     }
                 }
                 if (entity instanceof Player player) {
                     if (!pLevel.isClientSide) {
-                        player.sendSystemMessage(Component.literal("Your nest has been removed.").withStyle(ChatFormatting.GRAY));
+                        player.sendSystemMessage(Component.translatable("blockinteraction.nestblock.nest_removed").withStyle(ChatFormatting.GRAY));
                     }
                 }
             }

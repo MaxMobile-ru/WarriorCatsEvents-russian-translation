@@ -28,7 +28,7 @@ import net.snowteb.warriorcats_events.climbing.ClimbingConstants;
 import net.snowteb.warriorcats_events.diseases.DiseaseTypes;
 import net.snowteb.warriorcats_events.diseases.Diseaseable;
 import net.snowteb.warriorcats_events.effect.ModEffects;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.managers.ClimbDataAccessor;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.s2c.others.SyncExhaustionPacket;
@@ -206,7 +206,7 @@ public class LivingEntityMixin implements ClimbDataAccessor {
 
                     if (wce$exhaustionLevel > 80) {
                         player.displayClientMessage(
-                                Component.literal("Your paws feel tired.")
+                                Component.translatable("generics.paws_feel_tired")
                                         .withStyle(ChatFormatting.RED)
                                         .withStyle(ChatFormatting.ITALIC)
                                 ,true);
@@ -218,7 +218,7 @@ public class LivingEntityMixin implements ClimbDataAccessor {
                     if (wce$exhaustionLevel > 0) {
                         if ((wce$exhaustionLevel < 15) && this.wce$isTired) {
                             player.displayClientMessage(
-                                    Component.literal("Your strength returns")
+                                    Component.translatable("generic.strenght_returns")
                                             .withStyle(ChatFormatting.GREEN)
                                             .withStyle(ChatFormatting.ITALIC)
                                     ,true);

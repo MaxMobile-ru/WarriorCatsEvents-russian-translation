@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.c2s.skilltree.CtSPerformLeapPacket;
 import net.snowteb.warriorcats_events.skills.ISkillData;
@@ -215,14 +215,14 @@ public class LeapClientState {
         if (result != null) {
             if (!lockingTarget) {
                 lockingTarget = true;
-                player.displayClientMessage(Component.literal("Target Locked").withStyle(ChatFormatting.GRAY), true);
+                player.displayClientMessage(Component.translatable("leap.target_locked").withStyle(ChatFormatting.GRAY), true);
             } else {
                 lockingTarget = false;
-                player.displayClientMessage(Component.literal("Target unlocked").withStyle(ChatFormatting.DARK_GRAY), true);
+                player.displayClientMessage(Component.translatable("leap.target_unlocked").withStyle(ChatFormatting.DARK_GRAY), true);
             }
         } else {
             if (lockingTarget) {
-                player.displayClientMessage(Component.literal("Target unlocked").withStyle(ChatFormatting.DARK_GRAY), true);
+                player.displayClientMessage(Component.translatable("leap.target_unlocked").withStyle(ChatFormatting.DARK_GRAY), true);
                 lockingTarget = false;
             }
         }

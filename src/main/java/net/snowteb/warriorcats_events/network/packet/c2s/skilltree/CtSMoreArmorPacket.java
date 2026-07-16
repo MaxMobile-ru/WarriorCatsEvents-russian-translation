@@ -42,7 +42,7 @@ public class CtSMoreArmorPacket {
             if (player == null) return;
 
             if (!WCEServerConfig.SERVER.SKILL_TREE_SERVER.get()) {
-                player.sendSystemMessage(Component.literal("Skill tree is disabled for this world.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("generic.skill_tree_disabled").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -63,7 +63,7 @@ public class CtSMoreArmorPacket {
 
 
             if (player.totalExperience < cost && currentLevel < PlayerSkill.maxArmorLevel) {
-                player.sendSystemMessage(Component.literal("⚠ You need " + remaining + " XP more.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("generic.need_more_xp", remaining).withStyle(ChatFormatting.RED));
                 return;
             }
             if (currentDMGLevel == PlayerSkill.maxDMGLevel && currentHPLevel == PlayerSkill.maxHPLevel) {
@@ -87,7 +87,7 @@ public class CtSMoreArmorPacket {
 
                     player.getPersistentData().putInt("skill_armor_level", currentLevel + 1);
 
-                    player.sendSystemMessage(Component.literal("Pelt level increased to: " + (currentLevel + 1)));
+                    player.sendSystemMessage(Component.translatable("skills.pelt_level_increased", (currentLevel + 1)));
 
                     if (currentLevel + 1 == PlayerSkill.maxArmorLevel) {
                         MinecraftServer server = player.getServer();
@@ -103,9 +103,11 @@ public class CtSMoreArmorPacket {
                     }
                 }
                 else {
-                    player.sendSystemMessage(Component.literal("Pelt is maxed! : Level " + (currentLevel)).withStyle(ChatFormatting.YELLOW));
+                    player.sendSystemMessage(Component.translatable("skills.pelt_level_maxed", (currentLevel)).withStyle(ChatFormatting.YELLOW));
                 }
-            } else {player.sendSystemMessage(Component.literal("Requierements not present").withStyle(ChatFormatting.RED));}
+            } else {
+                player.sendSystemMessage(Component.translatable("skills.requierements_not_present").withStyle(ChatFormatting.RED));
+            }
 
 
         });

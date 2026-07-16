@@ -42,7 +42,7 @@ public class CtSMoreHPPacket {
             if (player == null) return;
 
             if (!WCEServerConfig.SERVER.SKILL_TREE_SERVER.get()) {
-                player.sendSystemMessage(Component.literal("Skill tree is disabled for this world.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("generic.skill_tree_disabled").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -54,7 +54,7 @@ public class CtSMoreHPPacket {
 
 
             if (player.totalExperience < cost && currentLevel < PlayerSkill.maxHPLevel) {
-                player.sendSystemMessage(Component.literal("⚠ You need " + remaining + " XP more.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("generic.need_more_xp", remaining).withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -78,7 +78,7 @@ public class CtSMoreHPPacket {
 
                 player.getPersistentData().putInt("skill_hp_level", currentLevel + 1);
 
-                player.sendSystemMessage(Component.literal("HP level increased to: " + (currentLevel + 1)));
+                player.sendSystemMessage(Component.translatable("skills.hp_level_increased", (currentLevel + 1)));
 
                 if (currentLevel + 1 == PlayerSkill.maxHPLevel) {
                     MinecraftServer server = player.getServer();
@@ -92,9 +92,8 @@ public class CtSMoreHPPacket {
                         }
                     }
                 }
-            }
-            else {
-                player.sendSystemMessage(Component.literal("Health skill is maxed! : Level " + (currentLevel)).withStyle(ChatFormatting.YELLOW));
+            } else {
+                player.sendSystemMessage(Component.translatable("skills.hp_level_maxed", (currentLevel)).withStyle(ChatFormatting.YELLOW));
             }
 
         });

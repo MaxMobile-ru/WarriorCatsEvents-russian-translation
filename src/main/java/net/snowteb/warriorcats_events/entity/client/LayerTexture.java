@@ -146,8 +146,6 @@ public class LayerTexture extends AbstractTexture {
 
         if (layer == null) return null;
 
-//        WarriorCatsEvents.LOGGER.debug("Attempting to load layer '{}'", layer);
-
         try {
             Resource resource = manager.getResource(ResourceLocation.parse(layer)).orElseThrow();
             return NativeImage.read(resource.open());

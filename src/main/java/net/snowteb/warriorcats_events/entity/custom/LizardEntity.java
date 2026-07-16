@@ -25,7 +25,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,7 +34,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.TurtleEggBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -43,6 +41,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.snowteb.warriorcats_events.block.ModBlocks;
 import net.snowteb.warriorcats_events.block.entity.LizardEggBlockEntity;
 import net.snowteb.warriorcats_events.entity.ModEntities;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.sound.ModSounds;
 import org.jetbrains.annotations.Nullable;
@@ -55,7 +54,6 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import tocraft.walkers.api.PlayerShape;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -388,7 +386,7 @@ public class LizardEntity extends TamableAnimal implements GeoEntity {
                                 {
                                     String mode = "following";
                                     String name = this.hasCustomName() ? this.getCustomName().getString() : this.getName().getString();
-                                    pPlayer.displayClientMessage(Component.literal(name + " is " + mode), true);
+                                    pPlayer.displayClientMessage(Component.translatable("entity.animal_is_mode", name, mode), true);
                                 }
                                 this.setOrderedToSit(false);
                                 this.mode = LizardMode.FOLLOW;
@@ -398,7 +396,7 @@ public class LizardEntity extends TamableAnimal implements GeoEntity {
                                 {
                                     String mode = "sitting";
                                     String name = this.hasCustomName() ? this.getCustomName().getString() : this.getName().getString();
-                                    pPlayer.displayClientMessage(Component.literal(name + " is " + mode), true);
+                                    pPlayer.displayClientMessage(Component.translatable("entity.animal_is_mode", name, mode), true);
                                 }
                                 this.setOrderedToSit(true);
                                 this.mode = LizardMode.SIT;
@@ -407,7 +405,7 @@ public class LizardEntity extends TamableAnimal implements GeoEntity {
                                 {
                                     String mode = "wandering";
                                     String name = this.hasCustomName() ? this.getCustomName().getString() : this.getName().getString();
-                                    pPlayer.displayClientMessage(Component.literal(name + " is " + mode), true);
+                                    pPlayer.displayClientMessage(Component.translatable("entity.animal_is_mode", name, mode), true);
                                 }
                                 this.setOrderedToSit(false);
                                 this.mode = LizardMode.WANDER;
@@ -615,24 +613,15 @@ public class LizardEntity extends TamableAnimal implements GeoEntity {
             this.lizard = mob;
         }
 
-        /**
-         * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
-         * method as well.
-         */
         public boolean canUse() {
             return this.lizard.hasEgg() && super.canUse();
         }
 
-        /**
-         * Returns whether an in-progress EntityAIBase should continue executing
-         */
+
         public boolean canContinueToUse() {
             return super.canContinueToUse() && this.lizard.hasEgg();
         }
 
-        /**
-         * Keep ticking a continuous task that has already been started
-         */
         public void tick() {
             super.tick();
             BlockPos blockpos = this.lizard.blockPosition();

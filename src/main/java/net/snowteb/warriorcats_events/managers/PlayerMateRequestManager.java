@@ -30,7 +30,7 @@ public class PlayerMateRequestManager {
 
         if (request.tick()) {
             requests.remove(player.getUUID());
-            player.sendSystemMessage(Component.literal("The request has expired").withStyle(ChatFormatting.GRAY));
+            player.sendSystemMessage(Component.translatable("managers.request_expired").withStyle(ChatFormatting.GRAY));
         }
     }
 

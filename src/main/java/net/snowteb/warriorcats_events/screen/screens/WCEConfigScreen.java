@@ -67,7 +67,7 @@ public class WCEConfigScreen extends Screen {
 
         leapToggleButton = new GradientSwitchButton(
                 centerX - 120, centerY - 20, 100, 15,
-                "Toggle Leap", leapTemp,
+                Component.translatable("screen.config.toggle_leap").getString(), leapTemp,
                 btn -> {
                     leapTemp = !leapTemp;
                 }, 0xFFFFFF, 0.8f
@@ -75,7 +75,7 @@ public class WCEConfigScreen extends Screen {
 
         ownMorphNameButton = new GradientSwitchButton(
                 centerX + 20, centerY - 20, 100, 15,
-                "Show Self Morph Name", ownMorphNameTemp,
+                Component.translatable("screen.config.self_morph_name").getString(), ownMorphNameTemp,
                 btn -> {
                     ownMorphNameTemp = !ownMorphNameTemp;
                 }, 0xFFFFFF, 0.8f
@@ -83,15 +83,15 @@ public class WCEConfigScreen extends Screen {
 
         ambientMusicButton = new GradientSwitchButton(
                 centerX - 120, centerY + 0, 100, 15,
-                "Background Music", ambientMusicTemp,
+                Component.translatable("screen.config.bg_music").getString(), ambientMusicTemp,
                 btn -> {
                     ambientMusicTemp = !ambientMusicTemp;
                 }, 0xFFFFFF, 0.8f
-                );
+        );
 
         chatEntityBubblesButton = new GradientSwitchButton(
                 centerX + 20, centerY + 0, 100, 15,
-                "Players Chat Bubbles", chatBubblesTemp,
+                Component.translatable("screen.config.chat_bubbles").getString(), chatBubblesTemp,
                 btn -> {
                     chatBubblesTemp = !chatBubblesTemp;
                 }, 0xFFFFFF, 0.8f
@@ -99,7 +99,7 @@ public class WCEConfigScreen extends Screen {
 
         ownChatBubblesButton = new GradientSwitchButton(
                 centerX - 120, centerY + 20, 100, 15,
-                "Own Chat Bubbles", ownChatBubblesTemp,
+                Component.translatable("screen.config.own_chat_bubbles").getString(), ownChatBubblesTemp,
                 btn -> {
                     ownChatBubblesTemp = !ownChatBubblesTemp;
                 }, 0xFFFFFF, 0.8f
@@ -107,7 +107,7 @@ public class WCEConfigScreen extends Screen {
 
         displayTerritoryButton = new GradientSwitchButton(
                 centerX + 20, centerY + 20, 100, 15,
-                "Display Territory", displayTerritoryTemp,
+                Component.translatable("screen.config.display_territory").getString(), displayTerritoryTemp,
                 btn -> {
                     displayTerritoryTemp = !displayTerritoryTemp;
                 }, 0xFFFFFF, 0.8f
@@ -124,7 +124,7 @@ public class WCEConfigScreen extends Screen {
         if (CompatibilitiesClient.SERENESEASONS_LOADED){
             sereneSeasonsOverlayButton = new GradientSwitchButton(
                     centerX + 20, centerY + 40, 100, 15,
-                    "Seasons Overlay", sereneSeasonsOverlayTemp,
+                    Component.translatable("screen.config.seasons_overlay").getString(), sereneSeasonsOverlayTemp,
                     btn -> {
                         sereneSeasonsOverlayTemp = !sereneSeasonsOverlayTemp;
                     }, 0xFFFFFF, 0.8f
@@ -135,7 +135,7 @@ public class WCEConfigScreen extends Screen {
 
         doneButton = new GradientToggleButton(
                 centerX - 20, centerY + 100, 40, 17,
-                Component.literal("Done"),
+                Component.translatable("screen.config.done"),
                 btn -> {
                     save();
                 },  ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/empty.png"),
@@ -144,7 +144,7 @@ public class WCEConfigScreen extends Screen {
 
         changelogButton = new GradientToggleButton(
                 centerX + 50, centerY + 100, 80, 17,
-                Component.literal("Last Changelog"),
+                Component.translatable("screen.config.changelog"),
                 btn -> {
                     Minecraft.getInstance().setScreen(new WCEChangelogScreen(this));
                 },  ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/empty.png"),

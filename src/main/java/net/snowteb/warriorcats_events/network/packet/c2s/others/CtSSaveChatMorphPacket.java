@@ -44,7 +44,8 @@ public class CtSSaveChatMorphPacket {
                 return;
             }
 
-            ModPackets.sendToPlayer(new StCFinallySaveMorph(packet.Key, data.genetics, data.variants, data.chimeraGenetics, data.chimeraVariants), player);
+            ModPackets.sendToPlayer(new StCFinallySaveMorph(packet.Key, data.genetics, data.variants,
+                    data.chimeraGenetics, data.chimeraVariants, data.onGeneticalSkin, data.presetVariant), player);
 
         });
 

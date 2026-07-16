@@ -8,9 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.commands.ClanListCommand;
-import net.snowteb.warriorcats_events.network.ModPackets;
-import net.snowteb.warriorcats_events.network.packet.s2c.clan.OpenSpecificClanScreen;
+import net.snowteb.warriorcats_events.commands.WCECommandHandles;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -58,15 +56,15 @@ public class CtSRegisterLogPacket {
 
                 data.registerLog(player.serverLevel().getServer().overworld(), clan.clanUUID, finalMessage);
 
-                player.displayClientMessage(Component.literal("Log successfully registered").withStyle(ChatFormatting.GREEN), false);
+                player.displayClientMessage(Component.translatable("clan.log_registered").withStyle(ChatFormatting.GREEN), false);
 
 
-                ClanListCommand.getList(player, true, false);
+                WCECommandHandles.clanList(player, true, false);
 
 //                ModPackets.sendToPlayer(new OpenSpecificClanScreen(clan.name, clan.clanUUID), player);
 
             } else {
-                player.sendSystemMessage(Component.literal("You are not in a clan.").withStyle(ChatFormatting.GRAY));
+                player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.GRAY));
             }
 
         });

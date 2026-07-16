@@ -225,9 +225,9 @@ public class KittyPetBowl extends BaseEntityBlock implements SimpleWaterloggedBl
 
                 } else {
 
-                    var thirstCap = pPlayer.getCapability(PlayerThirstProvider.PLAYER_THIRST).orElse(null);
+                    var thirstCap = pPlayer.getCapability(PlayerThirstProvider.PLAYER_THIRST).orElse(new PlayerThirst());
 
-                    if (bowlEntity.hasWater() && thirstCap != null && thirstCap.canDrink()) {
+                    if (bowlEntity.hasWater() && thirstCap.canDrink()) {
                         if (pLevel instanceof ServerLevel sLevel) {
                             if (pPlayer instanceof ServerPlayer sPlayer) {
                                 bowlEntity.drinkFromBowl(sLevel, getCenterOfBowl(pPos, pState), sPlayer);
@@ -281,7 +281,6 @@ public class KittyPetBowl extends BaseEntityBlock implements SimpleWaterloggedBl
         }
 
         pLevel.setBlockAndUpdate(pPos, newState);
-//        pLevel.sendBlockUpdated(pPos, pState, newState, 3);
 
     }
 

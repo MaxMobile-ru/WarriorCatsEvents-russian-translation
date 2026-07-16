@@ -1,28 +1,73 @@
 package net.snowteb.warriorcats_events.entity.client;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraftforge.fml.ModList;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.compat.CompatibilitiesClient;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
+import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
 public class WCModel extends GeoModel<WCatEntity> {
 
-    ModelPart rightPaw;
+    static final String[] RESOURCE_IGNORE_LIST = {
+            "genetics",
+            "wcskintemplate",
+            "empty",
+    };
 
-    /**
-     * An array list of all the textures available.
-     */
-    public static final ResourceLocation[] TEXTURES = {
+    public static ResourceLocation[] getTextures() {
+        ArrayList<ResourceLocation> textures = new ArrayList<>(Arrays.asList(BUILT_IN_TEXTURES));
+        ArrayList<ResourceLocation> packTextures = new ArrayList<>();
+
+        final Collection<Pack> RESOURCE_PACKS = Minecraft.getInstance().getResourcePackRepository().getSelectedPacks();
+
+        String[] builtInTexturePaths = new String[BUILT_IN_TEXTURES.length];
+        for (int i = 0; i < BUILT_IN_TEXTURES.length; i++) {
+            builtInTexturePaths[i] = BUILT_IN_TEXTURES[i].getPath();
+        }
+
+        for (Pack resourcePack : RESOURCE_PACKS) {
+            resourcePack.open().listResources(PackType.CLIENT_RESOURCES, WarriorCatsEvents.MODID, "textures/entity/wcat", (res, b) -> {
+
+                for (String s : builtInTexturePaths) {
+                    if (res.getPath().equals(s)) {
+                        return;
+                    }
+                }
+
+                for (String s : RESOURCE_IGNORE_LIST) {
+                    if (res.getPath().contains(s)) return;
+                }
+
+                textures.add(res);
+                packTextures.add(res);
+            });
+        }
+
+
+        PACK_TEXTURES = packTextures.toArray(new ResourceLocation[packTextures.size()]);
+
+        return textures.toArray(new ResourceLocation[textures.size()]);
+    }
+
+    public static final ResourceLocation[] BUILT_IN_TEXTURES = {
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/wcat/wcskin1.png"),
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/wcat/wcskin2.png"),
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/wcat/wcskin3.png"),
@@ -79,6 +124,11 @@ public class WCModel extends GeoModel<WCatEntity> {
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/wcat/parlee.png"), //52
     };
 
+    public static ResourceLocation[] TEXTURES = BUILT_IN_TEXTURES;
+
+
+    public static ResourceLocation[] PACK_TEXTURES = new ResourceLocation[]{};
+
     @Override
     public ResourceLocation getModelResource(WCatEntity object) {
         return ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "geo/wcat.geo.json");
@@ -97,37 +147,20 @@ public class WCModel extends GeoModel<WCatEntity> {
         return ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "animations/wcat.animation.json");
     }
 
+    private static float tail2InitialRot = -213;
 
     @Override
     public void setCustomAnimations(WCatEntity animatable, long instanceId, AnimationState<WCatEntity> animationState) {
         CoreGeoBone head = animatable.isAnImage() ? null : getAnimationProcessor().getBone("mainHead");
 
-//        getBone("crown").ifPresent(bone -> {
-//            bone.setHidden(true);
-//        });
-
-//        getBone("crown").ifPresent(bone -> {
-//            boolean hasCrown = animatable
-//                    .getItemBySlot(EquipmentSlot.HEAD)
-//                    .is(ModItems.FLOWER_CROWN.get());
-//            bone.setHidden(!hasCrown);
-//        });
-
-//        getBone("mane").ifPresent(bone -> {
-//            boolean hasMane = animatable
-//                    .getItemBySlot(EquipmentSlot.HEAD)
-//                    .is(ModItems.LEAF_MANE.get());
-//            bone.setHidden(true);
-//        });
-
-        boolean hasChestFur = (WCGenetics.FurGene.isLongFur(animatable.getGenetics().chestFur));
-        boolean hasBellyFur = (WCGenetics.FurGene.isLongFur(animatable.getGenetics().bellyFur));
-        boolean hasLegsFur = (WCGenetics.FurGene.isLongFur(animatable.getGenetics().legsFur));
-        boolean hasHeadFur = (WCGenetics.FurGene.isLongFur(animatable.getGenetics().headFur));
-        boolean hasCheekFur = (WCGenetics.FurGene.isLongFur(animatable.getGenetics().cheekFur));
-        boolean hasBackFur = (WCGenetics.FurGene.isLongFur(animatable.getGenetics().backFur));
-        boolean hasTailFur = (WCGenetics.FurGene.isLongFur(animatable.getGenetics().tailFur));
-        boolean isBobtail = (WCGenetics.Bobtail.isBobtail(animatable.getGenetics().bobtail));
+        boolean hasChestFur = (WCGenetics.FurGene.isLongFur(animatable.getGeneticsModule().getGenetics().chestFur));
+        boolean hasBellyFur = (WCGenetics.FurGene.isLongFur(animatable.getGeneticsModule().getGenetics().bellyFur));
+        boolean hasLegsFur = (WCGenetics.FurGene.isLongFur(animatable.getGeneticsModule().getGenetics().legsFur));
+        boolean hasHeadFur = (WCGenetics.FurGene.isLongFur(animatable.getGeneticsModule().getGenetics().headFur));
+        boolean hasCheekFur = (WCGenetics.FurGene.isLongFur(animatable.getGeneticsModule().getGenetics().cheekFur));
+        boolean hasBackFur = (WCGenetics.FurGene.isLongFur(animatable.getGeneticsModule().getGenetics().backFur));
+        boolean hasTailFur = (WCGenetics.FurGene.isLongFur(animatable.getGeneticsModule().getGenetics().tailFur));
+        boolean isBobtail = (WCGenetics.Bobtail.isBobtail(animatable.getGeneticsModule().getGenetics().bobtail));
 
         {
             getBone("chest_fur").ifPresent(bone -> bone.setHidden(!hasChestFur));
@@ -151,31 +184,26 @@ public class WCModel extends GeoModel<WCatEntity> {
 
 
         {
-            boolean hasFlowerArmor = animatable.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.FLOWER_ARMOR.get());
-            if (CompatibilitiesClient.hasCuriosItem(animatable.getPlayerBoundUuid(), ModItems.FLOWER_ARMOR.get()))
-                hasFlowerArmor = true;
-
-
-            boolean finalHasFlowerArmor = hasFlowerArmor;
-            getBone("flower_upper_armor").ifPresent(bone -> bone.setHidden(!finalHasFlowerArmor));
-            getBone("layer_2").ifPresent(bone -> bone.setHidden(!finalHasFlowerArmor));
-            getBone("layer_3").ifPresent(bone -> bone.setHidden(!finalHasFlowerArmor));
-
-            {
-
-                boolean hasTeethClaws = animatable.getItemBySlot(EquipmentSlot.FEET).is(ModItems.TEETH_CLAWS.get());
-                if (CompatibilitiesClient.hasCuriosItem(animatable.getPlayerBoundUuid(), ModItems.TEETH_CLAWS.get()))
-                    hasTeethClaws = true;
-
-
-                boolean finalHasTeethClaws = hasTeethClaws;
-                getBone("teethclaws1").ifPresent(bone -> bone.setHidden(!finalHasTeethClaws));
-                getBone("teethclaws2").ifPresent(bone -> bone.setHidden(!finalHasTeethClaws));
-                getBone("teethclaws3").ifPresent(bone -> bone.setHidden(!finalHasTeethClaws));
-                getBone("teethclaws4").ifPresent(bone -> bone.setHidden(!finalHasTeethClaws));
-            }
 
             if (head != null) {
+                float scale = 1.0f + (0.3f*((12 - animatable.getAgeInMoons())/12));
+                float yPos = 0.0f + (2f*((12 - animatable.getAgeInMoons())/12));
+                float zPos = 0.0f + (2f*((12 - animatable.getAgeInMoons())/12));
+                head.setScaleX(scale);
+                head.setScaleY(scale);
+                head.setScaleZ(scale);
+                head.setPosY(yPos);
+                head.setPosZ(zPos);
+
+                if (getAnimationProcessor().getBone("tail2") != null) {
+                    CoreGeoBone bone = getAnimationProcessor().getBone("tail2");
+                    if (tail2InitialRot == -213) {
+                        tail2InitialRot = bone.getRotX();
+                    }
+                    float rot = tail2InitialRot - (0.4f*((12 - animatable.getAgeInMoons())/12));
+                    bone.setRotX(rot);
+                }
+
                 EntityModelData entityModelData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
                 if (!animatable.isAnImage()) {
                     head.setRotX(entityModelData.headPitch() * Mth.DEG_TO_RAD);

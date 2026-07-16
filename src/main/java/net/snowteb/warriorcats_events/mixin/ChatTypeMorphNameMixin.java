@@ -7,11 +7,12 @@ import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.Entity;
 import net.snowteb.warriorcats_events.clan.ClanData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.util.CuteTextUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,7 +32,7 @@ public class ChatTypeMorphNameMixin {
         if (pEntity instanceof ServerPlayer player) {
             boolean shouldRewriteName = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
                     .map(WCEPlayerData::isMorphNameInChat).orElse(false);
-            if (shouldRewriteName && PlayerShape.getCurrentShape(player) instanceof WCatEntity){
+            if (shouldRewriteName && PlayerShape.getCurrentShape(player) instanceof WCatEntity) {
                 String morphName = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
                         .map(WCEPlayerData::getMorphName).orElse(player.getGameProfile().getName());
 
@@ -49,7 +50,6 @@ public class ChatTypeMorphNameMixin {
                 int color = 0xFFFFFF;
                 String clanName = "No clan";
                 String rank = "No rank";
-
 
                 if (clan != null) {
                     color = clan.color;

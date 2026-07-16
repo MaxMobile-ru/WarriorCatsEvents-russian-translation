@@ -3,18 +3,20 @@ package net.snowteb.warriorcats_events.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.snowteb.warriorcats_events.clan.WCEPlayerData;
 import net.snowteb.warriorcats_events.diseases.Diseaseable;
 import net.snowteb.warriorcats_events.entity.custom.EagleEntity;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.screen.menus.SetPoseMenu;
 import net.snowteb.warriorcats_events.screen.screens.*;
+import net.snowteb.warriorcats_events.screen.screens.createmorph.CreateMorphScreen;
 
 import java.util.List;
 import java.util.UUID;
@@ -107,18 +109,21 @@ public class ClientPacketHandles {
             Minecraft mc = Minecraft.getInstance();
             if (mc.level == null) return;
 
-            mc.setScreen(new CreateMorphGeneticsScreen(isSummoning));
+//            mc.setScreen(new CreateMorphGeneticsScreen(isSummoning));
+            mc.setScreen(new CreateMorphScreen(isSummoning));
         });
 
     }
 
-    public static void openSaveMorphScreen(String key ,WCGenetics genetics, WCGenetics.GeneticalVariants variants, WCGenetics chimeraGenetics, WCGenetics.GeneticalChimeraVariants chimeraVariants) {
+    public static void openSaveMorphScreen(String key ,WCGenetics genetics, WCGenetics.GeneticalVariants variants,
+                                           WCGenetics chimeraGenetics, WCGenetics.GeneticalChimeraVariants chimeraVariants,
+                                           boolean onGeneticalSkin, int presetVariant) {
         Minecraft.getInstance().execute(() -> {
             Minecraft mc = Minecraft.getInstance();
             if (mc.level == null) return;
 
 
-            mc.setScreen(new SaveChatMorphScreen(key ,genetics, variants, chimeraGenetics, chimeraVariants));
+            mc.setScreen(new SaveChatMorphScreen(key ,genetics, variants, chimeraGenetics, chimeraVariants, onGeneticalSkin, presetVariant));
         });
 
     }
@@ -168,6 +173,13 @@ public class ClientPacketHandles {
         Minecraft.getInstance().execute(() -> {
            Minecraft mc = Minecraft.getInstance();
            mc.setScreen(new WCEChangelogScreen(null));
+        });
+    }
+
+    public static void openNametagScreen(ItemStack item, InteractionHand pUsedHand) {
+        Minecraft.getInstance().execute(() -> {
+            Minecraft mc = Minecraft.getInstance();
+            mc.setScreen(new RenameTagMenu(item, pUsedHand));
         });
     }
 }

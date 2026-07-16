@@ -16,7 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.network.NetworkEvent;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.util.ModTags;
 
@@ -76,7 +76,7 @@ public class PerformInteractionPacket {
     }
 
     private static void interactShowAffection(WCatEntity cat, ServerPlayer player, PerformInteractionPacket msg) {
-        boolean result = cat.randomInteractionResultProcess(player.getUUID(), WCatEntity.CatInteraction.SHOW_AFFECTION);
+        boolean result = cat.getDialogueModule().randomInteractionResultProcess(player.getUUID(), WCatEntity.CatInteraction.SHOW_AFFECTION);
 
         if (result) {
             player.serverLevel().playSound(null, cat.blockPosition(), SoundEvents.CAT_PURREOW, SoundSource.NEUTRAL, 0.6F, 1.0F);
@@ -91,7 +91,7 @@ public class PerformInteractionPacket {
     private static void interactGivePrey(WCatEntity cat, ServerPlayer player, PerformInteractionPacket msg) {
         ItemStack preyStack = findPrey(player);
         if (preyStack != null) {
-            boolean result = cat.randomInteractionResultProcess(player.getUUID(), WCatEntity.CatInteraction.GIVE_ITEM);
+            boolean result = cat.getDialogueModule().randomInteractionResultProcess(player.getUUID(), WCatEntity.CatInteraction.GIVE_ITEM);
             if (result) {
                 preyStack.shrink(1);
                 player.serverLevel().playSound(null, cat.blockPosition(), SoundEvents.CAT_EAT, SoundSource.NEUTRAL, 0.6F, 1.0F);
@@ -105,12 +105,12 @@ public class PerformInteractionPacket {
             cat.setInteractionCooldown(6000);
 
         } else {
-            player.sendSystemMessage(Component.literal("You don't have anything to offer.").withStyle(ChatFormatting.GRAY));
+            player.sendSystemMessage(Component.translatable("generic.nothing_to_offer").withStyle(ChatFormatting.GRAY));
         }
     }
 
     private static void interactTalk(WCatEntity cat, ServerPlayer player, PerformInteractionPacket msg) {
-        boolean result = cat.randomInteractionResultProcess(player.getUUID(), WCatEntity.CatInteraction.TALK);
+        boolean result = cat.getDialogueModule().randomInteractionResultProcess(player.getUUID(), WCatEntity.CatInteraction.TALK);
         if (result) {
             player.serverLevel().sendParticles(ParticleTypes.HAPPY_VILLAGER, cat.getX(), cat.getY(),cat.getZ(),30,0.4f,0.4f,0.4f,0.1f);
         } else {

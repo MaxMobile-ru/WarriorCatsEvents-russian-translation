@@ -98,7 +98,7 @@ public class MakeshiftBedBlock extends BedBlock {
             return super.use(headState, level, pos, player, hand, hit);
         } else {
             player.displayClientMessage(
-                    Component.literal("This doesn't seem comfy enough...").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC),
+                    Component.translatable("blockinteraction.makeshiftnest.fail").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC),
                     true);
         }
         return InteractionResult.PASS;

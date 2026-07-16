@@ -13,9 +13,11 @@ import java.util.function.Supplier;
 
 public class CtSSwitchStealthPacket {
 
-    public CtSSwitchStealthPacket() {}
+    public CtSSwitchStealthPacket() {
+    }
 
-    public static void encode(CtSSwitchStealthPacket msg, FriendlyByteBuf buf) {}
+    public static void encode(CtSSwitchStealthPacket msg, FriendlyByteBuf buf) {
+    }
 
     public static CtSSwitchStealthPacket decode(FriendlyByteBuf buf) {
         return new CtSSwitchStealthPacket();
@@ -27,26 +29,26 @@ public class CtSSwitchStealthPacket {
 
             if (player == null) return;
 
-                player.getCapability(PlayerStealthProvider.STEALTH_MODE).ifPresent(cap -> {
+            player.getCapability(PlayerStealthProvider.STEALTH_MODE).ifPresent(cap -> {
 
-                    if (!cap.isUnlocked()) {
-                        player.sendSystemMessage(Component.literal("Stealth is not unlocked yet.")
-                                .withStyle(ChatFormatting.RED));
-                        return;
-                    }
+                if (!cap.isUnlocked()) {
+                    player.sendSystemMessage(Component.translatable("skills.stealth_not_unlocked")
+                            .withStyle(ChatFormatting.RED));
+                    return;
+                }
 
-                    if (cap.isOn()) {
-                        cap.setOn(false);
-                        player.sendSystemMessage(Component.literal("[Stealth: Off]").withStyle(ChatFormatting.RED));
-                    } else {
-                        cap.setOn(true);
-                        player.sendSystemMessage(Component.literal("[Stealth: On]").withStyle(ChatFormatting.GREEN));
-                    }
+                if (cap.isOn()) {
+                    cap.setOn(false);
+                    player.sendSystemMessage(Component.translatable("skills.stealth_off").withStyle(ChatFormatting.RED));
+                } else {
+                    cap.setOn(true);
+                    player.sendSystemMessage(Component.translatable("skills.stealth_on").withStyle(ChatFormatting.GREEN));
+                }
 
-                    cap.sync(player);
-                    ModPackets.sendToPlayer(
-                            new StCStealthSyncPacket(cap.isUnlocked(), cap.isStealthOn(), cap.isOn()), player);
-                });
+                cap.sync(player);
+                ModPackets.sendToPlayer(
+                        new StCStealthSyncPacket(cap.isUnlocked(), cap.isStealthOn(), cap.isOn()), player);
+            });
 
 
         });

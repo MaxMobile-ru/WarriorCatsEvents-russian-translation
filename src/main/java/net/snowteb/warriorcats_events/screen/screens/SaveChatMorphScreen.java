@@ -12,8 +12,8 @@ import net.minecraft.util.Mth;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.client.ClientStoredMorphs;
 import net.snowteb.warriorcats_events.entity.ModEntities;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.screen.widgets.GradientButton;
 import org.lwjgl.glfw.GLFW;
 
@@ -25,6 +25,8 @@ public class SaveChatMorphScreen extends Screen {
     private final WCGenetics.GeneticalVariants variants;
     private final WCGenetics chimeraGenetics;
     private final WCGenetics.GeneticalChimeraVariants chimeraVariants;
+    private final boolean onGeneticalSkin;
+    private final int presetVariant;
 
     private final String morphKey;
 
@@ -37,7 +39,8 @@ public class SaveChatMorphScreen extends Screen {
     private boolean isAnError = false;
 
     public SaveChatMorphScreen(String key, WCGenetics genetics, WCGenetics.GeneticalVariants variants,
-                               WCGenetics chimeraGenetics, WCGenetics.GeneticalChimeraVariants chimeraVariants) {
+                               WCGenetics chimeraGenetics, WCGenetics.GeneticalChimeraVariants chimeraVariants,
+                               boolean onGeneticalSkin, int presetVariant) {
         super(Component.empty());
 
         this.genetics = genetics;
@@ -46,6 +49,8 @@ public class SaveChatMorphScreen extends Screen {
         this.chimeraVariants = chimeraVariants;
         this.morphKey = key;
 
+        this.onGeneticalSkin = onGeneticalSkin;
+        this.presetVariant = presetVariant;
     }
 
     @Override
@@ -60,13 +65,13 @@ public class SaveChatMorphScreen extends Screen {
                 Component.literal("Key/Name")
         );
         morphKeyBox.setCanLoseFocus(true);
-        morphKeyBox.setHint(Component.literal("Key/Name").withStyle(ChatFormatting.DARK_GRAY));
+        morphKeyBox.setHint(Component.translatable("screen.chatmorph.name_hint").withStyle(ChatFormatting.DARK_GRAY));
         morphKeyBox.setValue(morphKey);
 
         saveButton = new GradientButton(
                 centerX - 70, centerY + 90,
                 60, 15,
-                Component.literal("Save"),
+                Component.translatable("screen.chatmorph.save"),
                 btn -> {
                     saveMorph();
 
@@ -77,7 +82,7 @@ public class SaveChatMorphScreen extends Screen {
         closeButton = new GradientButton(
                 centerX + 10, centerY + 90,
                 60, 15,
-                Component.literal("Close"),
+                Component.translatable("screen.chatmorph.close"),
                 btn -> {
                     this.onClose();
                 }, ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/empty.png"),
@@ -106,12 +111,12 @@ public class SaveChatMorphScreen extends Screen {
             entityToRender.setPlayerBoundUuid(UUID.nameUUIDFromBytes(ModEntities.WCAT.get().toString().getBytes()));
             entityToRender.setShowMorphName(false);
 
-            entityToRender.setOnGeneticalSkin(true);
-
-            entityToRender.setGenetics(genetics);
-            entityToRender.setGeneticalVariants(variants);
-            entityToRender.setChimeraGenetics(chimeraGenetics);
-            entityToRender.setGeneticalVariantsChimera(chimeraVariants);
+            entityToRender.setOnGeneticalSkin(onGeneticalSkin);
+            entityToRender.setVariant(presetVariant);
+            entityToRender.getGeneticsModule().setGenetics(genetics);
+            entityToRender.getGeneticsModule().setGeneticalVariants(variants);
+            entityToRender.getGeneticsModule().setChimeraGenetics(chimeraGenetics);
+            entityToRender.getGeneticsModule().setGeneticalVariantsChimera(chimeraVariants);
 
             entityToRender.setGender(1);
 
@@ -208,7 +213,7 @@ public class SaveChatMorphScreen extends Screen {
         WCGenetics.GeneticalChimeraVariants chimeraVariantsCopy = chimeraVariants;
 
         ClientStoredMorphs.MorphsFile.MorphData data =
-                new ClientStoredMorphs.MorphsFile.MorphData(geneticsCopy, geneticsChimeraCopy, genVariants, chimeraVariantsCopy);
+                new ClientStoredMorphs.MorphsFile.MorphData(geneticsCopy, geneticsChimeraCopy, genVariants, chimeraVariantsCopy, onGeneticalSkin, presetVariant);
 
         if (!morphKeyBox.getValue().equals("")) {
             boolean success = ClientStoredMorphs.add(morphKeyBox.getValue(), data, false);
@@ -216,13 +221,13 @@ public class SaveChatMorphScreen extends Screen {
             if (success) {
                 this.onClose();
                 Minecraft.getInstance().player.displayClientMessage(
-                        Component.literal("Morph saved with key: " + morphKeyBox.getValue()).withStyle(ChatFormatting.GREEN), true
+                        Component.translatable("screen.chatmorph.morph_saved", morphKeyBox.getValue()).withStyle(ChatFormatting.GREEN), true
                 );
             } else {
-                displayError("A morph with provided key already exists: " + "'" + morphKeyBox.getValue()+ "'", true);
+                displayError(Component.translatable("screen.chatmorph.morph_already_exists", morphKeyBox.getValue()).getString(), true);
             }
         } else {
-            displayError("No name or key provided.", true);
+            displayError(Component.translatable("screen.chatmorph.no_key_provided").getString(), true);
         }
 
     }

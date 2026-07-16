@@ -44,7 +44,7 @@ public class CtSToggleStealthPacket {
                     return;
                 }
                 if (!WCEServerConfig.SERVER.SKILL_TREE_SERVER.get()) {
-                    player.sendSystemMessage(Component.literal("Skill tree is disabled for this world.").withStyle(ChatFormatting.RED));
+                    player.sendSystemMessage(Component.translatable("generic.skill_tree_disabled").withStyle(ChatFormatting.RED));
                     return;
                 }
                 cap.setStealthOn(state);

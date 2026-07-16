@@ -3,7 +3,7 @@ package net.snowteb.warriorcats_events.integration;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Phantom;
 import net.snowteb.warriorcats_events.entity.ModEntities;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import tocraft.walkers.ability.AbilityRegistry;
 import tocraft.walkers.api.variant.TypeProviderRegistry;
 import tocraft.walkers.integrations.AbstractIntegration;

@@ -18,19 +18,19 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 import net.snowteb.warriorcats_events.util.GeneticsForVariant;
 import net.snowteb.warriorcats_events.clan.ClanData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.entity.ModEntities;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
 
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import static net.snowteb.warriorcats_events.entity.custom.WCatEntity.Rank.KIT;
+import static net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity.Rank.KIT;
 
 public class CtSCreateAndSpawnKitPacket {
     private final String kitPrefix;
@@ -101,7 +101,7 @@ public class CtSCreateAndSpawnKitPacket {
                     kit.setAge(-growingTicks);
 
                     kit.setOnGeneticalSkin(true);
-                    kit.inheritGeneticsFromParents(playerGens, mateGens);
+                    kit.getGeneticsModule().inheritGeneticsFromParents(playerGens, mateGens);
 
                     level.addFreshEntity(kit);
 

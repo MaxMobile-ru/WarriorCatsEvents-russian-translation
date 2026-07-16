@@ -7,69 +7,9 @@
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "item": "warriorcats_events:stone_crafting_table",
-      "text": "$(8)To start mixing herbs, you are gonna need a Crafting Rock. To put ingredients in it, Shift + Right-click the rock with the item in your hand. To prepare the recipe, Shift + Right-click with your claws.",
+      "item": "warriorcats_events:herb_rock",
+      "text": "$(8)To start mixing herbs, you are gonna need an Herb Rock. These are specifically designed to mix herbs in the most comfortable way. $(br2)Right-Click the block to access its menu and see all the recipes available.",
       "title": "Mixing Herbs"
-    },
-    {
-      "type": "patchouli:spotlight",
-      "item": "warriorcats_events:freshkill_and_herbs",
-      "text": "$(8)- 2 Herbs$(br)- 2 Prey$(br)- 1 Dock leaves$(br)",
-      "title": "Freshkill and Herbs"
-    },
-    {
-      "type": "patchouli:spotlight",
-      "item": "warriorcats_events:shredded_meat",
-      "text": "$(8)- 2-5 Prey",
-      "title": "Shredded Meat"
-    },
-    {
-      "type": "patchouli:spotlight",
-      "item": "warriorcats_events:traveling_herbs",
-      "text": "$(8)- 1 Sorrel Leaves$(br)- 1 Burnet Leaves$(br)- 1 Chamomile$(br)- 1 Daisy Leaves$(br)- 1 Dock Leaves$(br)",
-      "title": "Traveling Herbs"
-    },
-    {
-      "type": "patchouli:spotlight",
-      "item": "warriorcats_events:dock_poultice",
-      "text": "$(8)- 1 Dock Leaves$(br)",
-      "title": "Dock Poultice"
-    },
-    {
-      "type": "patchouli:spotlight",
-      "item": "warriorcats_events:yarrow_poultice",
-      "text": "$(8)- 1 Yarrow Leaves$(br)",
-      "title": "Yarrow Poultice"
-    },
-    {
-      "type": "patchouli:spotlight",
-      "item": "warriorcats_events:comfrey_poultice",
-      "text": "$(8)- 1 Comfrey Leaves / Comfrey root$(br)",
-      "title": "Comfrey Poultice"
-    },
-    {
-      "type": "patchouli:spotlight",
-      "item": "warriorcats_events:poppy_seeds",
-      "text": "$(8)- 1 Poppy$(br)",
-      "title": "Poppy Seeds"
-    },
-    {
-      "type": "patchouli:spotlight",
-      "item": "warriorcats_events:leg_wrap",
-      "text": "$(8)- 1 Stick$(br)- 1 Cobweb / Cobweb On A Stick$(br)- 1 Dock Leaves / Vine / Kelp",
-      "title": "Leg Wrap"
-    },
-    {
-      "type": "patchouli:spotlight",
-      "item": "warriorcats_events:moss_ball",
-      "text": "$(8)- 1 Moss Block$(br)",
-      "title": "Moss Balls"
-    },
-    {
-      "type": "patchouli:spotlight",
-      "item": "warriorcats_events:moss_ball",
-      "text": "$(8)- 1 Moss Ball$(br)- 1 Honey Block / Honey Bottle$(br)",
-      "title": "Honey Moss Balls"
     }
   ]
 

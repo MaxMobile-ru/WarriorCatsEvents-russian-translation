@@ -3,7 +3,7 @@ package net.snowteb.warriorcats_events.network.packet.s2c.others;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.client.ClientPacketHandles;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 
 import java.util.function.Supplier;
 
@@ -15,15 +15,20 @@ public class StCFinallySaveMorph {
     private final WCGenetics.GeneticalVariants variants;
     private final WCGenetics chimeraGenetics;
     private final WCGenetics.GeneticalChimeraVariants chimeraVariants;
+    private final boolean onGeneticalSkin;
+    private final int presetVariant;
 
 
     public StCFinallySaveMorph(String key, WCGenetics genetics, WCGenetics.GeneticalVariants variants,
-                               WCGenetics chimeraGens, WCGenetics.GeneticalChimeraVariants chimeraVariants) {
+                               WCGenetics chimeraGens, WCGenetics.GeneticalChimeraVariants chimeraVariants,
+                               boolean onGeneticalSkin, int presetVariant) {
         this.Key = key;
         this.genetics = genetics;
         this.variants = variants;
         this.chimeraGenetics = chimeraGens;
         this.chimeraVariants = chimeraVariants;
+        this.onGeneticalSkin = onGeneticalSkin;
+        this.presetVariant = presetVariant;
     }
 
     public static StCFinallySaveMorph decode(FriendlyByteBuf buf) {
@@ -36,7 +41,10 @@ public class StCFinallySaveMorph {
         WCGenetics chimeraGens = WCGenetics.decode(buf);
         WCGenetics.GeneticalChimeraVariants chimeraVariants = WCGenetics.GeneticalChimeraVariants.decode(buf);
 
-        return new StCFinallySaveMorph( key ,genetics, variants, chimeraGens, chimeraVariants);
+        boolean onGeneticalSkin = buf.readBoolean();
+        int presetVariant = buf.readInt();
+
+        return new StCFinallySaveMorph( key ,genetics, variants, chimeraGens, chimeraVariants,onGeneticalSkin , presetVariant);
     }
 
     public static void encode(StCFinallySaveMorph packet, FriendlyByteBuf buf) {
@@ -47,6 +55,8 @@ public class StCFinallySaveMorph {
         packet.variants.encode(buf);
         packet.chimeraGenetics.encode(buf);
         packet.chimeraVariants.encode(buf);
+        buf.writeBoolean(packet.onGeneticalSkin);
+        buf.writeInt(packet.presetVariant);
 
     }
 
@@ -54,7 +64,7 @@ public class StCFinallySaveMorph {
         NetworkEvent.Context ctx = packet.get();
         ctx.enqueueWork(() -> {
 
-            ClientPacketHandles.openSaveMorphScreen( Key ,genetics, variants, chimeraGenetics, chimeraVariants);
+            ClientPacketHandles.openSaveMorphScreen( Key ,genetics, variants, chimeraGenetics, chimeraVariants, onGeneticalSkin , presetVariant);
 
         });
 

@@ -10,9 +10,8 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
-import net.snowteb.warriorcats_events.network.packet.c2s.cats.CtSCreateAndSpawnKitPacket;
 import net.snowteb.warriorcats_events.network.packet.c2s.cats.CtSNameKitPacket;
 import org.joml.Quaternionf;
 
@@ -21,9 +20,7 @@ public class KitCreateScreen extends Screen {
 
     private EditBox kitPrefixBox;
 
-    private Button saveButton;
-
-//    private VariantScrollList variantScrollList;
+    //    private VariantScrollList variantScrollList;
 
     private final WCatEntity kitten;
 
@@ -50,10 +47,10 @@ public class KitCreateScreen extends Screen {
 
         if (prefixToolTip) {
                 pGuiGraphics.renderTooltip(Minecraft.getInstance().font,
-                        Component.empty()
-                                .append(Component.literal("The prefix of your kit. eg: ").withStyle(ChatFormatting.GRAY))
-                                .append(Component.literal("'Bengal'").withStyle(ChatFormatting.YELLOW))
-                                .append(Component.literal("kit").withStyle(ChatFormatting.GRAY))
+                        Component.translatable("screen.kitcreate.prefix_tip",
+                                        Component.literal("'Bengal'").withStyle(ChatFormatting.YELLOW)
+                                                .append(Component.literal("kit").withStyle(ChatFormatting.GRAY))
+                                ).withStyle(ChatFormatting.GRAY)
                         ,pMouseX, pMouseY);
         }
 
@@ -72,12 +69,8 @@ public class KitCreateScreen extends Screen {
                 centerx, centery + 10, 0xFFFFFFFF);
 
 
-        if (kitPrefix.isEmpty()) {
-                pGuiGraphics.drawString(Minecraft.getInstance().font, "<Prefix>", centerx-43, centery +34, 0xFF7d7d7d);
-        }
-
         if (textCooldown > 0) {
-            pGuiGraphics.drawString(Minecraft.getInstance().font, "Some fields are empty",
+            pGuiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("screen.kitcreate.fields_empty"),
                     centerx - 55, centery + 75, 0xFFFF0000);
         }
 
@@ -132,97 +125,36 @@ public class KitCreateScreen extends Screen {
         int centerX = this.width / 2;
         int centerY = this.height / 2;
 
-//        int listWidth = 140;
-//        int listHeight = 40;
-//        int top = centerY - 105;
-//        int bottom = centerY - 50;
-//
-//        this.variantScrollList = new VariantScrollList(
-//                Minecraft.getInstance(),
-//                listWidth,
-//                listHeight,
-//                top,
-//                bottom,
-//                20
-//        );
-//        this.variantScrollList.setRenderTopAndBottom(false);
-//        this.variantScrollList.setLeftPos(((centerX - (listWidth/2))));
-//
-//        variantScrollList.addOption("Calico", 0);
-//        variantScrollList.addOption("Siamese", 1);
-//        variantScrollList.addOption("Gray", 2);
-//        variantScrollList.addOption("Abyssinian", 3);
-//        variantScrollList.addOption("Black", 4);
-//        variantScrollList.addOption("Maine Coon", 5);
-//        variantScrollList.addOption("Russian Blue", 6);
-//        variantScrollList.addOption("Dark Brown Tabby", 7);
-//        variantScrollList.addOption("White", 8);
-//        variantScrollList.addOption("Calico 2", 9);
-//        variantScrollList.addOption("Munchkin", 10);
-//        variantScrollList.addOption("Light Gray Tabby", 11);
-//        variantScrollList.addOption("Chestnutpatch (Bookwom)", 12);
-//        variantScrollList.addOption("Ratstar (Telefonjoker)", 13);
-//        variantScrollList.addOption("Twitchstream (Cat)", 14);
-//        variantScrollList.addOption("Blazepit (Cat)", 15);
-//        variantScrollList.addOption("Bengalpelt (Klyonstar)", 16);
-//        variantScrollList.addOption("Sparrowstar (Whale_shark)", 17);
-//        variantScrollList.addOption("Foxeater (Sejr)", 18);
-//        variantScrollList.addOption("Willowsong (Sejr)", 19);
-//        variantScrollList.addOption("White 2", 20);
-//        variantScrollList.addOption("Dalmatian", 21);
-//        variantScrollList.addOption("Gray Tabby", 22);
-//        variantScrollList.addOption("Brown", 23);
-//        variantScrollList.addOption("Pale Ginger", 24);
-//        variantScrollList.addOption("Black 2", 25);
-//        variantScrollList.addOption("Bengal", 26);
-//        variantScrollList.addOption("Snowshoe", 27);
-//        variantScrollList.addOption("Toyger", 28);
-//        variantScrollList.addOption("Turkish Van", 29);
-//        variantScrollList.addOption("Albino (CoffeeCat)", 30);
-//        variantScrollList.addOption("Bengal (CoffeeCat)", 31);
-//        variantScrollList.addOption("Brindle Tortie (Mswolfy81)", 32);
-//        variantScrollList.addOption("Cream Calico 1 (Lightley)", 33);
-//        variantScrollList.addOption("Cream Calico 2 (Lightley)", 34);
-//        variantScrollList.addOption("Cream Calico 3 (Lightley)", 35);
-//        variantScrollList.addOption("Caramel (CoffeeCat)", 36);
-//        variantScrollList.addOption("Frostdawn (whitenoisewife)", 37);
-//        variantScrollList.addOption("Gray-white Tabby (Slay)", 38);
-//        variantScrollList.addOption("Hailflake (pvppet, Mswolfy81)", 39);
-//        variantScrollList.addOption("Karpati (whitenoisewife)", 40);
-//        variantScrollList.addOption("Leafstar (whitenoisewife)", 41);
-//        variantScrollList.addOption("Longtail (whitenoisewife)", 42);
-//        variantScrollList.addOption("Mothpaw (CoffeeCat)", 43);
-//        variantScrollList.addOption("Redtail (whitenoisewife)", 44);
-//        variantScrollList.addOption("Salem (CoffeeCat, Mswolfy81)", 45);
-//        variantScrollList.addOption("Short hair (CoffeeCat)", 46);
-//        variantScrollList.addOption("Stoneflare (Feathered Melodica)", 47);
-//        variantScrollList.addOption("Tortie point (whitenoisewife)", 48);
-//        variantScrollList.addOption("Turtleheart (RainbowServal, Mswolfy81)", 49);
-//        variantScrollList.addOption("Violetdew (bem te vi, Mswolfy81)", 50);
-//        variantScrollList.addOption("Patch (Feathered Melodica)", 51);
-//        variantScrollList.addOption("Parlee (PsychicStudios, CoffeeCat)", 52);
-//
-//
-//        if (!ClientClanData.get().isOnGeneticalSkin()) {
-//            this.addRenderableWidget(this.variantScrollList);
-//        }
-
 
         kitPrefixBox = new EditBox(
                 this.font,
                 centerX-45, centerY + 28,
                 90, 20,
-                Component.literal("Prefix")
+                Component.translatable("screen.setup.prefix")
         );
         kitPrefixBox.setMaxLength(13);
+        kitPrefixBox.setHint(Component.translatable("screen.setup.prefix_hint"));
+
         this.addRenderableWidget(kitPrefixBox);
 
-        saveButton = Button.builder(
-                Component.literal("Generate"),
+        Button saveButton = Button.builder(
+                Component.translatable("screen.kitcreate.done"),
                 btn -> onSave()
-        ).bounds(centerX-40, centerY + 85, 80, 20).build();
+        ).bounds(centerX - 40, centerY + 85, 80, 20).build();
 
         this.addRenderableWidget(saveButton);
+
+        Button setRandomPrefix = Button.builder(
+                Component.translatable("screen.setup.random_prefix"),
+                btn -> {
+
+                    int value = Minecraft.getInstance().player.getRandom().nextInt(WCatEntity.PREFIXES.length);
+                    String prefix = WCatEntity.PREFIXES[value];
+                    kitPrefixBox.setValue(prefix);
+                }
+        ).bounds(centerX - 40, centerY + 53, 80, 15).build();
+
+        this.addRenderableWidget(setRandomPrefix);
     }
 
     private void onSave() {

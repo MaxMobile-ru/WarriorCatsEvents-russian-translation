@@ -12,7 +12,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ChunkPos;
 import net.snowteb.warriorcats_events.client.ClientTerritoryData;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.c2s.cats.CtSSendPatrol;
 import net.snowteb.warriorcats_events.network.packet.c2s.cats.RetrieveLastCatModePacket;
@@ -83,7 +83,7 @@ public class PatrolScreen extends Screen {
 
         scaleSlider = new FloatSliderButton(centerX - 75, centerY - 105,
                 100, 20,
-                0.6f, 1.0f, 0.8f, "Scale");
+                0.6f, 1.0f, 0.8f, Component.translatable("screen.patrol.scale").getString());
 
         ClientTerritoryData.ClientClanTerritories territory = CLIENT_TERRITORIES.get(clanUUID);
 
@@ -110,7 +110,7 @@ public class PatrolScreen extends Screen {
         }
 
         backButton = Button.builder(
-                Component.literal("Close"),
+                Component.translatable("screen.patrol.close"),
                 btn -> {
                     Entity ent = Minecraft.getInstance().level.getEntity(currentCatID);
                     if (ent instanceof WCatEntity) {
@@ -146,14 +146,14 @@ public class PatrolScreen extends Screen {
         catSelection.setLeftPos(centerX + 90 - 50);
 
         sendBorderPatrol = Button.builder(
-                Component.literal("Border Patrol"),
+                Component.translatable("screen.patrol.border_patrol"),
                 btn -> {
                     sendPatrol(0);
                 }
         ).bounds(centerX-85, this.height - 30, 80, 20).build();
 
         sendHuntingPatrol = Button.builder(
-                Component.literal("Hunting Patrol"),
+                Component.translatable("screen.patrol.hunting_patrol"),
                 btn -> {
                     sendPatrol(1);
                 }
@@ -280,7 +280,7 @@ public class PatrolScreen extends Screen {
                     0xbb008888);
             pGuiGraphics.renderOutline(0 - 2, 0 - 2, 4, 4, 0xbbbb0000);
             pGuiGraphics.pose().scale(0.5f, 0.5f, 0.5f);
-            pGuiGraphics.drawString(this.font, "You are here", 0, -8, 0xFFFFFFFF);
+            pGuiGraphics.drawString(this.font, Component.translatable("screen.patrol.you_are_here"), 0, -8, 0xFFFFFFFF);
 
             pGuiGraphics.pose().popPose();
 
@@ -303,8 +303,8 @@ public class PatrolScreen extends Screen {
         int catsSelectedCount = catSelection.getSelectedIDs().size();
         int chunksSelectedCount = selected.size();
 
-        pGuiGraphics.drawCenteredString(this.font, catsSelectedCount + " cats selected.", 0, 0, 0xaaFFFFFF);
-        pGuiGraphics.drawCenteredString(this.font, chunksSelectedCount + " chunks selected.", 0, -137, 0xaaFFFFFF);
+        pGuiGraphics.drawCenteredString(this.font, Component.translatable("screen.patrol.cats_selected",catsSelectedCount), 0, 0, 0xaaFFFFFF);
+        pGuiGraphics.drawCenteredString(this.font, Component.translatable("screen.patrol.chunks_selected",chunksSelectedCount), 0, -137, 0xaaFFFFFF);
 
         pGuiGraphics.pose().popPose();
 
@@ -343,13 +343,13 @@ public class PatrolScreen extends Screen {
         if (this.isPlayerDeputy) entityIDs.add(this.currentCatID);
 
         if (entityIDs.isEmpty()) {
-            displayError("No cats were selected.", true);
+            displayError(Component.translatable("screen.patrol.no_cats_selected").getString(), true);
             return;
         }
 
         List<ChunkPos> territoryToPatrol = new ArrayList<>(selected);
         if (territoryToPatrol.isEmpty()) {
-            displayError("No territory was selected.", true);
+            displayError(Component.translatable("screen.patrol.no_chunks_selected").getString(), true);
             return;
         }
 
@@ -414,34 +414,29 @@ public class PatrolScreen extends Screen {
         String dangerText;
         ChatFormatting dangerColor;
         if (danger >= 0.9) {
-            dangerText = "HIGH";
+            dangerText = Component.translatable("screen.patrol.high_danger").getString();
             dangerColor = ChatFormatting.RED;
         } else if (danger >= 0.6) {
-            dangerText = "MODERATE";
+            dangerText = Component.translatable("screen.patrol.moderate_danger").getString();
             dangerColor = ChatFormatting.GOLD;
         } else if (danger >= 0.3) {
-            dangerText = "MEDIUM";
+            dangerText = Component.translatable("screen.patrol.medium_danger").getString();
             dangerColor = ChatFormatting.YELLOW;
         } else {
-            dangerText = "LOW";
+            dangerText = Component.translatable("screen.patrol.low_danger").getString();
             dangerColor = ChatFormatting.GREEN;
         }
 
-        Component dangerComp = Component.empty()
-                .append("Danger: ")
-                .append(Component.literal(dangerText).withStyle(dangerColor))
-                .append(Component.literal(" " + dangerPercentage + "%").withStyle(ChatFormatting.GRAY));
+        Component dangerComp = Component.translatable("screen.patrol.danger",
+                        Component.literal(dangerText).withStyle(dangerColor)
+                .append(Component.literal(" " + dangerPercentage + "%").withStyle(ChatFormatting.GRAY)));
 
         int timeForBorder = (int) (selected.size()*1.25D);
         int timeForHunting = (int) (selected.size()*2.25D);
 
-        Component forBorder = Component.empty()
-                .append("Estimated time: ")
-                .append(timeForBorder + "m");
+        Component forBorder = Component.translatable("screen.patrol.estimated_time", timeForBorder);
 
-        Component forHunting = Component.empty()
-                .append("Estimated time: ")
-                .append(timeForHunting + "m");
+        Component forHunting = Component.translatable("screen.patrol.estimated_time", timeForHunting);
 
         pGuiGraphics.drawCenteredString(this.font, dangerComp, centerX, this.height - 55, 0xFFFFFFFF);
 

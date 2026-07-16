@@ -125,7 +125,7 @@ public class FishingScreen extends Screen {
         guiGraphics.pose().scale(0.83f,0.83f,0);
         guiGraphics.drawCenteredString(
                 this.font,
-                "Click any part of the screen to grab fish",
+                Component.translatable("screen.fishing.click_tip"),
                 0,
                 0,
                 0x88FFFFFF
@@ -150,7 +150,7 @@ public class FishingScreen extends Screen {
                 Minecraft.getInstance().setScreen(null);
                 if (pPlayer != null) {
                     pPlayer.displayClientMessage(
-                            Component.literal("¡You missed the catch!").withStyle(ChatFormatting.GRAY),
+                            Component.translatable("screen.fishing.missed").withStyle(ChatFormatting.GRAY),
                             true
                     );
                 }
@@ -174,25 +174,6 @@ public class FishingScreen extends Screen {
             this.randomTiming--;
         }
 
-        // DEBUG
-//        {
-//            if (this.offset <= -88 && this.offset > -98 && this.fishTimer <= 5 && this.fishTimer > 0) {
-//                if (pPlayer != null) {
-//                    pPlayer.displayClientMessage(
-//                            Component.literal("¡Appears!").withStyle(ChatFormatting.GREEN),
-//                            false
-//                    );
-//                }
-//            }
-//            if (this.offset <= -98 && this.fishTimer <= 5 && this.fishTimer > 0) {
-//                if (pPlayer != null) {
-//                    pPlayer.displayClientMessage(
-//                            Component.literal("¡Goes!").withStyle(ChatFormatting.RED),
-//                            false
-//                    );
-//                }
-//            }
-//        }
     }
 
     @Override
@@ -205,7 +186,7 @@ public class FishingScreen extends Screen {
             Player player = Minecraft.getInstance().player;
             if (player != null) {
                 player.displayClientMessage(
-                        Component.literal("¡Perfect catch!").withStyle(ChatFormatting.DARK_AQUA),
+                        Component.translatable("screen.fishing.catch").withStyle(ChatFormatting.DARK_AQUA),
                         true
                 );
                 ModPackets.sendToServer(new CtSFishSuccesful(this.clickedPos));
@@ -218,7 +199,7 @@ public class FishingScreen extends Screen {
             Minecraft.getInstance().setScreen(null);
             if (pPlayer != null) {
                 pPlayer.displayClientMessage(
-                        Component.literal("¡You missed the catch!").withStyle(ChatFormatting.GRAY),
+                        Component.translatable("screen.fishing.missed").withStyle(ChatFormatting.GRAY),
                         true
                 );
                 ModPackets.sendToServer(new CtSFishFailed());

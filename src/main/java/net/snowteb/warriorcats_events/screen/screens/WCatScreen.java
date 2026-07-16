@@ -9,11 +9,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.screen.menus.WCatMenu;
-
-import static net.snowteb.warriorcats_events.screen.screens.ManageClanScreen.pose;
-import static net.snowteb.warriorcats_events.screen.screens.ManageClanScreen.rotation;
 
 public class WCatScreen extends AbstractContainerScreen<WCatMenu>  {
     private static final ResourceLocation TEXTURE =

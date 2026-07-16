@@ -10,11 +10,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.snowteb.warriorcats_events.entity.custom.EagleEntity;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.s2c.cats.OpenAncientStickScreenPacket;
 
@@ -55,7 +53,7 @@ public class AncientStickItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.literal("Right-click to command all or certain cats around").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("item.warriorcats_events.ancient_stick.tip").withStyle(ChatFormatting.GRAY));
     }
 
 }

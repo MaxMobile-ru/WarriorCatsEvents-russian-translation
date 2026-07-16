@@ -55,14 +55,6 @@ public class CraftingRockCategory implements IRecipeCategory<HerbsRecipe> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder iRecipeLayoutBuilder, HerbsRecipe herbsRecipe, IFocusGroup iFocusGroup) {
 
-//        iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 80, 11).addIngredients(herbsRecipe.getIngredients().get(0));
-//        iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 80, 21).addIngredients(herbsRecipe.getIngredients().get(1));
-//        iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 80, 31).addIngredients(herbsRecipe.getIngredients().get(2));
-//        iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 80, 41).addIngredients(herbsRecipe.getIngredients().get(3));
-//        iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 80, 51).addIngredients(herbsRecipe.getIngredients().get(4));
-//
-//        iRecipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT, 100, 31).addItemStack(herbsRecipe.getResultItem(null));
-
         int centerX = 90/2;
         int centerY = 90/2;
 

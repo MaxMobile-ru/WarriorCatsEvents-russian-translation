@@ -45,12 +45,12 @@ public class ResetSkillsPacket {
                     .map(ISkillData::isClimbUnlocked)
                     .orElse(false)) ? 1 : 0;
 
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultSpeedCost()* speedLevel)/ 0.32));
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultHPCost()* hpLevel)/ 0.32));
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultDMGCost()* dmgLevel)/ 0.32));
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultJumpCost()* jumpLevel)/ 0.32));
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultArmorCost()* armorLevel)/ 0.32));
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultClimbCost()* climbLevel)/ 0.32));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultSpeedCost()* speedLevel)* 0.66));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultHPCost()* hpLevel)* 0.66));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultDMGCost()* dmgLevel)* 0.66));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultJumpCost()* jumpLevel)* 0.66));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultArmorCost()* armorLevel)* 0.66));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultClimbCost()* climbLevel)* 0.66));
 
             player.getCapability(PlayerSkillProvider.SKILL_DATA).ifPresent(data -> data.setSpeedLevel(0));
             player.getCapability(PlayerSkillProvider.SKILL_DATA).ifPresent(data -> data.setHPLevel(0));

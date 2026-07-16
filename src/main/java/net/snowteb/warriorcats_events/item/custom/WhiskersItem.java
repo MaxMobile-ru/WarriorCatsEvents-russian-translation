@@ -16,13 +16,10 @@ import net.minecraft.world.level.Level;
 import net.snowteb.warriorcats_events.clan.WCEPlayerData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.diseases.Diseaseable;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.s2c.clan.S2CSyncClanDataPacket;
 import net.snowteb.warriorcats_events.network.packet.s2c.others.OpenPlayerCatDataScreenPacket;
 import net.snowteb.warriorcats_events.network.packet.s2c.others.SyncDiseasesPacket;
-import net.snowteb.warriorcats_events.util.ItemWithToolTip;
-import tocraft.walkers.api.PlayerShape;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -111,18 +108,18 @@ public class WhiskersItem extends Item {
         }
 
         if (InventoryScreen.hasShiftDown()) {
-            Component shiftRightClick = Component.literal("[Shift + Right-Click] ");
-            Component rightClick = Component.literal("[Right-Click] ");
+            Component shiftRightClick = Component.translatable("generic.shift_right_click").append(" ");
+            Component rightClick = Component.translatable("generic.right_click").append(" ");
 
             tooltip.add(Component.empty());
-            tooltip.add(rightClick.copy().append(Component.literal("On a nest to claim it.").withStyle(ChatFormatting.GRAY)));
-            tooltip.add(shiftRightClick.copy().append(Component.literal("On a Wild Cat to change their clan role.").withStyle(ChatFormatting.GRAY)));
-            tooltip.add(rightClick.copy().append(Component.literal("On a Wild Cat to display their profile.").withStyle(ChatFormatting.GRAY)));
-            tooltip.add(rightClick.copy().append(Component.literal("On a Player to display their character profile.").withStyle(ChatFormatting.GRAY)));
+            tooltip.add(rightClick.copy().append(Component.translatable("item.warriorcats_events.whiskers.tip1").withStyle(ChatFormatting.GRAY)));
+            tooltip.add(shiftRightClick.copy().append(Component.translatable("item.warriorcats_events.whiskers.tip2").withStyle(ChatFormatting.GRAY)));
+            tooltip.add(rightClick.copy().append(Component.translatable("item.warriorcats_events.whiskers.tip3").withStyle(ChatFormatting.GRAY)));
+            tooltip.add(rightClick.copy().append(Component.translatable("item.warriorcats_events.whiskers.tip4").withStyle(ChatFormatting.GRAY)));
 
         } else {
             tooltip.add(Component.empty());
-            tooltip.add((Component.literal("[Hold Shift to display all usages]").withStyle(ChatFormatting.DARK_PURPLE)));
+            tooltip.add((Component.translatable("item.warriorcats_events.claws.display_tips").withStyle(ChatFormatting.DARK_PURPLE)));
         }
     }
 

@@ -62,6 +62,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.BLACK_KITTYPET_BOWL.get());
         this.dropSelf(ModBlocks.RED_KITTYPET_BOWL.get());
 
+        this.dropSelf(ModBlocks.HERB_MIXING_ROCK.get());
+
         //DOCK
         {
             this.add(ModBlocks.DOCK.get(), block -> this.applyExplosionDecay(

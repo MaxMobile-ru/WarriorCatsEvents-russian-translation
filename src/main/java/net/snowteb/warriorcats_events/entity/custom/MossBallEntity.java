@@ -26,6 +26,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.snowteb.warriorcats_events.entity.ModEntities;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.item.custom.MossBallItem;
 
@@ -158,26 +159,6 @@ public class MossBallEntity extends ThrowableItemProjectile {
         }
     }
 
-    @Override
-    public void playerTouch(Player pPlayer) {
-        super.playerTouch(pPlayer);
-
-//        if (!(this.level() instanceof ServerLevel sLevel)) return;
-//        if (!(pPlayer instanceof ServerPlayer)) return;
-//
-//        if (this.getLife() < 20) return;
-//        if (this.getItem().isEmpty()) return;
-//        ItemStack copy = this.getItem().copy();
-//        if (copy.hasTag()) {
-//            copy.getTag().remove("Life");
-//        }
-//        if (!pPlayer.addItem(copy)) {
-//            pPlayer.drop(copy, false);
-//        }
-//        this.discard();
-//        sLevel.playSound(null, pPlayer.blockPosition(), SoundEvents.ITEM_PICKUP,
-//                SoundSource.PLAYERS, 0.4f, 1.8f);
-    }
 
     @Override
     protected void onHitEntity(EntityHitResult pResult) {

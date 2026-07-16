@@ -1,4 +1,4 @@
-// 1.20.1	2026-06-10T15:44:13.5061708	Loot Tables
+// 1.20.1	2026-07-14T09:38:47.4948895	Loot Tables
 4f62f5681b31900bd279a524d2c674329bef96ea data/warriorcats_events/loot_tables/blocks/acacia_bed.json
 bfa634b2f3721f6ded9efd586859321af030abd7 data/warriorcats_events/loot_tables/blocks/acorn_bed.json
 a25dc54da96e56a57be709cad12a508112279cac data/warriorcats_events/loot_tables/blocks/acorn_lantern.json
@@ -26,6 +26,7 @@ bc9ef1fa4c0a2a6a88d0721a08ab5b7a7799adbc data/warriorcats_events/loot_tables/blo
 bfc2e2d15d5c97f879d9328117e2917821c2d4bb data/warriorcats_events/loot_tables/blocks/green_glowrocks.json
 1c09ad3fcf6ae5d377f186fdaf8daf964c943a41 data/warriorcats_events/loot_tables/blocks/green_wall_glowrocks.json
 9fa247165a05bcb29ef7d176a2ea9bc94cf0ed62 data/warriorcats_events/loot_tables/blocks/hay_bed.json
+d14f8678b99f12e54d15a40324dd95e2407757d8 data/warriorcats_events/loot_tables/blocks/herb_rock.json
 0257e11400610c0934d1f6a177f7744ec67fc5e9 data/warriorcats_events/loot_tables/blocks/juniper.json
 c9a7c9e0cc9dbd8f83458ecbd40e0c52e7713654 data/warriorcats_events/loot_tables/blocks/kelp_bed.json
 6aefe3cd733916f65d468c34d24b10d8a67beec8 data/warriorcats_events/loot_tables/blocks/kittypet_bed.json

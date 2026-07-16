@@ -510,6 +510,19 @@ public class ModPackets {
                 .consumerMainThread(OpenChangelogScreenPacket::handle)
                 .add();
 
+        net.messageBuilder(RenameNametagPacket.class, 76, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(RenameNametagPacket::decode)
+                .encoder(RenameNametagPacket::encode)
+                .consumerMainThread(RenameNametagPacket::handle)
+                .add();
+
+        net.messageBuilder(KickNPCPacket.class, 77, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(KickNPCPacket::decode)
+                .encoder(KickNPCPacket::encode)
+                .consumerMainThread(KickNPCPacket::handle)
+                .add();
+
+
     }
 
 

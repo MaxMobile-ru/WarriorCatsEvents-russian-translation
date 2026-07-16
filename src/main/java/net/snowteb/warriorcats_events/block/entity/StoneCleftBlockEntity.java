@@ -37,32 +37,6 @@ public class StoneCleftBlockEntity extends BlockEntity implements MenuProvider {
         }
     };
 
-
-    private static final int INPUT1 = 0;
-    private static final int INPUT2 = 1;
-    private static final int INPUT3 = 2;
-    private static final int INPUT4 = 3;
-    private static final int INPUT5 = 4;
-    private static final int INPUT6 = 5;
-    private static final int INPUT7 = 6;
-    private static final int INPUT8 = 7;
-    private static final int INPUT9 = 8;
-    private static final int INPUT10 = 9;
-    private static final int INPUT11 = 10;
-    private static final int INPUT12 = 11;
-    private static final int INPUT13 = 12;
-    private static final int INPUT14 = 13;
-    private static final int INPUT15 = 14;
-    private static final int INPUT16 = 15;
-    private static final int INPUT17 = 16;
-    private static final int INPUT18 = 17;
-    private static final int INPUT19 = 18;
-    private static final int INPUT20 = 19;
-    private static final int INPUT21 = 20;
-    private static final int INPUT22 = 21;
-    private static final int INPUT23 = 22;
-    private static final int INPUT24 = 23;
-
     private LazyOptional<IItemHandler> LazyItemHandler = LazyOptional.empty();
 
 

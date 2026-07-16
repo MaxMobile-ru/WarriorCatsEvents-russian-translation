@@ -88,16 +88,12 @@ public class PlayerCatDataScreen extends Screen {
 
         name = Component.literal(data.name);
         genderText = Component.literal(data.gender);
-//        if (data.gender == 0) {
-//            genderText = Component.literal("Tom-cat");
-//        } else if (data.gender == 1) {
-//            genderText = Component.literal("She-cat");
-//        }
 
-        catMate = Component.literal("Mate: ").append(Component.literal(data.mateName).withStyle(ChatFormatting.AQUA));
+
+        catMate = Component.translatable("screen.catdata.mate", Component.literal(data.mateName).withStyle(ChatFormatting.AQUA));
 
         {
-            clanName = Component.literal("From ").append(Component.literal(data.clanName));
+            clanName = Component.translatable("screen.catdata.clan", Component.literal(data.clanName));
         }
 
         ageText = Component.nullToEmpty(data.age.name());
@@ -120,9 +116,9 @@ public class PlayerCatDataScreen extends Screen {
 
             String text = "";
             if (menuKey.equals("bio")) {
-                text = "Update character bio";
+                text = Component.translatable("screen.playercatdata.character_bio").getString();
             } else if (menuKey.equals("gender")) {
-                text = "Set character gender";
+                text = Component.translatable("screen.playercatdata.character_gender").getString();
             }
 
             pGuiGraphics.drawCenteredString(this.font, text, centerX, centerY, 0xff888899);
@@ -131,7 +127,7 @@ public class PlayerCatDataScreen extends Screen {
             pGuiGraphics.pose().translate(centerX, centerY + 38, 0);
             float scale = 0.7f;
             pGuiGraphics.pose().scale(scale, scale, scale);
-            pGuiGraphics.drawCenteredString(this.font, "Leave empty to reset", 0, 0, 0x55888899);
+            pGuiGraphics.drawCenteredString(this.font, Component.translatable("screen.playercatdata.leave_empty_tip"), 0, 0, 0x55888899);
             pGuiGraphics.pose().popPose();
 
 
@@ -204,7 +200,7 @@ public class PlayerCatDataScreen extends Screen {
         pGuiGraphics.pose().popPose();
 
         if (interactionCooldownTooltip) {
-            pGuiGraphics.renderTooltip(Minecraft.getInstance().font, Component.empty().append("Cannot have kits right now."), this.width, 30);
+            pGuiGraphics.renderTooltip(Minecraft.getInstance().font, Component.translatable("screen.playercatdata.cant_have_kits"), this.width, 30);
         }
 
         Player player = Minecraft.getInstance().level.getPlayerByUUID(targetUUID);
@@ -266,7 +262,7 @@ public class PlayerCatDataScreen extends Screen {
                     if (ClientClanData.get().getMateUUID().equals(targetUUID)) {
                         if (myKitCooldown <= 0 && data.kitCooldown <= 0 /*&& canInitiallyHaveKits*/) {
                             this.addRenderableWidget(Button.builder(
-                                    Component.literal("Have kits"),
+                                    Component.translatable("screen.catdata.have_kits"),
                                     btn -> {
                                         ModPackets.sendToServer(new PlayerKitPacket(targetUUID));
 
@@ -284,7 +280,7 @@ public class PlayerCatDataScreen extends Screen {
 
         if (editingProfile) {
             setBioButton = Button.builder(
-                    Component.literal("Set bio"),
+                    Component.translatable("screen.playercatdata.set_bio"),
                     btn -> {
                         bioMenu();
 
@@ -292,7 +288,7 @@ public class PlayerCatDataScreen extends Screen {
             ).bounds(this.width - 85, 10, 80, 20).build();
 
             setGenderButton = Button.builder(
-                    Component.literal("Set gender"),
+                    Component.translatable("screen.playercatdata.set_gender"),
                     btn -> {
                         genderMenu();
 
@@ -305,7 +301,7 @@ public class PlayerCatDataScreen extends Screen {
 
 
         this.addRenderableWidget(Button.builder(
-                Component.literal("Close"),
+                Component.translatable("screen.playercatdata.close"),
                 btn -> {
                     this.onClose();
                 }
@@ -330,11 +326,11 @@ public class PlayerCatDataScreen extends Screen {
                 120, 15,
                 Component.literal("Bio")
         );
-        bioBox.setHint(Component.literal("Your bio here").withStyle(ChatFormatting.DARK_GRAY).withStyle(ChatFormatting.ITALIC));
+        bioBox.setHint(Component.translatable("screen.playercatdata.bio_here").withStyle(ChatFormatting.DARK_GRAY).withStyle(ChatFormatting.ITALIC));
         bioBox.setMaxLength(245);
 
         sendBioButton = Button.builder(
-                Component.literal("Save"),
+                Component.translatable("screen.playercatdata.save"),
                 btn -> {
                     this.onClose();
                     WCEClient.playLocalSound(ModSounds.MENU_ACCEPT.get(), SoundSource.AMBIENT, 0.2f, 1.0f);
@@ -344,7 +340,7 @@ public class PlayerCatDataScreen extends Screen {
         ).bounds(centerX - 65, centerY + 50, 60, 20).build();
 
         closeMenus = Button.builder(
-                Component.literal("Close"),
+                Component.translatable("screen.playercatdata.close"),
                 btn -> {
                     drawMainMenu();
                     setBioButton.active = true;
@@ -375,11 +371,11 @@ public class PlayerCatDataScreen extends Screen {
                 120, 15,
                 Component.literal("Gender")
         );
-        genderBox.setHint(Component.literal("Gender here").withStyle(ChatFormatting.DARK_GRAY).withStyle(ChatFormatting.ITALIC));
+        genderBox.setHint(Component.translatable("screen.playercatdata.gender_here").withStyle(ChatFormatting.DARK_GRAY).withStyle(ChatFormatting.ITALIC));
         genderBox.setMaxLength(30);
 
         sendGenderButton = Button.builder(
-                Component.literal("Save"),
+                Component.translatable("screen.playercatdata.save"),
                 btn -> {
                     this.onClose();
                     WCEClient.playLocalSound(ModSounds.MENU_ACCEPT.get(), SoundSource.AMBIENT, 0.2f, 1.0f);
@@ -389,7 +385,7 @@ public class PlayerCatDataScreen extends Screen {
         ).bounds(centerX - 65, centerY + 50, 60, 20).build();
 
         closeMenus = Button.builder(
-                Component.literal("Close"),
+                Component.translatable("screen.playercatdata.close"),
                 btn -> {
                     drawMainMenu();
                     setBioButton.active = true;

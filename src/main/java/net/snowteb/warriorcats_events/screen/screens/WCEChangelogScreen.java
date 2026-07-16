@@ -62,7 +62,7 @@ public class WCEChangelogScreen extends Screen {
 
         backButton = new GradientToggleButton(
                 centerX - 135, centerY + 90, 40, 17,
-                Component.literal("Back"),
+                Component.translatable("screen.changelog.back"),
                 btn -> {
                     onClose();
                 },  ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/empty.png"),
@@ -104,18 +104,6 @@ public class WCEChangelogScreen extends Screen {
         float textScale = 0.50f;
         pGuiGraphics.pose().scale(textScale, textScale, textScale);
 
-        int y = 0;
-
-//        for (String line : lines) {
-//            List<FormattedCharSequence> wrapped = this.font.split(FormattedText.of(line), 550);
-//            for (FormattedCharSequence subLine : wrapped) {
-//
-//
-//                pGuiGraphics.drawString(this.font,subLine, 0, y, 0xFFFFFFFF);
-//                y += this.font.lineHeight;
-//            }
-//            y+=6;
-//        }
         pGuiGraphics.pose().popPose();
 
 
@@ -178,50 +166,56 @@ public class WCEChangelogScreen extends Screen {
     }
 
     private void defineChangelogLines() {
-        lines.add("$(##) Now available on Aternos!");
-        lines.add("$(#) Nests, Moonstone, Lizards, and more by Bem te vi!");
-        lines.add("Greetings! This update adds several new decorative and functional blocks, this thanks to the contribution by 'bem te vi' and his amazing talent with modeling. We all thank him for such beautiful pieces of art 💖  \n" +
+        lines.add("$(#) 1.11.0 | Reworks, more languages, and more!");
+        lines.add("Greetingss, this update will be mainly focused on internal reworks, and some very nice changes.\n" +
                 "\n" +
-                "This is only the part 1 of the contributions made by 'bem te vi', there will be more to come in the future.\n" +
+                "This includes a complete rework of the Create Morph menu. Now it will be not only more pretty, but also a lot more friendly with our 'squared-screen' friends.\n" +
                 "\n" +
-                "This update, aside from decorative blocks, accessories, and fixes, also includes the new Lizard!\n" +
-                "Lizards are very cute and useful creatures that can be tamed using Spider eyes. Kits usually hunt these down so better to be careful before taming.\n" +
-                "Once you have tamed a Lizard, you can Shift+Right-click to carry them on your head.\n" +
-                "Lizards will also occasionally dig up valuable items! From ores, to even valuable items such as Hearts of the sea.\n" +
-                "Lizards can be bred and will lay eggs in dark places once they have a mate.\n" +
+                "Not only this, but also some huge news...\n" +
                 "\n" +
-                "Again, thanks to 'bem te vi' for contributing with basically all models and textures in this update.");
+                "WCE is now available in other languages!!!!\n" +
+                "Thanks to the amazing work of tangyunyun, who contacted me to voluntarily help with this, WCE is now available in Chinese!!! \n" +
+                "希望你喜欢\n" +
+                "\n" +
+                "Additionally, WCE is now also available in Spanish. This is a translation made of my own, since I myself speak spanish. Espero aprecien el arduo trabajo c:\n" +
+                "\n" +
+                "Also, thanks to 'Dazzy / Phen' and 'Bog' and their amazing contribution of a piece of code... WCE now also supports custom cat textures! You can now make a resourcepack with the ID \"warriorcats_events\" and add any textures you want. Here is a template to make your own resource packs. You can force resourcepacks in Multiplayer servers.\n" +
+                "\n" +
+                "https://www.mediafire.com/file/sd9qmmnoy2apld2/example_pack_1.20.1.zip/file\n" +
+                "\n" +
+                "There is also a lot more changes, adjustements, and additions in this update, so...");
         lines.add("$(##) Changelog");
 
-        lines.add("- Added: Cherry Blossom Nest, Driftwood Nest, Daisy Nest, Acacia Nest, Terracotta Nest, Bamboo Nest, Berry Nest, Coral Nest, Glowberry Nest, Muddy Nest, Kittypet Nest, Acorn Nest, Nautilus Nest, Sunflower Nest.");
-        lines.add("- Added Glowrocks, found in caves, can be tinted of different colors. Many can be placed together.");
-        lines.add("- Added Moonstone, a block intended to be a replacement for the Enchanting table. Surrounding it with Glowrocks will cause the same effect as surrounding an Enchanting table with Bookshelfs.");
-        lines.add("- Added accessories: Blue Morpho Wing, Goliath Birdwing Wing, Monarch Wing, Tiger Swallowtail Wing. As for now (until future updates), these can be found in village chests. ");
-        lines.add("- Added Acorn Lantern, Daisy Chain, Lavender Chain. ");
-        lines.add("- Added Stickfire, as a replacement for furnaces.");
-        lines.add("- Added Lizards! Lizards can be found around the world, and can be tamed using Spider eyes. Lizards can ocassionally dig valuable items for you. You can carry a lizard on your head by using Shift+Right-Click on a tamed lizard. ");
-        lines.add("- Added drop to vanilla frogs. They will now drop a respective food item.");
-        lines.add("- Added back the old config system for additional items (through .toml). This change wont be reverted, and will be the new average in the future.");
-        lines.add("- Removed some limitations for Leaping.");
-        lines.add("- Adjusted some diseases, fixed some values.");
-        lines.add("- Fixed an issue that caused players to be kicked out of their clans, and reset some character data.");
-        lines.add("- Fixed an issue with Warrior Nametags.");
-        lines.add("- Reduced chance of breaking paws.");
-        lines.add("- Reduced chance of sore pads.");
-        lines.add("- Fishing will now spawn an actual fish instead of an item, looks very cute :3");
-        lines.add("- The Leaping button can now be configured. Will stay as Left Click by default.");
-        lines.add("- Added sounds specific for Pigeons.");
-        lines.add("- Added subtitles to most sounds for accessibility settings.");
-        lines.add("- Slightly reduced enemy spawns in territory.");
-        lines.add("- Other fixes and adjustements to Wild Cats.");
-        lines.add("- Minor adjustements to prey.");
-        lines.add("- Removed naturally spawned too massive Wild Cats");
-        lines.add("- Increased the time to charge leap from up to 8 secs, to 15 secs.");
-        lines.add("- Increased the hitbox for leaping.");
-        lines.add("- Added an op command to invite players to clans.");
-        lines.add("- Added new public emote.");
-        lines.add("- Added new exclusive emote for contributors");
+        lines.add("- Fixed kits showing as fleas when the server config is changed.");
+        lines.add("- Removed all Hard-coded Strings and replaced by translation keys.");
+        lines.add("- Replaced genetics serializing for Wild Cats. From 1.16.0, Wild Cats that are not migrated from older versions to 1.11.X-1.15.X, will lose all their genetic traits.");
+        lines.add("- Reworked and improved Create Morph menu.");
+        lines.add("- Improved rendering for carrying kits.");
+        lines.add("- Fixed the infinite XP glitch in the Skill Tree.");
+        lines.add("- Added server config for max claimable territory.");
+        lines.add("- All cat collars have been removed. Cat collars are now replaced by a single dyable cat collar, that allows endless color combinations.");
+        lines.add("- Stored morphs now support preset cats.");
+        lines.add("- Replaced player morph serializing. You might experience minor one-time issues.");
+        lines.add("- Added Chinese and Spanish translations.");
+        lines.add("- Added prefix randomization to the \"Kit\" item.");
+        lines.add("- Added Carved stone! You can now Right-click stone to carve it, and obtain pebbles, which can be crafted into cobblestone.");
+        lines.add("- Reworked herb mixing system. Now it wont be managed through the Crafting Rock.");
+        lines.add("- Added Herb Rock, a dedicated block for mixing herbs.");
+        lines.add("- Added skin shades! You can change the skin shade of your character in the Details section.");
+        lines.add("- Updated Warrior's Guide.");
+        lines.add("- Warrior Nametags are now renamable. Shift+Right-click to rename a Warrior Nametag.");
+        lines.add("- Claws, Whiskers, and Warriors Guide will no longer drop on death.");
+        lines.add("- Improved cats AI. Now they will run and avoid damage sources such as fire, cactus, and others.");
+        lines.add("- Cats are now inmune to Sweet Berry bushes.");
+        lines.add("- Added an option to kick/remove NPCs from clans in the clan menu.");
+        lines.add("- Added Flappy Cat! Play Flappy Cat from the last option in the WCE Options menu.");
         lines.add("- Other minor adjustements.");
+        lines.add("- Other minor reworks.");
+        lines.add("- Removed Herobrinepaw.");
+
+        lines.add("$(##) Discord Boosters");
+        lines.add("Boost our Discord server to be a contributor and have exclusive emotes, bigger cat sizes, and other features!");
+
 
         lines.add("$(/#) Thank you for reading 🐈");
     }

@@ -17,23 +17,29 @@ public class PlayerSkill implements ISkillData {
     public static final double armorMultiplier = 2.5;
 
     public static int getDefaultSpeedCost() {
-    return (int) (30 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
-}
+        return (int) (30 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
+    }
+
     public static int getDefaultHPCost() {
-    return (int) (160 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
-}
+        return (int) (160 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
+    }
+
     public static int getDefaultDMGCost() {
-    return (int) (40 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
-}
+        return (int) (40 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
+    }
+
     public static int getDefaultJumpCost() {
-    return (int) (300 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
-}
+        return (int) (300 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
+    }
+
     public static int getDefaultArmorCost() {
-    return (int) (300 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
-}
+        return (int) (300 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
+    }
+
     public static int getDefaultStealthCost() {
-    return (int) (2921 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
-}
+        return (int) (2921 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
+    }
+
     public static int getDefaultClimbCost() {
         return (int) (1800 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
     }
@@ -72,17 +78,19 @@ public class PlayerSkill implements ISkillData {
     public int getSpeedLevel() {
         return speedLevel;
     }
+
     @Override
     public void setSpeedLevel(int level) {
         this.speedLevel = level;
     }
 
     @Override
-    public boolean isLeaping(){
+    public boolean isLeaping() {
         return isLeaping;
     }
+
     @Override
-    public void setLeaping(boolean isLeaping){
+    public void setLeaping(boolean isLeaping) {
         this.isLeaping = isLeaping;
     }
 
@@ -90,6 +98,7 @@ public class PlayerSkill implements ISkillData {
     public int getLeapPower() {
         return leapPower;
     }
+
     @Override
     public void setLeapPower(int leapPower) {
         this.leapPower = leapPower;
@@ -99,6 +108,7 @@ public class PlayerSkill implements ISkillData {
     public int getHPLevel() {
         return HPLevel;
     }
+
     @Override
     public void setHPLevel(int level) {
         this.HPLevel = level;
@@ -108,6 +118,7 @@ public class PlayerSkill implements ISkillData {
     public int getDMGLevel() {
         return DMGLevel;
     }
+
     @Override
     public void setDMGLevel(int level) {
         this.DMGLevel = level;
@@ -117,6 +128,7 @@ public class PlayerSkill implements ISkillData {
     public int getJumpLevel() {
         return jumpLevel;
     }
+
     @Override
     public void setJumpLevel(int level) {
         this.jumpLevel = level;
@@ -126,6 +138,7 @@ public class PlayerSkill implements ISkillData {
     public int getArmorLevel() {
         return armorLevel;
     }
+
     @Override
     public void setArmorLevel(int level) {
         this.armorLevel = level;
@@ -135,6 +148,7 @@ public class PlayerSkill implements ISkillData {
     public boolean isClimbUnlocked() {
         return climbUnlocked;
     }
+
     @Override
     public void setClimbUnlocked(boolean climbUnlocked) {
         this.climbUnlocked = climbUnlocked;
@@ -172,7 +186,7 @@ public class PlayerSkill implements ISkillData {
         if (hpAttr != null) {
             hpAttr.removeModifier(PlayerSkill.HP_SKILL_UUID);
 
-            double bonus = (hpMultiplier *WCEServerConfig.SERVER.SKILL_HP_MULTIPLIER.get()) * newStore.getHPLevel();
+            double bonus = (hpMultiplier * WCEServerConfig.SERVER.SKILL_HP_MULTIPLIER.get()) * newStore.getHPLevel();
             if (bonus > 0) {
                 hpAttr.addPermanentModifier(
                         new AttributeModifier(
@@ -187,7 +201,7 @@ public class PlayerSkill implements ISkillData {
         var dmgAttr = player.getAttribute(Attributes.ATTACK_DAMAGE);
         if (dmgAttr != null) {
             dmgAttr.removeModifier(PlayerSkill.DMG_SKILL_UUID);
-            double bonus = (damageMultiplier *WCEServerConfig.SERVER.SKILL_DMG_MULTIPLIER.get()) * newStore.getDMGLevel();
+            double bonus = (damageMultiplier * WCEServerConfig.SERVER.SKILL_DMG_MULTIPLIER.get()) * newStore.getDMGLevel();
             if (bonus > 0) {
                 dmgAttr.addPermanentModifier(
                         new AttributeModifier(
@@ -202,7 +216,7 @@ public class PlayerSkill implements ISkillData {
         var jumpAttr = player.getAttribute(ModAttributes.PLAYER_JUMP.get());
         if (jumpAttr != null) {
             jumpAttr.removeModifier(PlayerSkill.JUMP_SKILL_UUID);
-            double bonus = (jumpMultiplier *WCEServerConfig.SERVER.SKILL_JUMP_MULTIPLIER.get()) * newStore.getJumpLevel();
+            double bonus = (jumpMultiplier * WCEServerConfig.SERVER.SKILL_JUMP_MULTIPLIER.get()) * newStore.getJumpLevel();
             if (bonus > 0) {
                 jumpAttr.addPermanentModifier(
                         new AttributeModifier(
@@ -217,7 +231,7 @@ public class PlayerSkill implements ISkillData {
         var armorAttr = player.getAttribute(Attributes.ARMOR);
         if (armorAttr != null) {
             armorAttr.removeModifier(PlayerSkill.ARMOR_SKILL_UUID);
-            double bonus = (armorMultiplier *WCEServerConfig.SERVER.SKILL_ARMOR_MULTIPLIER.get()) * newStore.getArmorLevel();
+            double bonus = (armorMultiplier * WCEServerConfig.SERVER.SKILL_ARMOR_MULTIPLIER.get()) * newStore.getArmorLevel();
             if (bonus > 0) {
                 armorAttr.addPermanentModifier(
                         new AttributeModifier(

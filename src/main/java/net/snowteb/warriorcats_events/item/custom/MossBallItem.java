@@ -27,7 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.snowteb.warriorcats_events.entity.custom.MossBallEntity;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import org.jetbrains.annotations.Nullable;
 import tocraft.walkers.api.PlayerShape;
 
@@ -91,7 +91,7 @@ public class MossBallItem extends Item {
 
                         if (pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof MossBallItem item) {
                             if (getWaterLevel(single) >= 10) {
-                                pPlayer.displayClientMessage(Component.literal("Already full of water!").withStyle(ChatFormatting.GRAY), true);
+                                pPlayer.displayClientMessage(Component.translatable("item.warriorcats_events.moss_ball.full_of_water").withStyle(ChatFormatting.GRAY), true);
                                 return InteractionResultHolder.fail(single);
                             }
                         }
@@ -202,10 +202,10 @@ public class MossBallItem extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         if (getWaterLevel(pStack) > 0) {
-            pTooltipComponents.add(Component.literal("Water: " + getWaterLevel(pStack)).withStyle(ChatFormatting.AQUA));
+            pTooltipComponents.add(Component.translatable("item.warriorcats_events.moss_ball.water_level", getWaterLevel(pStack)).withStyle(ChatFormatting.AQUA));
         }
         if (getHoneyLevel(pStack) > 0) {
-            pTooltipComponents.add(Component.literal("Honey: " + getHoneyLevel(pStack)).withStyle(ChatFormatting.GOLD));
+            pTooltipComponents.add(Component.translatable("item.warriorcats_events.moss_ball.honey_level", getHoneyLevel(pStack)).withStyle(ChatFormatting.GOLD));
         }
     }
 

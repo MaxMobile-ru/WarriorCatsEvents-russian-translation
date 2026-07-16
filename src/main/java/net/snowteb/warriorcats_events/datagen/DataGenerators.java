@@ -8,7 +8,6 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.datagen.loot.GlobalLootModifiers;
 import net.snowteb.warriorcats_events.datagen.loot.ModLootTableProvider;
 
 import java.util.concurrent.CompletableFuture;

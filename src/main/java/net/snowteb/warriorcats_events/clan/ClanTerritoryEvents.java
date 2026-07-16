@@ -31,7 +31,7 @@ public class ClanTerritoryEvents {
 
         ChunkPos pos = new ChunkPos(event.getPos());
         if (isInEnemyTerritory(player, pos)) {
-            player.displayClientMessage(Component.literal("You cannot break blocks in this territory.").withStyle(ChatFormatting.RED), true);
+            player.displayClientMessage(Component.translatable("clan.cannot_break_blocks").withStyle(ChatFormatting.RED), true);
             event.setCanceled(true);
         }
     }
@@ -50,7 +50,7 @@ public class ClanTerritoryEvents {
 
         ChunkPos pos = new ChunkPos(event.getPos());
         if (isInEnemyTerritory(player, pos)) {
-            player.displayClientMessage(Component.literal("You cannot place blocks in this territory.").withStyle(ChatFormatting.RED), true);
+            player.displayClientMessage(Component.translatable("clan.cannot_place_blocks").withStyle(ChatFormatting.RED), true);
 
             event.setCanceled(true);
         }
@@ -67,7 +67,7 @@ public class ClanTerritoryEvents {
         ChunkPos pos = new ChunkPos(event.getPos());
         if (isInEnemyTerritory(player, pos)) {
             if (player.serverLevel().getBlockEntity(event.getPos()) != null) {
-                player.displayClientMessage(Component.literal("You cannot manage containers in this territory.").withStyle(ChatFormatting.RED), true);
+                player.displayClientMessage(Component.translatable("clan.cannot_open_containers").withStyle(ChatFormatting.RED), true);
                 event.setCanceled(true);
             }
         }

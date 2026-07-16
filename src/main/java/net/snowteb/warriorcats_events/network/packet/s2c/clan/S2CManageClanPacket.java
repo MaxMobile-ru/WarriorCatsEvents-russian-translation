@@ -3,9 +3,8 @@ package net.snowteb.warriorcats_events.network.packet.s2c.clan;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.client.ClanInfo;
-import net.snowteb.warriorcats_events.client.ClientClanCache;
 import net.snowteb.warriorcats_events.client.ClientPacketHandles;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 
 import java.util.*;
 import java.util.function.Supplier;

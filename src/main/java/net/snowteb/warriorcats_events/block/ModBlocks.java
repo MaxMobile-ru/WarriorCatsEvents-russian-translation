@@ -229,9 +229,16 @@ public class ModBlocks {
                     BlockBehaviour.Properties.of().sound(SoundType.STONE).strength(0.25F).noOcclusion()
             ));
 
+    public static final RegistryObject<Block> CARVED_STONE = BLOCKS.register("carved_stone",
+            () -> new WCEStoneBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion().noLootTable()));
+
 
     public static final RegistryObject<Block> STONE_CRAFTING_TABLE = BLOCKS.register("stone_crafting_table",
             ()  -> new StoneCraftingTable(BlockBehaviour.Properties.copy(Blocks.STONE).strength(0.2F).noOcclusion()));
+
+    public static final RegistryObject<Block> HERB_MIXING_ROCK = BLOCKS.register("herb_rock",
+            ()  -> new HerbMixingRockBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(0.2F).noOcclusion()));
+
 
     public static final RegistryObject<Block> DOCK = BLOCKS.register("dock",
             () -> new GenericBushBlock(

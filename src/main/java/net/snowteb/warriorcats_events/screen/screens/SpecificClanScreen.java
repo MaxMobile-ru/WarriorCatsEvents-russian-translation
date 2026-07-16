@@ -15,13 +15,15 @@ import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.client.ClanInfo;
 import net.snowteb.warriorcats_events.client.ClientClanCache;
 import net.snowteb.warriorcats_events.entity.ModEntities;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.managers.ClanSymbol;
+import net.snowteb.warriorcats_events.network.packet.c2s.cats.KickNPCPacket;
 import net.snowteb.warriorcats_events.network.packet.c2s.clan.CtSRequestManageScreenPacket;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.c2s.clan.CtSRegisterLogPacket;
 import net.snowteb.warriorcats_events.screen.widgets.*;
 import net.snowteb.warriorcats_events.sound.ModSounds;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.UUID;
@@ -45,6 +47,7 @@ public class SpecificClanScreen extends Screen {
 
     private GradientToggleButton players;
     private GradientToggleButton npcs;
+    private GradientButton kickNPC;
 
     private GradientToggleButton backButton;
 
@@ -86,7 +89,7 @@ public class SpecificClanScreen extends Screen {
                 centerX - 140,
                 centerY - 120,
                 80, 20,
-                Component.literal("Members"),
+                Component.translatable("screen.clan.members"),
                 btn -> {
                     selectFirstOptions(membersButton);
                     drawShowPlayerOrCatsMembers();
@@ -99,7 +102,7 @@ public class SpecificClanScreen extends Screen {
                 centerX - 40,
                 centerY - 120,
                 80, 20,
-                Component.literal("Logs"),
+                Component.translatable("screen.clan.logs"),
                 btn -> {
                     selectFirstOptions(logsButton);
                     drawShowLogsMembers();
@@ -112,14 +115,14 @@ public class SpecificClanScreen extends Screen {
                 centerX + 60,
                 centerY - 120,
                 80, 20,
-                Component.literal("Manage"),
+                Component.translatable("screen.clan.manage"),
                 btn -> {
                     selectFirstOptions(manageButton);
                     if (clan.canManage) {
                         onClose();
                         ModPackets.sendToServer(new CtSRequestManageScreenPacket(clan.uuid));
                     } else {
-                        errorMessage = "You don't have permission to do that";
+                        errorMessage = Component.translatable("clan.no_permissions").getString();
                         showErrorMessageFor = 100;
                     }
 
@@ -148,7 +151,7 @@ public class SpecificClanScreen extends Screen {
                 Minecraft.getInstance(),
                 140,
                 this.height - 60,
-                centerY + 0,
+                centerY,
                 centerY + 80,
                 20
         );
@@ -177,7 +180,7 @@ public class SpecificClanScreen extends Screen {
         this.clanLogsList.setRenderBackground(false);
 
         backButton = new GradientToggleButton(
-                centerX - 20, centerY + 88, 40, 15, Component.literal("Back"),
+                centerX - 20, centerY + 88, 40, 15, Component.translatable("screen.clan.back"),
                 btn -> {
                     WCEClient.playLocalSound(ModSounds.MENU_OPEN.get(), SoundSource.NEUTRAL, 0.8f,1.3f);
                     Minecraft.getInstance().setScreen(new ClanListScreen(false));
@@ -206,8 +209,12 @@ public class SpecificClanScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         renderBackground(pGuiGraphics);
+
+        if (kickNPC != null) {
+            kickNPC.visible = NPCmembersList.getSelected() != null && activeScreen.equals("cats");
+        }
 
         if (menuY < targetY) {
             menuY += (targetY - menuY) * 0.10f;
@@ -239,7 +246,7 @@ public class SpecificClanScreen extends Screen {
         }
 
         if (clan.canManage) pGuiGraphics.drawString(Minecraft.getInstance().font,
-                Component.literal("Manager").withStyle(ChatFormatting.GRAY), 2, 2, 0xFFFFFF);
+                Component.translatable("screen.clan.manager").withStyle(ChatFormatting.GRAY), 2, 2, 0xFFFFFF);
         if (Minecraft.getInstance().player != null) {
             {
                 pGuiGraphics.pose().pushPose();
@@ -280,10 +287,10 @@ public class SpecificClanScreen extends Screen {
                 entityToRender.setVariant(cat.variant);
 
                 entityToRender.setOnGeneticalSkin(cat.onGeneticalSkin);
-                entityToRender.setGenetics(cat.genetics);
-                entityToRender.setChimeraGenetics(cat.chimeraGenetics);
-                entityToRender.setGeneticalVariants(cat.variants);
-                entityToRender.setGeneticalVariantsChimera(cat.chimeraVariants);
+                entityToRender.getGeneticsModule().setGenetics(cat.genetics);
+                entityToRender.getGeneticsModule().setChimeraGenetics(cat.chimeraGenetics);
+                entityToRender.getGeneticsModule().setGeneticalVariants(cat.variants);
+                entityToRender.getGeneticsModule().setGeneticalVariantsChimera(cat.chimeraVariants);
 
                 entityToRender.setOnGround(true);
                 entityToRender.setYRot(0);
@@ -312,7 +319,7 @@ public class SpecificClanScreen extends Screen {
             int renderBGwidth = (centerX - 110) - 10;
 
             pGuiGraphics.drawCenteredString(Minecraft.getInstance().font,
-                    Component.literal("Send a log").withStyle(ChatFormatting.WHITE), 10 + renderBGwidth / 2, centerY - 90, 0xFFFFFF);
+                    Component.translatable("screen.clan.send_a_log").withStyle(ChatFormatting.WHITE), 10 + renderBGwidth / 2, centerY - 90, 0xFFFFFF);
 
 
 
@@ -344,12 +351,12 @@ public class SpecificClanScreen extends Screen {
                     "Members: " + (clan.memberCount + clan.clanCats.size()), centerX, centerY - 35, 0xFFFFFF);
 
             if (activeScreen.equals("players")) {
-                pGuiGraphics.drawCenteredString(Minecraft.getInstance().font,"Players: " + (clan.memberCount) , centerX, centerY - 20, 0xFFFFFF);
+                pGuiGraphics.drawCenteredString(Minecraft.getInstance().font,Component.translatable("screen.clan.players", (clan.memberCount)) , centerX, centerY - 20, 0xFFFFFF);
 
             }
             if (activeScreen.equals("cats") && !searchBarActive) {
                 pGuiGraphics.drawCenteredString(Minecraft.getInstance().font,
-                        "NPCs: " + (clan.clanCats.size()), centerX, centerY - 20, 0xFFFFFF);
+                        Component.translatable("screen.clan.npcs", (clan.clanCats.size())), centerX, centerY - 20, 0xFFFFFF);
 
             }
 
@@ -361,7 +368,7 @@ public class SpecificClanScreen extends Screen {
                 clan.name, centerX, centerY - 90, clan.color);
 
         if (clan.leaderName != null) pGuiGraphics.drawCenteredString(Minecraft.getInstance().font,
-                "Leader: " + clan.leaderName, centerX, centerY - 70, 0xFFFFFF);
+                Component.translatable("screen.clanmanage.leader", clan.leaderName), centerX, centerY - 70, 0xFFFFFF);
 
 
         pGuiGraphics.pose().popPose();
@@ -402,7 +409,7 @@ public class SpecificClanScreen extends Screen {
                 centerX - 65,
                 centerY - 50,
                 60, 15,
-                Component.literal("NPCs"),
+                Component.translatable("screen.clan.npcs_button"),
                 btn -> {
                     selectMemberType(npcs);
                     drawShowCatsMembers();
@@ -411,11 +418,33 @@ public class SpecificClanScreen extends Screen {
                 80, 15,0.8f,  clan.color
         );
 
+        int displayCatX0 = centerX + 110;
+        int displayCatX1 = this.width - 10;
+        int displayCatCenter = displayCatX0 + (displayCatX1 - displayCatX0)/2;
+
+        kickNPC = new GradientButton(
+                displayCatCenter - 40,
+                centerY + 80,
+                80, 15,
+                Component.translatable("screen.clanmanage.kickplayer"),
+                btn -> {
+                    if (NPCmembersList.getSelected() != null) {
+                        ModPackets.sendToServer(new KickNPCPacket(NPCmembersList.getSelected().getId(), clan.uuid));
+                        this.onClose();
+                    }
+                },
+                ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/empty.png"),
+                80, 20, clan.color
+        );
+
+        if (clan.canManage) this.addRenderableWidget(kickNPC);
+
+
         players = new GradientToggleButton(
                 centerX + 5,
                 centerY - 50,
                 60, 15,
-                Component.literal("Players"),
+                Component.translatable("screen.clan.players_button"),
                 btn -> {
                     selectMemberType(players);
                     drawShowPlayerMembers();
@@ -461,7 +490,7 @@ public class SpecificClanScreen extends Screen {
 
         searchBar.setValue("");
         searchBar.setResponder(this::filterNPCList);
-        searchBar.setHint(Component.literal("<Search>").withStyle(ChatFormatting.DARK_GRAY));
+        searchBar.setHint(Component.translatable("screen.clan.search_hint").withStyle(ChatFormatting.DARK_GRAY));
 
         filterNPCList("");
 
@@ -496,7 +525,7 @@ public class SpecificClanScreen extends Screen {
 
         if (clan.canManage) {
             this.addRenderableWidget(new GradientToggleButton(
-                    centerX + 50, centerY + 88, 45, 15, Component.literal("Write Log"),
+                    centerX + 50, centerY + 88, 45, 15, Component.translatable("screen.clan.write_log"),
                     btn -> {
                         drawSendLogWidgets();
                     },
@@ -630,13 +659,13 @@ public class SpecificClanScreen extends Screen {
         );
 
         sendLogBar.setMaxLength(140);
-        sendLogBar.setHint(Component.literal("<message>").withStyle(ChatFormatting.DARK_GRAY));
+        sendLogBar.setHint(Component.translatable("screen.clan.message_hint").withStyle(ChatFormatting.DARK_GRAY));
 
         this.addRenderableWidget(Button.builder(
-                Component.literal("Send"),
+                Component.translatable("screen.clan.send"),
                 btn -> {
                     if (sendLogBar.getValue().isEmpty()) {
-                        errorMessage = "The content is empty.";
+                        errorMessage = Component.translatable("screen.clan.content_empty").getString();
                         showErrorMessageFor = 100;
                     } else {
                         ModPackets.sendToServer(new CtSRegisterLogPacket(sendLogBar.getValue(), clan.uuid));

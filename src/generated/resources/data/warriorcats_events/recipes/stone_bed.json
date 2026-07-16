@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "B": {
-      "item": "minecraft:stone"
+      "item": "minecraft:cobblestone"
     },
     "D": {
       "tag": "warriorcats_events:feathers"

@@ -1,6 +1,6 @@
 package net.snowteb.warriorcats_events.managers;
 
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,15 +18,22 @@ public class ServerPlayerMorphsCache {
         public WCGenetics chimeraGenetics;
         public WCGenetics.GeneticalVariants variants;
         public WCGenetics.GeneticalChimeraVariants chimeraVariants;
+        public boolean onGeneticalSkin;
+        public int presetVariant;
         public int time;
 
-        public ServerMorphData(WCGenetics genetics, WCGenetics chimeraGenetics, WCGenetics.GeneticalVariants variants, WCGenetics.GeneticalChimeraVariants chimeraVariants, int time) {
+        public ServerMorphData(WCGenetics genetics, WCGenetics chimeraGenetics, WCGenetics.GeneticalVariants variants,
+                               WCGenetics.GeneticalChimeraVariants chimeraVariants,
+                               boolean onGeneticalSkin, int presetVariant,
+                               int time) {
 
             this.genetics = genetics;
             this.chimeraGenetics = chimeraGenetics;
             this.variants = variants;
             this.chimeraVariants = chimeraVariants;
             this.time = time;
+            this.onGeneticalSkin = onGeneticalSkin;
+            this.presetVariant = presetVariant;
         }
     }
 

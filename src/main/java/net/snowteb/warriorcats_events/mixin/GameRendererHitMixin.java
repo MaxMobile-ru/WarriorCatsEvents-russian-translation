@@ -15,6 +15,7 @@ import net.minecraft.world.phys.*;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.util.ModTags;
 import net.snowteb.warriorcats_events.zconfig.WCEClientConfig;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,13 +25,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GameRenderer.class)
 public abstract class GameRendererHitMixin {
 
+    @Final
     @Shadow
-    private Minecraft minecraft;
+    Minecraft minecraft;
 
     @Inject(method = "pick", at = @At("TAIL"))
     private void modifyPick(float partialTicks, CallbackInfo ci) {
 
-//        if (!WCEClientConfig.CLIENT.HIT_THROUGH_PLANTS.get()) return;
 
         Player player = minecraft.player;
         if (player == null) return;

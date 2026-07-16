@@ -44,7 +44,7 @@ public class CtSPerformLeapPacket {
             if (player == null) return;
 
             if (!WCEServerConfig.SERVER.LEAP_SERVER.get()) {
-                player.displayClientMessage(Component.literal("Leaping is disabled in this server").withStyle(ChatFormatting.RED), true);
+                player.displayClientMessage(Component.translatable("generic.leap_disabled").withStyle(ChatFormatting.RED), true);
                 return;
             }
 

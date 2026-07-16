@@ -8,8 +8,8 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.sounds.SoundSource;
 import net.snowteb.warriorcats_events.WCEClient;
 import net.snowteb.warriorcats_events.entity.ModEntities;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.sound.ModSounds;
 
 import java.util.UUID;
@@ -90,10 +90,10 @@ public class MemberScrollList extends AbstractSelectionList<MemberScrollList.Mem
                 this.wCatEntity.setXRot(0);
 
                 this.wCatEntity.setOnGeneticalSkin(onGeneticalSkin);
-                this.wCatEntity.setGenetics(genetics);
-                this.wCatEntity.setChimeraGenetics(chimeraGens);
-                this.wCatEntity.setGeneticalVariants(variants);
-                this.wCatEntity.setGeneticalVariantsChimera(chimeraVariants);
+                this.wCatEntity.getGeneticsModule().setGenetics(genetics);
+                this.wCatEntity.getGeneticsModule().setChimeraGenetics(chimeraGens);
+                this.wCatEntity.getGeneticsModule().setGeneticalVariants(variants);
+                this.wCatEntity.getGeneticsModule().setGeneticalVariantsChimera(chimeraVariants);
             }
         }
 

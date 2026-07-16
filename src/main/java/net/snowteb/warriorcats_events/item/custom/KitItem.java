@@ -24,8 +24,8 @@ import net.snowteb.warriorcats_events.clan.ClanData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerData;
 import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.entity.ModEntities;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.managers.Sequence;
 import net.snowteb.warriorcats_events.network.ModPackets;
@@ -35,7 +35,7 @@ import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
 
 import java.util.UUID;
 
-import static net.snowteb.warriorcats_events.entity.custom.WCatEntity.Rank.KIT;
+import static net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity.Rank.KIT;
 
 public class KitItem extends Item {
     public KitItem(Properties pProperties) {
@@ -132,7 +132,7 @@ public class KitItem extends Item {
                 kit.setAge(-growingTicks);
 
                 kit.setOnGeneticalSkin(true);
-                kit.inheritGeneticsFromParents(playerGens, mateGens);
+                kit.getGeneticsModule().inheritGeneticsFromParents(playerGens, mateGens);
 
                 level.addFreshEntity(kit);
 
@@ -161,9 +161,6 @@ public class KitItem extends Item {
 
                     kit.setPrefix(Component.literal(prefix));
 
-                    sPlayer.sendSystemMessage(Component.literal(finalName).withStyle(ChatFormatting.GREEN)
-                            .append(Component.literal(" has been born!").withStyle(ChatFormatting.WHITE))
-                    );
                 }
 
                 kit.wanderCenter = sPlayer.blockPosition();
@@ -223,12 +220,6 @@ public class KitItem extends Item {
                 if (sPlayer.getItemInHand(InteractionHand.MAIN_HAND).is(ModItems.KIT_ITEM.get()) && !sPlayer.getAbilities().instabuild) sPlayer.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
                 level.sendParticles(ParticleTypes.HAPPY_VILLAGER, clickedPos.getX(), clickedPos.getY() + 0.5, clickedPos.getZ(), 15,0.3f,0.3f, 0.3f,0.2f);
 
-                Component messageLog = Component.literal(finalName).withStyle(ChatFormatting.GREEN)
-                        .append(Component.literal(" has been born! ").withStyle(ChatFormatting.WHITE))
-                        .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal(sPlayer.getName().getString()).withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal(")").withStyle(ChatFormatting.GRAY));
-                kit.registerClanLog(messageLog);
 
 
                 MinecraftServer mcServer = sPlayer.getServer();

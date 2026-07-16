@@ -1,52 +1,31 @@
 package net.snowteb.warriorcats_events.block.custom;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
-import net.snowteb.warriorcats_events.block.entity.StoneCraftingTableBlockEntity;
-import net.snowteb.warriorcats_events.item.ModItems;
-import net.snowteb.warriorcats_events.particles.WCEParticles;
-import net.snowteb.warriorcats_events.recipes.HerbsRecipe;
-import net.snowteb.warriorcats_events.recipes.WCERecipes;
 import net.snowteb.warriorcats_events.screen.menus.StoneCraftingTableMenu;
-import net.snowteb.warriorcats_events.util.ModTags;
 import org.jetbrains.annotations.Nullable;
 import tocraft.walkers.api.PlayerShape;
 
-import java.util.Optional;
-
-public class StoneCraftingTable extends HorizontalDirectionalBlock implements EntityBlock {
+public class StoneCraftingTable extends HorizontalDirectionalBlock {
     private static final Component CONTAINER_TITLE = Component.translatable("block.warriorcats_events.stone_crafting_table");
 
     protected static final VoxelShape NORTH_TABLE = Block.box(2.0D, 0.0D, 6.0D, 13.0D, 6.0D, 14.0D);
@@ -90,10 +69,6 @@ public class StoneCraftingTable extends HorizontalDirectionalBlock implements En
             return InteractionResult.SUCCESS;
         } else {
             if (PlayerShape.getCurrentShape(pPlayer) instanceof Animal) {
-
-                if (pPlayer.isShiftKeyDown()) {
-                    return InteractionResult.PASS;
-                }
 
                 pPlayer.openMenu(pState.getMenuProvider(pLevel, pos));
                 pPlayer.awardStat(Stats.INTERACT_WITH_CRAFTING_TABLE);
@@ -157,165 +132,4 @@ public class StoneCraftingTable extends HorizontalDirectionalBlock implements En
         return SHAPE_NORTH;
     }
 
-    public boolean handleHerbsRecipeCraftingBlockState(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand) {
-        if (!(pLevel.getBlockEntity(pPos) instanceof StoneCraftingTableBlockEntity blockEntity)) return false;
-
-        if (pPlayer.getItemInHand(pHand).is(ModTags.Items.HERB_CRAFTING)) {
-
-            boolean handled = blockEntity.handleInteractValidItem(pPlayer, pPlayer.getItemInHand(InteractionHand.MAIN_HAND));;
-            if (handled) {
-                if (pLevel instanceof ServerLevel sLevel) {
-                    Vec3 position = pPos.getCenter();
-                    sLevel.playSound(
-                            null, position.x, position.y, position.z,
-                            SoundEvents.MOSS_STEP, SoundSource.BLOCKS,
-                            0.6F, (float) (0.7F + 0.3*sLevel.getRandom().nextFloat())
-                    );
-                    sLevel.playSound(
-                            null, position.x, position.y, position.z,
-                            SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS,
-                            0.2F, 1.5F
-                    );
-                }
-            }
-            return handled;
-
-        } else if (pPlayer.getItemInHand(pHand).is(ModItems.CLAWS.get())) {
-
-            boolean recipeSuccess = handleMakeRecipe(pState, pLevel, pPos, pPlayer, pHand, blockEntity);
-
-            if (recipeSuccess) {
-                if (pLevel instanceof ServerLevel sLevel) {
-                    Vec3 position = pPos.getCenter();
-                    sLevel.playSound(
-                            null, position.x, position.y, position.z,
-                            SoundEvents.MOSS_STEP, SoundSource.BLOCKS,
-                            0.6F, (float) (0.7F + 0.3*sLevel.getRandom().nextFloat())
-                    );
-                    sLevel.playSound(
-                            null, position.x, position.y, position.z,
-                            SoundEvents.SLIME_JUMP_SMALL, SoundSource.BLOCKS,
-                            0.6F, (float) (1.2F + 0.3*sLevel.getRandom().nextFloat())
-                    );
-
-                    Direction facing = pState.getValue(StoneCraftingTable.FACING);
-
-                    position = switch (facing) {
-                        case NORTH -> position.add(0,0,0.1);
-                        case SOUTH -> position.add(0,0,-0.1);
-                        case WEST -> position.add(0.1,0,0);
-                        case EAST -> position.add(-0.1,0,0);
-                        default -> position;
-                    };
-
-                    sLevel.sendParticles(
-                            ParticleTypes.HAPPY_VILLAGER,
-                            position.x, position.y + 0.4, position.z,
-                            10, 0.1, 0.3, 0.1, 0.005);
-
-                }
-                return true;
-            } else {
-                pPlayer.displayClientMessage(Component.literal("Not a recipe").withStyle(ChatFormatting.GRAY), true);
-                return false;
-            }
-
-        } else if (pPlayer.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-            boolean handled = blockEntity.handleTakeItem(pPlayer);
-            if (handled) {
-                if (pLevel instanceof ServerLevel sLevel) {
-                    Vec3 position = pPos.getCenter();
-                    sLevel.playSound(
-                            null, position.x, position.y, position.z,
-                            SoundEvents.MOSS_STEP, SoundSource.BLOCKS,
-                            0.6F, (float) (0.7F + 0.3*sLevel.getRandom().nextFloat())
-                    );
-                }
-            }
-            return handled;
-        }
-
-
-        return false;
-    }
-
-    public boolean handleMakeRecipe(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, StoneCraftingTableBlockEntity pBlockEntity) {
-
-        RecipeWrapper wrapper = new RecipeWrapper(pBlockEntity.getItemStackHandler());
-
-        Optional<RecipeHolder<HerbsRecipe>> recipe = pLevel.getRecipeManager()
-                .getRecipeFor(WCERecipes.HERBS.get(), wrapper, pLevel);
-
-        if (recipe.isPresent()) {
-
-            ItemStack result = recipe.get().value().assemble(wrapper, pLevel.registryAccess());
-
-            for (int i = 0; i < pBlockEntity.getItemStackHandler().getSlots(); i++) {
-                pBlockEntity.getItemStackHandler().extractItem(i, 1, false);
-            }
-
-            Vec3 pos = pPos.getCenter();
-
-            ItemEntity itemEntity = new ItemEntity(pLevel, pos.x, pos.y, pos.z, result);
-            itemEntity.setPickUpDelay(10);
-
-            pLevel.addFreshEntity(itemEntity);
-
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new StoneCraftingTableBlockEntity(pPos, pState);
-    }
-
-    @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-
-        if (pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof StoneCraftingTableBlockEntity) {
-                ((StoneCraftingTableBlockEntity) blockEntity).dropInventory();
-            }
-        }
-
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
-    }
-
-    @Override
-    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-
-        if (pLevel.getBlockEntity(pPos) instanceof StoneCraftingTableBlockEntity blockEntity) {
-            if (blockEntity.isNotEmpty()) {
-                Vec3 position = pPos.getCenter();
-
-                Direction facing = pState.getValue(StoneCraftingTable.FACING);
-
-                position = switch (facing) {
-                    case NORTH -> position.add(0,0,0.1);
-                    case SOUTH -> position.add(0,0,-0.1);
-                    case WEST -> position.add(0.1,0,0);
-                    case EAST -> position.add(-0.1,0,0);
-                    default -> position;
-                };
-
-                pLevel.sendParticles(
-                        WCEParticles.HERBS.get(),
-                        position.x, position.y - 0.05, position.z,
-                        1, 0.0, 0.0, 0.0, 0.005);
-            }
-        }
-
-        pLevel.scheduleTick(pPos, this, 15);
-    }
-
-    @Override
-    public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
-        super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
-        if (!pLevel.isClientSide()) {
-            pLevel.scheduleTick(pPos, this, 15);
-        }
-    }
 }

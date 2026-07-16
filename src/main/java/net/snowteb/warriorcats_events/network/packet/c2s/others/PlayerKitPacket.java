@@ -15,6 +15,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.attachments.ModAttachments;
 import net.snowteb.warriorcats_events.attachments.WCEPlayerData;
+import net.snowteb.warriorcats_events.clan.ClanData;
 import net.snowteb.warriorcats_events.managers.PlayerKittingRequestManager;
 
 import java.util.UUID;
@@ -56,11 +57,11 @@ public class PlayerKitPacket implements CustomPacketPayload {
             WCEPlayerData.Age targetAge = targetPlayer.getData(ModAttachments.PLAYER_WCE_DATA).getMorphAge();
 
             if (myAge != WCEPlayerData.Age.ADULT) {
-                player.sendSystemMessage(Component.literal(myMorphName + " is not old enough for this.")
+                player.sendSystemMessage(Component.translatable("generic.cat_not_old_enough", myMorphName)
                         .withStyle(ChatFormatting.RED));
                 return;
             } else if (targetAge != WCEPlayerData.Age.ADULT) {
-                player.sendSystemMessage(Component.literal(targetMorphName + " is not old enough for this.")
+                player.sendSystemMessage(Component.translatable("generic.cat_not_old_enough", targetMorphName)
                         .withStyle(ChatFormatting.RED));
                 return;
             }
@@ -68,66 +69,17 @@ public class PlayerKitPacket implements CustomPacketPayload {
             PlayerKittingRequestManager.request(targetPlayer, player);
 
             player.sendSystemMessage(
-                    Component.empty()
-                            .append("Request to create life sent to ")
-                            .append(Component.literal(targetMorphName).withStyle(ChatFormatting.AQUA)
-                                    .append(Component.literal( "(" + targetPlayer.getName().getString() + ")").withStyle(ChatFormatting.GRAY))
-                            ));
+                    Component.translatable("managers.kit_request",
+                            ClanData.logFormattedPlayerName(targetPlayer))
+            );
 
             targetPlayer.sendSystemMessage(
-                    Component.empty()
-                            .append(Component.literal(myMorphName).withStyle(ChatFormatting.AQUA)
-                                    .append(Component.literal( "(" + player.getName().getString() + ")").withStyle(ChatFormatting.GRAY))
-                                    .append(" wants to bring kits to life with you.")
-                            ));
+                    Component.translatable("managers.kit_request_received",
+                            ClanData.logFormattedPlayerName(player))
+            );
 
             targetPlayer.sendSystemMessage(
-                    Component.empty()
-                            .append(
-                                    Component.literal("[ACCEPT]")
-                                            .withStyle(style -> style
-                                                    .withColor(ChatFormatting.GREEN)
-                                                    .withItalic(true)
-                                                    .withUnderlined(true)
-                                                    .withClickEvent(
-                                                            new ClickEvent(
-                                                                    ClickEvent.Action.RUN_COMMAND,
-                                                                    "/wce mate kits accept"
-                                                            )
-                                                    )
-                                                    .withHoverEvent(
-                                                            new HoverEvent(
-                                                                    HoverEvent.Action.SHOW_TEXT,
-                                                                    Component.literal("Accept")
-                                                                            .withStyle(ChatFormatting.GREEN)
-                                                            )
-                                                    )
-                                            )
-                            )
-
-                            .append("       ")
-
-                            .append(
-                                    Component.literal("[DECLINE]")
-                                            .withStyle(style -> style
-                                                    .withColor(ChatFormatting.RED)
-                                                    .withItalic(true)
-                                                    .withUnderlined(true)
-                                                    .withClickEvent(
-                                                            new ClickEvent(
-                                                                    ClickEvent.Action.RUN_COMMAND,
-                                                                    "/wce mate kits decline"
-                                                            )
-                                                    )
-                                                    .withHoverEvent(
-                                                            new HoverEvent(
-                                                                    HoverEvent.Action.SHOW_TEXT,
-                                                                    Component.literal("Decline")
-                                                                            .withStyle(ChatFormatting.RED)
-                                                            )
-                                                    )
-                                            )
-                            )
+                    PlayerKittingRequestManager.getMessage()
             );
 
         });

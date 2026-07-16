@@ -12,7 +12,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.attachments.ModAttachments;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -42,7 +42,7 @@ public class CtSTakeCatPacket implements CustomPacketPayload {
             UUID clanUUID = player.getData(ModAttachments.PLAYER_WCE_DATA).getCurrentClanUUID();
 
             if (clanUUID.equals(ClanData.EMPTY_UUID)) {
-                player.sendSystemMessage(Component.literal("You are not in a clan.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -54,7 +54,7 @@ public class CtSTakeCatPacket implements CustomPacketPayload {
             }
 
             if (!data.canCommandWarriors(clan, player.getUUID())) {
-                player.sendSystemMessage(Component.literal("You need member permissions to take cats.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("clan.member_perms_requiered").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -70,21 +70,17 @@ public class CtSTakeCatPacket implements CustomPacketPayload {
 
                 String morphName = player.getData(ModAttachments.PLAYER_WCE_DATA).getMorphName();
 
-                Component message = Component.empty()
-                        .append(Component.literal(morphName).withStyle(ChatFormatting.AQUA))
-                        .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal(")").withStyle(ChatFormatting.GRAY))
-                        .append(" has taken ")
-                        .append(cat.hasCustomName() ? cat.getCustomName().copy() : Component.literal("a cat"));
+                Component message = Component.translatable("clan.player_took_cat",
+                        ClanData.logFormattedPlayerName(player),
+                        cat.hasCustomName() ? cat.getCustomName().copy() : Component.translatable("generic.catname"));
+
                 cat.registerClanLog(message);
 
 
-                Component catName = cat.hasCustomName() ? cat.getCustomName() : Component.literal("This cat");
+                Component catName = cat.hasCustomName() ? cat.getCustomName() : Component.translatable("generic.catname");
 
-                player.displayClientMessage(Component.empty()
-                        .append(catName.copy())
-                        .append(" will now listen to you."), true);
+                player.displayClientMessage(Component.translatable("generic.cat_will_now_listen",
+                        catName), true);
             }
 
 

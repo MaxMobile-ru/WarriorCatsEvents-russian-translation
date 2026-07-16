@@ -14,7 +14,7 @@
     },
     {
       "type": "patchouli:crafting",
-      "text": "These are very good for paw crafting! The perfect size and height for you to mix your herbs and make anything you can think of!",
+      "text": "These are very good for paw crafting! The perfect size and height for you to make anything you can think of!",
       "title": "Crafting Stone",
       "recipe": "warriorcats_events:stone_crafting_table"
     }

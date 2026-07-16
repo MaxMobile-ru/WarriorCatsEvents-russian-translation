@@ -47,12 +47,12 @@ public class CtSUnclaimTerritory implements CustomPacketPayload {
             String morphName = player.getData(ModAttachments.PLAYER_WCE_DATA).getMorphName();
 
             if (player.level().dimension() != Level.OVERWORLD) {
-                player.sendSystemMessage(Component.literal("Territory not available in other dimensions.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("territory.not_available_in_dimensions").withStyle(ChatFormatting.RED));
                 return;
             }
 
             if (uuid.equals(ClanData.EMPTY_UUID)) {
-                player.sendSystemMessage(Component.literal("You are not in a clan.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -66,24 +66,19 @@ public class CtSUnclaimTerritory implements CustomPacketPayload {
             ChunkPos currentPosition = packet.chunkPos;
 
             if (!data.canManage(clan, player.getUUID())) {
-                player.sendSystemMessage(Component.literal("You don't have permission to unclaim territory.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("clan.no_permissions").withStyle(ChatFormatting.RED));
                 return;
             }
 
             if (!clan.claimedTerritory.containsKey(currentPosition)) {
-                player.sendSystemMessage(Component.literal("Territory not claimed.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("territory.not_claimed").withStyle(ChatFormatting.RED));
                 return;
             }
 
-            Component log = Component.empty()
-                    .append(Component.literal(morphName).withStyle(ChatFormatting.GOLD))
-                    .append(Component.literal(" [").withStyle(ChatFormatting.DARK_GRAY))
-                    .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.DARK_GRAY))
-                    .append(Component.literal("]").withStyle(ChatFormatting.DARK_GRAY))
-                    .append(" has unclaimed territory ")
-                    .append(Component.literal(clan.claimedTerritory.get(currentPosition).name).withStyle(ChatFormatting.LIGHT_PURPLE))
-                    .append(" at: ")
-                    .append(Component.literal(
+            Component log = Component.translatable("territory.territory_unclaimed_log",
+                    ClanData.logFormattedPlayerName(player),
+                    Component.literal(clan.claimedTerritory.get(currentPosition).name).withStyle(ChatFormatting.LIGHT_PURPLE),
+                    Component.literal(
                             String.format("X=%d, Z=%d", currentPosition.x, currentPosition.z)
                     ).withStyle(ChatFormatting.AQUA));
 
@@ -91,7 +86,7 @@ public class CtSUnclaimTerritory implements CustomPacketPayload {
             boolean result = data.unclaimChunk(clan.clanUUID, currentPosition, overworldLevel);
             if (result) {
                 data.registerLog(overworldLevel, clan.clanUUID, log);
-                player.sendSystemMessage(Component.literal("Territory successfully unclaimed."));
+                player.sendSystemMessage(Component.translatable("territory.success_unclaimed").withStyle(ChatFormatting.GREEN));
                 data.syncTerritoriesToClients(overworldLevel);
             } else {
                 player.sendSystemMessage(Component.literal("Territory couldn't be accessed.").withStyle(ChatFormatting.RED));

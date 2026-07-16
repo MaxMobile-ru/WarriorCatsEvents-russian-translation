@@ -5,7 +5,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.player.Player;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

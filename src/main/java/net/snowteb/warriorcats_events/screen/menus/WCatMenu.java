@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.util.WCatArmorSlots;
 
 public class WCatMenu extends AbstractContainerMenu {

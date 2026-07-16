@@ -19,9 +19,9 @@ import net.snowteb.warriorcats_events.attachments.ModAttachments;
 import net.snowteb.warriorcats_events.clan.ClanData;
 import net.snowteb.warriorcats_events.attachments.WCEPlayerData;
 import net.snowteb.warriorcats_events.entity.ModEntities;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
-import net.snowteb.warriorcats_events.event.ModEvents2;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
+import net.snowteb.warriorcats_events.event.ModEventsForge1;
 import net.snowteb.warriorcats_events.integration.WCatTypeProvider;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.s2c.clan.S2CSyncClanDataPacket;
@@ -67,7 +67,7 @@ public class UpdateClanDataPacket implements CustomPacketPayload {
             int variantData = player.getData(ModAttachments.PLAYER_WCE_DATA).getVariantData();
 
 
-            ModEvents2.schedule(10, () -> {
+            ModEventsForge1.schedule(10, () -> {
                 WCatEntity shape = new WCatTypeProvider().create(ModEntities.WCAT.get(), player.level(), variantData, player);
                 PlayerShape.updateShapes(player, shape);
                 ((ServerLevel) player.level()).sendParticles(ParticleTypes.ENCHANT,
@@ -97,23 +97,17 @@ public class UpdateClanDataPacket implements CustomPacketPayload {
 
                 if (usesSufix) {
                     player.getServer().getPlayerList().broadcastSystemMessage(
-                            Component.empty()
-                                    .append(Component.literal(playerMorphPrefix + lastSufix).withStyle(ChatFormatting.GOLD))
-                                    .append(" from ")
-                                    .append(Component.literal(playerMorphClan).withStyle(ChatFormatting.AQUA))
-                                    .append(" has grown and shall now be known as ")
-                                    .append(Component.literal(playerMorphName).withStyle(ChatFormatting.GOLD))
-                                    .append("!")
-
+                            Component.translatable("clan.player_has_grown_sufix",
+                                    Component.literal(playerMorphPrefix + lastSufix).withStyle(ChatFormatting.GOLD),
+                                    Component.literal(playerMorphClan).withStyle(ChatFormatting.AQUA),
+                                    Component.literal(playerMorphName).withStyle(ChatFormatting.GOLD))
                             , false
                     );
                 } else {
                     player.getServer().getPlayerList().broadcastSystemMessage(
-                            Component.empty()
-                                    .append(Component.literal(playerMorphName).withStyle(ChatFormatting.GOLD))
-                                    .append(" from ")
-                                    .append(Component.literal(playerMorphClan).withStyle(ChatFormatting.AQUA))
-                                    .append(" has grown!")
+                            Component.translatable("clan.player_has_grown_no_sufix",
+                                    Component.literal(playerMorphName).withStyle(ChatFormatting.GOLD),
+                                    Component.literal(playerMorphClan).withStyle(ChatFormatting.AQUA))
                             , false
                     );
                 }

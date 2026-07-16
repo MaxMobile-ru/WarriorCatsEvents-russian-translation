@@ -17,7 +17,7 @@ public class ButtonScrollList extends AbstractSelectionList<ButtonScrollList.Ent
         super(mc, width, bottom-top, top, itemHeight);
     }
 
-    public void addButton(String label, Runnable action, String tooltip) {
+    public void addButton(Component label, Runnable action, Component tooltip) {
         addEntry(new Entry(label, action, tooltip));
     }
 
@@ -57,10 +57,10 @@ public class ButtonScrollList extends AbstractSelectionList<ButtonScrollList.Ent
 
     public class Entry extends AbstractSelectionList.Entry<Entry> {
         private final Button button;
-        private final String tooltip;
+        private final Component tooltip;
 
-        public Entry(String label, Runnable action, String tooltip) {
-            this.button = Button.builder(Component.literal(label), b -> {
+        public Entry(Component label, Runnable action, Component tooltip) {
+            this.button = Button.builder(label, b -> {
                         minecraft.setScreen(null);
                         action.run();
                     })
@@ -92,8 +92,8 @@ public class ButtonScrollList extends AbstractSelectionList<ButtonScrollList.Ent
             button.setX(pLeft - 5);
             button.setY(pTop);
             button.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
-            if (button.isHovered() && !tooltip.isEmpty()) {
-                List<FormattedCharSequence> text = minecraft.font.split(FormattedText.of(this.tooltip), 200);
+            if (button.isHovered() && !tooltip.getString().isEmpty()) {
+                List<FormattedCharSequence> text = minecraft.font.split(this.tooltip, 200);
                 ButtonScrollList.this.setTooltip(text);
             }
         }

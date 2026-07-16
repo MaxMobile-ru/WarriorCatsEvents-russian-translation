@@ -83,7 +83,7 @@ public class SkillScreen extends Screen {
         );
         guiGraphics.drawCenteredString(
                 this.font,
-                "Skill Tree",
+                Component.translatable("screen.skill_tree"),
                 centerX,
                 centerY - 118,
                 0xFFFFFF
@@ -102,11 +102,12 @@ public class SkillScreen extends Screen {
             Component Text1 = Component.literal("");
             Component Text2 = Component.literal("");
             if (currentSpeedLevel < PlayerSkill.maxSpeedLevel) {
-                Text1 = Component.literal("Requiered: Speed Level MAX\n");
+                Text1 = Component.translatable("screen.skill_tree.requiered_speed_max").append("\n");
             }
             if (currentHPLevel < PlayerSkill.maxHPLevel) {
-                Text2 = Component.literal("Requiered: HP Level MAX");
+                Text2 = Component.translatable("screen.skill_tree.requiered_hp_max");
             }
+
 
 
             float scale = 0.55f;
@@ -145,10 +146,10 @@ public class SkillScreen extends Screen {
             Component Text1 = Component.literal("");
             Component Text2 = Component.literal("");
             if (currentDMGLevel < PlayerSkill.maxDMGLevel) {
-                Text1 = Component.literal("Requiered: Claws Level MAX\n");
+                Text1 = Component.translatable("screen.skill_tree.requiered_claws_max").append("\n");
             }
             if (currentHPLevel < PlayerSkill.maxHPLevel) {
-                Text2 = Component.literal("Requiered: HP Level MAX");
+                Text2 = Component.translatable("screen.skill_tree.requiered_hp_max");
             }
 
             float scale = 0.55f;
@@ -183,10 +184,10 @@ public class SkillScreen extends Screen {
             Component Text1 = Component.literal("");
             Component Text2 = Component.literal("");
             if (currentToughnessLevel < PlayerSkill.maxArmorLevel) {
-                Text1 = Component.literal("Requiered: Pelt Level MAX\n");
+                Text1 = Component.translatable("screen.skill_tree.requiered_pelt_max").append("\n");
             }
             if (currentJumpLevel < PlayerSkill.maxJumpLevel) {
-                Text2 = Component.literal("Requiered: Jump Level MAX");
+                Text2 = Component.translatable("screen.skill_tree.requiered_jump_max");
             }
 
 
@@ -222,10 +223,10 @@ public class SkillScreen extends Screen {
             Component Text1 = Component.literal("");
             Component Text2 = Component.literal("");
             if (currentSpeedLevel < PlayerSkill.maxSpeedLevel) {
-                Text1 = Component.literal("Requiered: Speed Level MAX\n");
+                Text1 = Component.translatable("screen.skill_tree.requiered_speed_max").append("\n");
             }
             if (currentJumpLevel < PlayerSkill.maxJumpLevel) {
-                Text2 = Component.literal("Requiered: Jump Level MAX");
+                Text2 = Component.translatable("screen.skill_tree.requiered_jump_max");
             }
 
 
@@ -318,9 +319,9 @@ public class SkillScreen extends Screen {
                     }
 
                     if (stealth.isOn()) {
-                        stealthSwitchText = Component.literal("On").withStyle(ChatFormatting.GREEN);
+                        stealthSwitchText = Component.translatable("screen.skill_tree.on").withStyle(ChatFormatting.GREEN);
                     } else {
-                        stealthSwitchText = Component.literal("Off").withStyle(ChatFormatting.YELLOW);
+                        stealthSwitchText = Component.translatable("screen.skill_tree.off").withStyle(ChatFormatting.YELLOW);
                     }
 
 
@@ -356,7 +357,7 @@ public class SkillScreen extends Screen {
         this.clearWidgets();
 
         this.addRenderableWidget(Button.builder(
-                Component.literal("Morph Stats"),
+                Component.translatable("screen.skill_tree.morph_stats"),
                 btn -> {
                     ModPackets.sendToServer(new ReqMorphStatsPacket());
                     statsScreenClicked = true;
@@ -368,7 +369,7 @@ public class SkillScreen extends Screen {
                 this.width / 2 - 40,
                 this.height / 2 - 17,
                 80, 20,
-                Component.literal("Stealth : " + stealthCost),
+                Component.translatable("screen.skill_tree.stealth_cost", stealthCost),
                 b -> {
                     ModPackets.sendToServer(new CtSUnlockStealthPacket());
 
@@ -381,7 +382,7 @@ public class SkillScreen extends Screen {
                 this.width / 2 + 43,
                 this.height / 2 + 33,
                 80, 20,
-                Component.literal("Reset Tree"),
+                Component.translatable("screen.skill_tree.reset_tree"),
                 b -> {
                     ModPackets.sendToServer(new ResetSkillsPacket());
                     ModPackets.sendToServer(new ReqSkillDataPacket());
@@ -394,7 +395,7 @@ public class SkillScreen extends Screen {
                 this.width / 2 + 45,
                 this.height / 2 - 97,
                 80, 20,
-                Component.literal("+1 Claws | " + nextDMGLevelCost),
+                Component.translatable("screen.skill_tree.claws_cost", nextDMGLevelCost),
                 b -> {
                     ModPackets.sendToServer(new CtSMoreDMGPacket());
                     ModPackets.sendToServer(new ReqSkillDataPacket());
@@ -408,7 +409,7 @@ public class SkillScreen extends Screen {
                 this.width / 2 - 40,
                 this.height / 2 - 97,
                 80, 20,
-                Component.literal("+1 HP | " + nextHPLevelCost),
+                Component.translatable("screen.skill_tree.hp_cost", nextHPLevelCost),
                 b -> {
                     ModPackets.sendToServer(new CtSMoreHPPacket());
                     ModPackets.sendToServer(new ReqSkillDataPacket());
@@ -422,7 +423,7 @@ public class SkillScreen extends Screen {
                 this.width / 2 - 124,
                 this.height / 2 - 97,
                 80, 20,
-                Component.literal("+1 Speed | " + nextSpeedLevelCost),
+                Component.translatable("screen.skill_tree.speed_cost", nextSpeedLevelCost),
                 b -> {
                     ModPackets.sendToServer(new CtSMoreSpeedPacket());
                     ModPackets.sendToServer(new ReqSkillDataPacket());
@@ -435,7 +436,7 @@ public class SkillScreen extends Screen {
                 this.width / 2 - 81,
                 this.height / 2 - 57,
                 80, 20,
-                Component.literal("+1 Jump | " + nextJumpLevelCost),
+                Component.translatable("screen.skill_tree.jump_cost", nextJumpLevelCost),
                 b -> {
                     ModPackets.sendToServer(new CtSMoreJumpPacket());
                     ModPackets.sendToServer(new ReqSkillDataPacket());
@@ -474,7 +475,7 @@ public class SkillScreen extends Screen {
                 this.width / 2 - 124,
                 this.height / 2 - 17,
                 80, 20,
-                Component.literal("Climbing | " + climbCost),
+                Component.translatable("screen.skill_tree.climb_cost", climbCost),
                 b -> {
                     ModPackets.sendToServer(new CtSUnlockClimbPacket());
                 },

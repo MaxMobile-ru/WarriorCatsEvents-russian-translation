@@ -477,6 +477,17 @@ public class ModPackets {
                 (pkt, ctx) -> pkt.handle(ctx)
         );
 
+        registrar.playToServer(
+                RenameNametagPacket.TYPE,
+                RenameNametagPacket.CODEC,
+                (pkt, ctx) -> RenameNametagPacket.handle(pkt, ctx)
+        );
+
+        registrar.playToServer(
+                KickNPCPacket.TYPE,
+                KickNPCPacket.CODEC,
+                (pkt, ctx) -> KickNPCPacket.handle(pkt, ctx)
+        );
 
 
     }

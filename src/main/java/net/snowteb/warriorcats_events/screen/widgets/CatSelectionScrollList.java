@@ -8,7 +8,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
 import java.util.ArrayList;
 import java.util.List;

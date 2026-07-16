@@ -32,7 +32,7 @@ public class SetPoseMenu extends Screen {
         int constant = 30;
 
         setPose0 = Button.builder(
-                Component.literal("No pose"),
+                Component.translatable("screen.pose.no_pose"),
                 btn -> {
                     setPose(0);
                 }
@@ -41,7 +41,7 @@ public class SetPoseMenu extends Screen {
         y += constant;
 
         setPose1 = Button.builder(
-                Component.literal("Gracious"),
+                Component.translatable("screen.pose.gracious"),
                 btn -> {
                     setPose(1);
                 }
@@ -50,7 +50,7 @@ public class SetPoseMenu extends Screen {
         y += constant;
 
         setPose2 = Button.builder(
-                Component.literal("Dominant"),
+                Component.translatable("screen.pose.dominant"),
                 btn -> {
                     setPose(2);
                 }
@@ -59,7 +59,7 @@ public class SetPoseMenu extends Screen {
         y += constant;
 
         setPose3 = Button.builder(
-                Component.literal("Refined"),
+                Component.translatable("screen.pose.refined"),
                 btn -> {
                     setPose(3);
                 }
@@ -68,7 +68,7 @@ public class SetPoseMenu extends Screen {
         y += constant;
 
         setPose4Limp = Button.builder(
-                Component.literal("Limping"),
+                Component.translatable("screen.pose.limping"),
                 btn -> {
                     setPose(4);
                 }
@@ -76,7 +76,7 @@ public class SetPoseMenu extends Screen {
 
 
         close = Button.builder(
-                Component.literal("Close"),
+                Component.translatable("screen.pose.close"),
                 btn -> {
                     onClose();
                 }

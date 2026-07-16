@@ -10,7 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.managers.Sequence;
 import org.jetbrains.annotations.ApiStatus;
 import tocraft.walkers.api.PlayerShape;
@@ -198,15 +198,17 @@ public class Disease<T extends Disease<T>> {
                     if (heal(entity)) {
                         if (this.getType().getMaxHealLevel() > 1){
                             entity.sendSystemMessage(
-                                    Component.literal("Your " + getType().getName().getString()
-                                            + " has improved. " + getHealLevel() + "/" + getType().getMaxHealLevel())
+                                    Component.translatable("managers.disease_improved",
+                                            getType().getName().getString(),
+                                            getHealLevel() + "/" + getType().getMaxHealLevel())
                             );
                         }
 
                         if (isHealed()) {
                             entity.sendSystemMessage(
-                                    Component.literal("Your " + getType().getName().getString() + " has been cured.")
-                                            .withStyle(ChatFormatting.GREEN)
+                                    Component.translatable("managers.disease_healed",
+                                            getType().getName().getString()
+                                    ).withStyle(ChatFormatting.GREEN)
                             );
                         }
                     }

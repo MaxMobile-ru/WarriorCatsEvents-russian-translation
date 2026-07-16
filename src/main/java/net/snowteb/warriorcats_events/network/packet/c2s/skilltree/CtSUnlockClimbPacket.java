@@ -33,7 +33,7 @@ public class CtSUnlockClimbPacket implements CustomPacketPayload {
             ServerPlayer player = (ServerPlayer) ctx.player();
 
             if (!WCEServerConfig.SERVER.SKILL_TREE_SERVER.get()) {
-                player.sendSystemMessage(Component.literal("Skill tree is disabled for this world.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("generic.skill_tree_disabled").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -46,13 +46,13 @@ public class CtSUnlockClimbPacket implements CustomPacketPayload {
             if (currentJumpLevel == PlayerSkill.maxJumpLevel && currentSpeedLevel == PlayerSkill.maxSpeedLevel) {
                 CapabilityManager.attachmentProvider(player, ModAttachments.PLAYER_SKILL, cap -> {
                     if (cap.isClimbUnlocked()) {
-                        player.sendSystemMessage(Component.literal("Climbing is already unlocked!")
+                        player.sendSystemMessage(Component.translatable("skills.climb_already_unlocked")
                                 .withStyle(ChatFormatting.YELLOW));
                         return;
                     }
 
                     if (player.totalExperience < cost) {
-                        player.sendSystemMessage(Component.literal("⚠ You need " + remaining + " XP more.")
+                        player.sendSystemMessage(Component.translatable("generic.need_more_xp", remaining)
                                 .withStyle(ChatFormatting.RED));
                         return;
                     }
@@ -75,7 +75,7 @@ public class CtSUnlockClimbPacket implements CustomPacketPayload {
                     }
 
 
-                    player.sendSystemMessage(Component.literal("Climbing ability unlocked!")
+                    player.sendSystemMessage(Component.translatable("skills.climb_unlocked")
                             .withStyle(ChatFormatting.GREEN));
 
 

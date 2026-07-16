@@ -16,6 +16,7 @@ import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.block.ModBlocks;
 import net.snowteb.warriorcats_events.recipes.HerbsRecipe;
 import net.snowteb.warriorcats_events.recipes.WCERecipes;
+import net.snowteb.warriorcats_events.screen.screens.HerbMixingRockScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,7 @@ public class JEIPlugin implements IModPlugin {
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         IModPlugin.super.registerGuiHandlers(registration);
+        registration.addGuiContainerHandler(HerbMixingRockScreen.class, new HerbMixingScreenHandler());
     }
 
     @Override

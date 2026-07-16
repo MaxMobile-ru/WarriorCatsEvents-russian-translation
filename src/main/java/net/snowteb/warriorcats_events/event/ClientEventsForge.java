@@ -14,6 +14,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +26,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -31,20 +34,29 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
 import net.snowteb.warriorcats_events.WCEClient;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
+import net.snowteb.warriorcats_events.attachments.CapabilityManager;
+import net.snowteb.warriorcats_events.attachments.ModAttachments;
+import net.snowteb.warriorcats_events.attachments.StealthClientState;
+import net.snowteb.warriorcats_events.client.EntityChatBubbleManager;
 import net.snowteb.warriorcats_events.client.LeapClientState;
 import net.snowteb.warriorcats_events.compat.CompatibilitiesClient;
 import net.snowteb.warriorcats_events.diseases.Disease;
 import net.snowteb.warriorcats_events.diseases.Diseaseable;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.EagleEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.managers.ClimbDataAccessor;
 import net.snowteb.warriorcats_events.network.ModPackets;
-import net.snowteb.warriorcats_events.network.packet.c2s.others.CompareVersionsPacket;
+import net.snowteb.warriorcats_events.network.packet.c2s.clan.EmoteMorphPacket;
+import net.snowteb.warriorcats_events.network.packet.c2s.others.*;
 import net.snowteb.warriorcats_events.network.packet.c2s.skilltree.ReqSkillDataPacket;
 import net.snowteb.warriorcats_events.screen.menus.EmoteMenu;
 import net.snowteb.warriorcats_events.screen.screens.SkillScreen;
 import net.snowteb.warriorcats_events.screen.menus.PlaySoundMenu;
+import net.snowteb.warriorcats_events.screen.screens.WCEOptionsScreen;
 import net.snowteb.warriorcats_events.sound.ModSounds;
+import net.snowteb.warriorcats_events.util.ModKeybinds;
 import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
+import org.lwjgl.glfw.GLFW;
 import tocraft.walkers.api.PlayerShape;
 
 import java.util.List;
@@ -56,10 +68,285 @@ import static net.snowteb.warriorcats_events.WCEClient.*;
 public class ClientEventsForge {
 
     private static Button extraButton;
+    private static int waterCooldown = 0;
+    private static boolean waterPressed;
+
+    @SubscribeEvent
+    public static void onKeyInput(InputEvent.Key event) {
+
+        if ((event.getKey() == GLFW.GLFW_KEY_LEFT_SHIFT || event.getKey() == GLFW.GLFW_KEY_RIGHT_SHIFT) && event.getAction() == GLFW.GLFW_PRESS) {
+            if (isBeingLatched) {
+                setFreeCounter += 16;
+            }
+        }
+
+        if (ModKeybinds.OPTIONS_KEY.isDown() && event.getAction() == GLFW.GLFW_PRESS) {
+            Minecraft.getInstance().setScreen(new WCEOptionsScreen());
+        }
+
+
+    }
+
+    @SubscribeEvent
+    public static void onScroll(InputEvent.MouseScrollingEvent event) {
+        Minecraft mc = Minecraft.getInstance();
+
+        if (isRenderingEmoteMenu && mc.screen == null) {
+
+            emoteOffset -= (int) event.getScrollDeltaY();
+
+            if (WarriorCatsEvents.Collaborators.isContributor(Minecraft.getInstance().player.getUUID())) {
+                emoteOffset = Mth.clamp(emoteOffset, -3, EmoteIndexData.MAX_EMOTES);
+            } else {
+                emoteOffset = Mth.clamp(emoteOffset, -1, EmoteIndexData.MAX_EMOTES);
+            }
+
+            WCEClient.playLocalSound(ModSounds.MENU_CLICK.get(), SoundSource.NEUTRAL, 0.1f, 1.3f);
+
+            event.setCanceled(true);
+        } else if (isRenderingSoundMenu && mc.screen == null) {
+            soundOffset -= (int) event.getScrollDeltaY();
+
+            soundOffset = Mth.clamp(soundOffset, 0, MAX_SOUNDS);
+
+
+            WCEClient.playLocalSound(ModSounds.MENU_CLICK.get(), SoundSource.NEUTRAL, 0.1f, 1.3f);
+
+            event.setCanceled(true);
+        }
+    }
+
+
+
+    @SubscribeEvent
+    public static void onClientTick(ClientTickEvent.Post event) {
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer player = mc.player;
+        if (mc.player == null) return;
+        if (mc.level == null) return;
+        /**
+         * If the skill is unlocked and on, and the player is shifting, send the info to the StealthClientState.
+         */
+
+        if (newParticleTime > 0) newParticleTime--;
+
+        EntityChatBubbleManager.tick();
+
+        CapabilityManager.attachmentProvider(player, ModAttachments.PLAYER_STEALTH, cap -> {
+            if (!cap.isUnlocked() || !cap.isOn()) return;
+
+            boolean shifting = mc.options.keyShift.isDown();
+            if (player instanceof ClimbDataAccessor data && data.wce$isClimbing()) shifting = false;
+            StealthClientState.tick(shifting);
+        });
+
+        {
+            if (player.getVehicle() != null) {
+                if (player.getVehicle() instanceof EagleEntity eagle && !eagle.isOwnedBy(player)) {
+                    if (!isBeingLatched) {
+                        isBeingLatched = true;
+                        setFreeCounter = 60;
+                    }
+                } else {
+                    isBeingLatched = false;
+                }
+            } else {
+                if (isBeingLatched) isBeingLatched = false;
+            }
+
+            if (!isBeingLatched) {
+                setFreeCounter = 0;
+            } else {
+
+                if (setFreeCounter >= 199) {
+                    isBeingLatched = false;
+                    setFreeCounter = 0;
+                    ModPackets.sendToServer(new CtSDismountEaglePacket());
+
+                }
+
+                if (setFreeCounter > 0) {
+                    setFreeCounter--;
+                }
+            }
+
+        }
+
+
+        boolean shifting = mc.options.keyShift.isDown();
+        LeapClientState.tick(shifting);
+
+
+        /**
+         * Keybinds with cooldowns.
+         * This is so holding down the key doesn't send 20 packets per second and breaks the whole game.
+         */
+        if (waterCooldown > 0) waterCooldown--;
+
+        if (WCEServerConfig.SERVER.THIRST.get() && (ModKeybinds.WATERDRINK_KEY.isDown() && waterCooldown == 0)) {
+            if (!waterPressed) {
+                ModPackets.sendToServer(new WaterPacket());
+                waterPressed = true;
+                waterCooldown = 7;
+            }
+        } else {
+            waterPressed = false;
+        }
+
+
+        if (EMOTES_HUD_MENU_KEY.consumeClick()) {
+
+            if (isRenderingEmoteMenu) {
+
+                int selected = emoteOffset;
+
+                if (selected == -1) {
+                    ModPackets.sendToServer(new CtSSwitchShape());
+                } else {
+                    ModPackets.sendToServer(new EmoteMorphPacket(selected));
+                }
+
+            } else {
+                WCEClient.playLocalSound(ModSounds.MENU_OPEN.get(), SoundSource.NEUTRAL, 0.4f, 1f);
+            }
+
+            if (isRenderingSoundMenu) isRenderingSoundMenu = false;
+
+
+            emoteOffset = 0;
+            isRenderingEmoteMenu = !isRenderingEmoteMenu;
+        }
+
+        if (ModKeybinds.HISSING_KEY.consumeClick()) {
+            if (isRenderingSoundMenu) {
+                int selected = soundOffset;
+                if (selected != 0) {
+                    ModPackets.sendToServer(new CtSPlayCatSoundPacket(selected));
+                }
+            } else {
+                WCEClient.playLocalSound(ModSounds.MENU_OPEN.get(), SoundSource.NEUTRAL, 0.4f, 1f);
+            }
+
+            if (isRenderingEmoteMenu) isRenderingEmoteMenu = false;
+
+            soundOffset = 0;
+            isRenderingSoundMenu = !isRenderingSoundMenu;
+        }
+
+        if (ModKeybinds.CLIMB_KEY.consumeClick()) {
+            if (PlayerShape.getCurrentShape(player) instanceof WCatEntity) {
+                boolean climbUnlocked = player.getData(ModAttachments.PLAYER_SKILL).isClimbUnlocked();
+                if (climbUnlocked) {
+                    if (WCEServerConfig.SERVER.SKILL_TREE_SERVER.get()) {
+                        if (climbCooldown <= 0) {
+                            if (player instanceof ClimbDataAccessor dataAccessor) {
+                                if (dataAccessor.wce$isClimbing()) return;
+                            }
+                            if (!hasClimbableSurface(player)) return;
+
+                            ModPackets.sendToServer(new CtSClimbPacket());
+                            climbCooldown = CLIM_COOLDOWN;
+                        } else {
+                            displayCannotClimb = 20;
+                            cannotClimbBlink = true;
+                            cannotClimbBlinkCount = 6;
+                        }
+                    } else {
+                        player.sendSystemMessage(Component.literal("Skill tree is disabled for this world.")
+                                .withStyle(ChatFormatting.RED));
+                    }
+                } else {
+                    player.displayClientMessage(Component.literal("Climbing skill has not been unlocked yet!")
+                            .withStyle(ChatFormatting.YELLOW), true);
+                }
+            }
+        }
+
+        WCEClient.climbClientTick();
+
+        if (isRenderingEmoteMenu && (mc.screen != null || mc.player == null)) {
+            isRenderingEmoteMenu = false;
+            emoteOffset = 0;
+        }
+
+        if (isRenderingSoundMenu && (mc.screen != null || mc.player == null)) {
+            isRenderingSoundMenu = false;
+            soundOffset = 0;
+        }
+
+    }
+
+    private static boolean hasClimbableSurface(Player player) {
+
+        Level level = player.level();
+        BlockPos pos = player.blockPosition();
+
+        int playerY = pos.getY();
+
+        Direction[] dirs = {
+                Direction.NORTH,
+                Direction.SOUTH,
+                Direction.EAST,
+                Direction.WEST
+        };
+
+        for (Direction dir : dirs) {
+
+            BlockPos base = pos.relative(dir);
+
+            for (int dy = 0; dy <= 0; dy++) {
+
+                BlockPos check = base.above(dy);
+
+                BlockState state = level.getBlockState(check);
+
+                if (!state.isCollisionShapeFullBlock(level, check)) continue;
+
+                int y = check.getY();
+
+                if (y != playerY) continue;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     @SubscribeEvent
     public static void onClientLogin(ClientPlayerNetworkEvent.LoggingIn event) {
         ModPackets.sendToServer(new CompareVersionsPacket(WarriorCatsEvents.MOD_VERSION));
+
+        if (event.getPlayer().level().isClientSide()) {
+            if (UpdateCheck.updateAvailable) {
+
+                event.getPlayer().sendSystemMessage(
+                        Component.literal("[Warrior Cats Events] New ")
+                                .append(
+                                        Component.literal("version")
+                                                .withStyle(style -> style.withColor(ChatFormatting.GREEN)
+                                                        .withUnderlined(true).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL,
+                                                                "https://modrinth.com/mod/warrior-cats-events"
+                                                        ))
+                                                )
+                                )
+                                .append(" available: "
+                                        + UpdateCheck.latestVersion).withStyle(style -> style.withColor(0xfffb00)
+                                ));
+
+                if (!UpdateCheck.update_message.isEmpty()){
+                    event.getPlayer().sendSystemMessage(
+                            Component.empty()
+                                    .append(Component.literal("[Warrior Cats Events] ")
+                                            .withStyle(style -> style.withColor(0xfffb00)))
+                                    .append(Component.literal(" Update message: ").withStyle(ChatFormatting.BOLD))
+                    );
+                    event.getPlayer().sendSystemMessage(Component.literal(UpdateCheck.update_message).withStyle(ChatFormatting.GRAY));
+                    event.getPlayer().sendSystemMessage(Component.literal(""));
+                }
+
+            }
+        }
     }
 
     @SubscribeEvent
@@ -71,7 +358,7 @@ public class ClientEventsForge {
         int y = screen.getGuiTop() - 18;
 
         extraButton = Button.builder(
-                Component.literal("Skill tree"),
+                Component.translatable("wce.button.skill_tree"),
                 btn -> {
                     Minecraft.getInstance().setScreen(new SkillScreen());
                     ModPackets.sendToServer(new ReqSkillDataPacket());
@@ -135,9 +422,6 @@ public class ClientEventsForge {
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/mouse_unclicked.png");
     private static ResourceLocation currentRightMouseTexture =
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/mouse_right_unclicked.png");
-
-//    private static ResourceLocation climbIcon =
-//            ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/climb_icon.png");
 
     private static ResourceLocation climbingIcon =
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/climbing_icon.png");
@@ -299,7 +583,7 @@ public class ClientEventsForge {
                 if (exhaustionLevel > 80 && player instanceof ClimbDataAccessor data && data.wce$isClimbing()) {
                     int y = 30;
                     if (climbCooldown > 0) y = 43;
-                    pGuiGraphics.drawCenteredString(mcinstance.font, "Losing grip!",
+                    pGuiGraphics.drawCenteredString(mcinstance.font, Component.translatable("generic.losing_grip"),
                             0, y, 0xFF0000);
                 }
                 pGuiGraphics.pose().popPose();
@@ -450,7 +734,7 @@ public class ClientEventsForge {
         if (!LeapClientState.isLockingTarget() && player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
             guiGraphics.drawString(
                     Minecraft.getInstance().font,
-                    "Lock Target",
+                    Component.translatable("generic.lock_target"),
                     4,
                     height - 15,
                     0xFFFFFF
@@ -525,7 +809,7 @@ public class ClientEventsForge {
             int centerX = width / 2;
             int centerY = height / 2;
 
-            Component text = Component.literal("The footprint smells like " + lookingAtParticle).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY);
+            Component text = Component.translatable("generic.footprint_smells_like", lookingAtParticle).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY);
 
             float scale = 1f;
 
@@ -565,7 +849,7 @@ public class ClientEventsForge {
             guiGraphics.blit(fillBar,centerX-100, centerY + 23, 0,0,200, 18,200, 18);
             guiGraphics.disableScissor();
 
-            guiGraphics.drawCenteredString(Minecraft.getInstance().font,"Press 'Left Shift' to unlatch", centerX, centerY + 28, 0xFFFFFF );
+            guiGraphics.drawCenteredString(Minecraft.getInstance().font,Component.translatable("generic.unlatch_tip"), centerX, centerY + 28, 0xFFFFFF );
 
         }
     }

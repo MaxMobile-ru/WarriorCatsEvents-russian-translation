@@ -12,7 +12,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 import net.snowteb.warriorcats_events.managers.ServerPlayerMorphsCache;
 
 import java.util.Map;
@@ -25,15 +25,18 @@ public class CtSShareMorphToChat implements CustomPacketPayload {
     private final WCGenetics.GeneticalVariants variants;
     private final WCGenetics chimeraGenetics;
     private final WCGenetics.GeneticalChimeraVariants chimeraVariants;
+    private final boolean onGeneticalSkin;
+    private final int presetVariant;
 
-
-    public CtSShareMorphToChat(String key,WCGenetics genetics, WCGenetics.GeneticalVariants variants,
-                               WCGenetics chimeraGens, WCGenetics.GeneticalChimeraVariants chimeraVariants) {
+    public CtSShareMorphToChat(String key, WCGenetics genetics, WCGenetics.GeneticalVariants variants,
+                               WCGenetics chimeraGens, WCGenetics.GeneticalChimeraVariants chimeraVariants, boolean onGeneticalSkin, int presetVariant) {
         this.Key = key;
         this.genetics = genetics;
         this.variants = variants;
         this.chimeraGenetics = chimeraGens;
         this.chimeraVariants = chimeraVariants;
+        this.onGeneticalSkin = onGeneticalSkin;
+        this.presetVariant = presetVariant;
     }
 
     public static CtSShareMorphToChat decode(FriendlyByteBuf buf) {
@@ -45,8 +48,10 @@ public class CtSShareMorphToChat implements CustomPacketPayload {
 
         WCGenetics chimeraGens = WCGenetics.decode(buf);
         WCGenetics.GeneticalChimeraVariants chimeraVariants = WCGenetics.GeneticalChimeraVariants.decode(buf);
+        boolean onGeneticalSkin = buf.readBoolean();
+        int presetVariant = buf.readInt();
 
-        return new CtSShareMorphToChat( key ,genetics, variants, chimeraGens, chimeraVariants);
+        return new CtSShareMorphToChat( key ,genetics, variants, chimeraGens, chimeraVariants,onGeneticalSkin ,presetVariant);
     }
 
     public static void encode(CtSShareMorphToChat packet, FriendlyByteBuf buf) {
@@ -57,6 +62,8 @@ public class CtSShareMorphToChat implements CustomPacketPayload {
         packet.variants.encode(buf);
         packet.chimeraGenetics.encode(buf);
         packet.chimeraVariants.encode(buf);
+        buf.writeBoolean(packet.onGeneticalSkin);
+        buf.writeInt(packet.presetVariant);
 
     }
 
@@ -65,7 +72,8 @@ public class CtSShareMorphToChat implements CustomPacketPayload {
             ServerPlayer player = (ServerPlayer) ctx.player();
 
             ServerPlayerMorphsCache.ServerMorphData data =
-                    new ServerPlayerMorphsCache.ServerMorphData(packet.genetics, packet.chimeraGenetics, packet.variants, packet.chimeraVariants, 12000);
+                    new ServerPlayerMorphsCache.ServerMorphData(packet.genetics, packet.chimeraGenetics, packet.variants,
+                            packet.chimeraVariants, packet.onGeneticalSkin, packet.presetVariant, 12000);
 
             int extraKey = 0;
             String key = packet.Key;

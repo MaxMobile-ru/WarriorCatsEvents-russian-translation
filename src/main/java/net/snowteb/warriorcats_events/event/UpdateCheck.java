@@ -35,7 +35,7 @@ public class UpdateCheck {
                     WarriorCatsEvents.LOGGER.info("[Warrior Cats Events] Is up to date");
                 }
             } catch (Exception e) {
-                WarriorCatsEvents.LOGGER.error("[Warrior Cats Events] Couldn't verify version: " + e.getMessage());
+                WarriorCatsEvents.LOGGER.error("[Warrior Cats Events] Couldn't verify version: {}", e.getMessage());
             }
         }).start();
     }

@@ -12,7 +12,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.attachments.ModAttachments;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.s2c.cats.StCOpenPatrolScreenPacket;
 
@@ -49,7 +49,7 @@ public class CtSRequestPatrolData implements CustomPacketPayload {
             UUID clanUUID = player.getData(ModAttachments.PLAYER_WCE_DATA).getCurrentClanUUID();
 
             if (clanUUID.equals(ClanData.EMPTY_UUID)) {
-                player.sendSystemMessage(Component.literal("You are not in a clan.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.RED));
                 return;
             }
 

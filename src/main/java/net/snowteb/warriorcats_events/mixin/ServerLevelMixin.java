@@ -30,7 +30,7 @@ public class ServerLevelMixin {
             ChunkPos pos = pChunk.getPos();
             RandomSource random = sLevel.getRandom();
 
-            if ((sLevel.getGameTime() + pos.x + pos.z) % 7200 == 0 && random.nextFloat() < 0.15) {
+            if ((sLevel.getGameTime() + pos.x + pos.z) % 7200 == 0 && random.nextFloat() < 0.12) {
                 ClanData data = ClanData.get(sLevel.getServer().overworld());
                 List<ClanData.Clan> clans = data.getAllClans();
 
@@ -60,10 +60,10 @@ public class ServerLevelMixin {
 
                     int maxCount = 3;
 
-                    if (chanceOfType < 0.004) {
+                    if (chanceOfType < 0.003) {
                         type = ModEntities.EAGLE.get();
                         maxCount = 1;
-                    } else if (chanceOfType < 0.008) {
+                    } else if (chanceOfType < 0.007) {
                         int roll = random.nextInt(4);
                         if (roll == 0) {
                             type = EntityType.FOX;

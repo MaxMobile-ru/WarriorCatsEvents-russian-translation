@@ -64,7 +64,7 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
             if (clan != null) {
                 if (!data.canManage(clan, player.getUUID())) return;
                 if (!data.canManagePlayer(clan.clanUUID, player.getUUID(), packet.playerUUID)) {
-                    player.sendSystemMessage(Component.literal("You don't have permission to do that.").withStyle(ChatFormatting.RED));
+                    player.sendSystemMessage(Component.translatable("clan.no_permissions").withStyle(ChatFormatting.RED));
                     return;
                 }
                 if (!clan.members.containsKey(packet.playerUUID)) return;
@@ -96,7 +96,7 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
                 if (packet.key.equals("changeperms")) {
                     if (!(clan.memberPerms.get(player.getUUID()) == ClanData.ClanPermissions.OWNER || clan.members.get(player.getUUID()) == ClanData.ClanPlayerRank.LEADER)
                             && packet.rank.equals("admin")) {
-                        player.sendSystemMessage(Component.literal("You don't have permission to do that.").withStyle(ChatFormatting.RED));
+                        player.sendSystemMessage(Component.translatable("clan.no_permissions").withStyle(ChatFormatting.RED));
                         return;
                     }
 
@@ -114,7 +114,7 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
                 }
 
             } else {
-                player.sendSystemMessage(Component.literal("You are not in a clan.").withStyle(ChatFormatting.GRAY));
+                player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.GRAY));
             }
 
         });
@@ -131,7 +131,7 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
         }
 
         if (currentRank == rank) {
-            leader.sendSystemMessage(Component.literal("The target is already a " + rank).withStyle(ChatFormatting.YELLOW));
+            leader.sendSystemMessage(Component.translatable("clan.player_is_already_a", rank).withStyle(ChatFormatting.YELLOW));
             return;
         }
 
@@ -146,25 +146,25 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
 
         if (rank == ClanData.ClanPlayerRank.DEPUTY && deputies >= 1) {
             leader.sendSystemMessage(
-                    Component.empty()
-                            .append(Component.literal("Role limit reached. ").withStyle(ChatFormatting.YELLOW))
-                            .append(Component.literal("(" + deputies + ")").withStyle(ChatFormatting.GOLD))
+                    Component.translatable("clan.role_limit_reached",
+                                    Component.literal("(" + deputies + ")").withStyle(ChatFormatting.GOLD))
+                            .withStyle(ChatFormatting.YELLOW)
             );
             return;
         }
         if (rank == ClanData.ClanPlayerRank.MEDICINE && medicine >= 2) {
             leader.sendSystemMessage(
-                    Component.empty()
-                            .append(Component.literal("Role limit reached. ").withStyle(ChatFormatting.YELLOW))
-                            .append(Component.literal("(" + medicine + ")").withStyle(ChatFormatting.GOLD))
+                    Component.translatable("clan.role_limit_reached",
+                                    Component.literal("(" + medicine + ")").withStyle(ChatFormatting.GOLD))
+                            .withStyle(ChatFormatting.YELLOW)
             );
             return;
         }
         if (rank == ClanData.ClanPlayerRank.MEDICINEAPP && medicineApp >= 1) {
             leader.sendSystemMessage(
-                    Component.empty()
-                            .append(Component.literal("Role limit reached. ").withStyle(ChatFormatting.YELLOW))
-                            .append(Component.literal("(" + medicineApp + ")").withStyle(ChatFormatting.GOLD))
+                    Component.translatable("clan.role_limit_reached",
+                                    Component.literal("(" + medicineApp + ")").withStyle(ChatFormatting.GOLD))
+                            .withStyle(ChatFormatting.YELLOW)
             );
             return;
         }
@@ -174,13 +174,11 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
             data.setDirty();
         } else {
             data.changeMemberRank(targetUUID, clan.clanUUID, rank);
-            Component playerRankChangeLog = Component.empty()
-                    .append(Component.literal(morphName).withStyle(ChatFormatting.AQUA))
-                    .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal("player")
-                    .append(Component.literal(")").withStyle(ChatFormatting.GRAY))
-                    .append(" has been made a ")
-                    .append(Component.literal(rank.name()).withStyle(ChatFormatting.GOLD)));
+            Component playerRankChangeLog = Component.translatable("clan.player_changerank_log",
+                    Component.literal(morphName).withStyle(ChatFormatting.AQUA)
+                            .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
+                            .append(Component.literal("player")),
+                    Component.literal(rank.name()).withStyle(ChatFormatting.GOLD));
 
             data.registerLog(leader.serverLevel().getServer().overworld(), clan.clanUUID, playerRankChangeLog);
 
@@ -188,10 +186,9 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
         }
 
         leader.sendSystemMessage(
-                Component.empty()
-                        .append(Component.literal(morphName).withStyle(ChatFormatting.GOLD))
-                        .append(" has been promoted to ")
-                        .append(Component.literal(String.valueOf(rank)).withStyle(ChatFormatting.AQUA))
+                Component.translatable("clan.player_role_promoted",
+                        Component.literal(morphName).withStyle(ChatFormatting.GOLD),
+                        Component.literal(String.valueOf(rank)).withStyle(ChatFormatting.AQUA))
         );
 
         if (target != null) {
@@ -200,12 +197,10 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
                 if (member == null) continue;
 
                 member.sendSystemMessage(
-                        Component.empty()
-                                .append(Component.literal(morphName).withStyle(ChatFormatting.GOLD))
-                                .append(" is now ")
-                                .append(Component.literal(String.valueOf(rank)).withStyle(ChatFormatting.AQUA)
-                                        .append("!")
-                                ));
+                        Component.translatable("clan.broadcast_player_change",
+                                Component.literal(morphName).withStyle(ChatFormatting.GOLD),
+                                Component.literal(String.valueOf(rank)).withStyle(ChatFormatting.AQUA))
+                );
             }
         }
 
@@ -214,7 +209,7 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
     private static void kickMember(UUID targetUUID ,ServerPlayer target, ServerPlayer leader, String morphName, ClanData.Clan clan, ClanData data) {
 
         if (target == leader) {
-            leader.sendSystemMessage(Component.literal("You can't kick yourself.").withStyle(ChatFormatting.YELLOW));
+            leader.sendSystemMessage(Component.translatable("commands.clan.cant_kick_self").withStyle(ChatFormatting.YELLOW));
             return;
         }
 
@@ -224,23 +219,21 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
             } else {
                 data.removeMember(targetUUID, clan.clanUUID);
 
-                Component playerLeftLog = Component.empty()
-                        .append(Component.literal(morphName).withStyle(ChatFormatting.AQUA))
-                        .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal("player").withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal(")").withStyle(ChatFormatting.GRAY))
-                        .append(" has been kicked from ")
-                        .append(Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
+                Component playerLeftLog = Component.translatable("clan.player_removed",
+                        Component.literal(morphName).withStyle(ChatFormatting.AQUA)
+                                .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
+                                .append(Component.literal("player").withStyle(ChatFormatting.GRAY))
+                                .append(Component.literal(")").withStyle(ChatFormatting.GRAY)),
+                        Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
 
                 data.registerLog(leader.serverLevel().getServer().overworld(), clan.clanUUID, playerLeftLog);
             }
             data.setDirty();
 
             leader.sendSystemMessage(
-                    Component.empty()
-                            .append(Component.literal(morphName).withStyle(ChatFormatting.GOLD))
-                            .append(" has been removed from ")
-                            .append(Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)))
+                    Component.translatable("clan.player_removed",
+                            Component.literal(morphName).withStyle(ChatFormatting.GOLD),
+                            Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)))
             );
         }
 
@@ -249,7 +242,7 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
     private static void changePerms(UUID targetUUID, ServerPlayer target, ServerPlayer leader, String morphName,ClanData.ClanPermissions perms , ClanData.Clan clan, ClanData data) {
 
         if (target == leader) {
-            leader.sendSystemMessage(Component.literal("You can't change your own permissions.").withStyle(ChatFormatting.YELLOW));
+            leader.sendSystemMessage(Component.translatable("clan.cant_change_own_perms").withStyle(ChatFormatting.YELLOW));
             return;
         }
 
@@ -259,23 +252,21 @@ public class CtSManageClanMemberPacket implements CustomPacketPayload {
             } else {
                 data.changeMemberPermissions(targetUUID, clan.clanUUID, perms);
 
-                Component playerJoinedLog = Component.empty()
-                        .append(Component.literal(morphName).withStyle(ChatFormatting.AQUA))
-                        .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal("player").withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal(")").withStyle(ChatFormatting.GRAY))
-                        .append(" has been made ")
-                        .append(Component.literal(perms.name()).withStyle(ChatFormatting.RED));
+                Component playerJoinedLog = Component.translatable("clan.member_perms",
+                        Component.literal(morphName).withStyle(ChatFormatting.AQUA)
+                                .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
+                                .append(Component.literal("player").withStyle(ChatFormatting.GRAY))
+                                .append(Component.literal(")").withStyle(ChatFormatting.GRAY)),
+                        Component.literal(perms.name()).withStyle(ChatFormatting.RED));
 
                 data.registerLog(leader.serverLevel().getServer().overworld(), clan.clanUUID, playerJoinedLog);
             }
             data.setDirty();
 
             leader.sendSystemMessage(
-                    Component.empty()
-                            .append(Component.literal(morphName).withStyle(ChatFormatting.GOLD))
-                            .append(" has been made ")
-                            .append(Component.literal(perms.name()).withStyle(ChatFormatting.RED))
+                    Component.translatable("clan.member_perms",
+                            Component.literal(morphName).withStyle(ChatFormatting.GOLD),
+                            Component.literal(perms.name()).withStyle(ChatFormatting.RED))
             );
         }
 

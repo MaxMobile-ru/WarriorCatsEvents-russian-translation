@@ -28,17 +28,17 @@ public class CtSSwitchStealthPacket implements CustomPacketPayload {
 
             CapabilityManager.attachmentProvider(player, ModAttachments.PLAYER_STEALTH, cap -> {
                 if (!cap.isUnlocked()) {
-                    player.sendSystemMessage(Component.literal("Stealth is not unlocked yet.")
+                    player.sendSystemMessage(Component.translatable("skills.stealth_not_unlocked")
                             .withStyle(ChatFormatting.RED));
                     return;
                 }
 
                 if (cap.isOn()) {
                     cap.setOn(false);
-                    player.sendSystemMessage(Component.literal("[Stealth: Off]").withStyle(ChatFormatting.RED));
+                    player.sendSystemMessage(Component.translatable("skills.stealth_off").withStyle(ChatFormatting.RED));
                 } else {
                     cap.setOn(true);
-                    player.sendSystemMessage(Component.literal("[Stealth: On]").withStyle(ChatFormatting.GREEN));
+                    player.sendSystemMessage(Component.translatable("skills.stealth_on").withStyle(ChatFormatting.GREEN));
                 }
 
                 cap.sync(player);

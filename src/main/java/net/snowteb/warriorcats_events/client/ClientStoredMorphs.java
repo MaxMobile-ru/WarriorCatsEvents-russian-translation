@@ -2,11 +2,12 @@ package net.snowteb.warriorcats_events.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.InstanceCreator;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -18,8 +19,10 @@ import java.util.Map;
 @OnlyIn(Dist.CLIENT)
 public class ClientStoredMorphs {
 
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting()
+            .registerTypeAdapter(MorphsFile.MorphData.class,
+                    (InstanceCreator<MorphsFile.MorphData>) type -> new MorphsFile.MorphData())
+            .create();
     private static final Path FILE_PATH =
             Minecraft.getInstance().gameDirectory.toPath().resolve("config")
                     .resolve(WarriorCatsEvents.MODID).resolve("morphs.json");
@@ -29,8 +32,58 @@ public class ClientStoredMorphs {
     public static class MorphsFile {
         public Map<String,MorphData> morphs = new HashMap<>();
 
-        public record MorphData(WCGenetics genetics, WCGenetics chimeraGenetics, WCGenetics.GeneticalVariants variants, WCGenetics.GeneticalChimeraVariants chimeraVariants){}
-    }
+        public static class MorphData {
+            private final WCGenetics genetics;
+            private final WCGenetics chimeraGenetics;
+            private final WCGenetics.GeneticalVariants variants;
+            private final WCGenetics.GeneticalChimeraVariants chimeraVariants;
+            private final boolean onGeneticalSkin;
+            private final int presetVariant;
+
+            public MorphData(WCGenetics genetics, WCGenetics chimeraGenetics,
+                             WCGenetics.GeneticalVariants variants, WCGenetics.GeneticalChimeraVariants chimeraVariants,
+                             boolean onGeneticalSkin, int presetVariant) {
+                this.genetics = genetics;
+                this.chimeraGenetics = chimeraGenetics;
+                this.variants = variants;
+                this.chimeraVariants = chimeraVariants;
+                this.onGeneticalSkin = onGeneticalSkin;
+                this.presetVariant = presetVariant;
+            }
+
+            MorphData() {
+                this.genetics = new WCGenetics();
+                this.chimeraGenetics = new WCGenetics();
+                this.variants = new WCGenetics.GeneticalVariants();
+                this.chimeraVariants = new WCGenetics.GeneticalChimeraVariants();
+                this.onGeneticalSkin = true;
+                this.presetVariant = 0;
+            }
+
+            public WCGenetics genetics() {
+                return this.genetics;
+            }
+
+            public WCGenetics chimeraGenetics() {
+                return this.chimeraGenetics;
+            }
+
+            public WCGenetics.GeneticalVariants variants() {
+                return this.variants;
+            }
+
+            public WCGenetics.GeneticalChimeraVariants chimeraVariants() {
+                return this.chimeraVariants;
+            }
+
+            public boolean onGeneticalSkin() {
+                return this.onGeneticalSkin;
+            }
+
+            public int presetVariant() {
+                return this.presetVariant;
+            }
+        }    }
 
     public static void load() {
         try {

@@ -41,6 +41,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.snowteb.warriorcats_events.block.ModBlocks;
 import net.snowteb.warriorcats_events.block.entity.LizardEggBlockEntity;
 import net.snowteb.warriorcats_events.entity.ModEntities;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.sound.ModSounds;
 import org.jetbrains.annotations.Nullable;
@@ -384,7 +385,7 @@ public class LizardEntity extends TamableAnimal implements GeoEntity {
                                 {
                                     String mode = "following";
                                     String name = this.hasCustomName() ? this.getCustomName().getString() : this.getName().getString();
-                                    pPlayer.displayClientMessage(Component.literal(name + " is " + mode), true);
+                                    pPlayer.displayClientMessage(Component.translatable("entity.animal_is_mode", name, mode), true);
                                 }
                                 this.setOrderedToSit(false);
                                 this.mode = LizardMode.FOLLOW;
@@ -394,7 +395,7 @@ public class LizardEntity extends TamableAnimal implements GeoEntity {
                                 {
                                     String mode = "sitting";
                                     String name = this.hasCustomName() ? this.getCustomName().getString() : this.getName().getString();
-                                    pPlayer.displayClientMessage(Component.literal(name + " is " + mode), true);
+                                    pPlayer.displayClientMessage(Component.translatable("entity.animal_is_mode", name, mode), true);
                                 }
                                 this.setOrderedToSit(true);
                                 this.mode = LizardMode.SIT;
@@ -403,7 +404,7 @@ public class LizardEntity extends TamableAnimal implements GeoEntity {
                                 {
                                     String mode = "wandering";
                                     String name = this.hasCustomName() ? this.getCustomName().getString() : this.getName().getString();
-                                    pPlayer.displayClientMessage(Component.literal(name + " is " + mode), true);
+                                    pPlayer.displayClientMessage(Component.translatable("entity.animal_is_mode", name, mode), true);
                                 }
                                 this.setOrderedToSit(false);
                                 this.mode = LizardMode.WANDER;
@@ -606,24 +607,14 @@ public class LizardEntity extends TamableAnimal implements GeoEntity {
             this.lizard = mob;
         }
 
-        /**
-         * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
-         * method as well.
-         */
         public boolean canUse() {
             return this.lizard.hasEgg() && super.canUse();
         }
 
-        /**
-         * Returns whether an in-progress EntityAIBase should continue executing
-         */
         public boolean canContinueToUse() {
             return super.canContinueToUse() && this.lizard.hasEgg();
         }
 
-        /**
-         * Keep ticking a continuous task that has already been started
-         */
         public void tick() {
             super.tick();
             BlockPos blockpos = this.lizard.blockPosition();

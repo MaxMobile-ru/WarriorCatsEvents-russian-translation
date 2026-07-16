@@ -17,11 +17,9 @@ public class CoughDisease extends Disease<CoughDisease> {
             Disease<?> whitecough = base.copy();
             if (tDiseaseable.removeDisease(DiseaseTypes.WHITECOUGH)) {
                 tDiseaseable.getEntity().sendSystemMessage(
-                        Component.empty()
-                                        .append("Your ")
-                                .append(Component.literal(DiseaseTypes.WHITECOUGH.getName().getString()).withStyle(ChatFormatting.GRAY))
-                                .append(" has turned into ")
-                                .append(Component.literal(DiseaseTypes.GREENCOUGH.getName().getString()).withStyle(ChatFormatting.DARK_GREEN))
+                        Component.translatable("managers.disease_turned_into",
+                                Component.literal(DiseaseTypes.WHITECOUGH.getName().getString()).withStyle(ChatFormatting.GRAY),
+                                Component.literal(DiseaseTypes.GREENCOUGH.getName().getString()).withStyle(ChatFormatting.DARK_GREEN))
                 );
                 Disease<?> greencough = tDiseaseable.getDisease(DiseaseTypes.GREENCOUGH);
                 greencough.setLevel(whitecough.getLevel());

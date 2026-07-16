@@ -11,13 +11,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.Tags;
 import net.snowteb.warriorcats_events.compat.CompatibilitiesServer;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.managers.ClimbDataAccessor;
 import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
@@ -91,8 +90,8 @@ public class DiseaseManager {
 
         if (gotSick) {
             if (entity instanceof WCatEntity cat && cat.getOwner() instanceof Player player) {
-                String name = "A clanmate";
-                player.sendSystemMessage(Component.literal(name + " has gotten sick.")
+                String name = Component.translatable("generic.wcat.clanmate").getString();
+                player.sendSystemMessage(Component.translatable("managers.clanmate_sick", name)
                         .withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
             }
         }

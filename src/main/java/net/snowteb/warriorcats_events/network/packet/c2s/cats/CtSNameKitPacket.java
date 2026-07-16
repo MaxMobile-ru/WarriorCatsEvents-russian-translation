@@ -1,5 +1,6 @@
 package net.snowteb.warriorcats_events.network.packet.c2s.cats;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
@@ -10,7 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
 public class CtSNameKitPacket implements CustomPacketPayload {
     private final String kitPrefix;
@@ -60,6 +61,20 @@ public class CtSNameKitPacket implements CustomPacketPayload {
 
                     kit.setNameColor(kit.getRank());
 
+
+                    Component messageLog = Component.translatable("item.warriorcats_events.kit.kit_born",
+                            Component.literal(finalName).withStyle(ChatFormatting.GREEN),
+                            Component.literal("(").withStyle(ChatFormatting.GRAY)
+                                    .append(Component.literal(sPlayer.getName().getString()).withStyle(ChatFormatting.GRAY))
+                                    .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
+
+                    kit.registerClanLog(messageLog);
+
+                    sPlayer.sendSystemMessage(
+                            Component.translatable("item.warriorcats_events.kit.kit_born",
+                                    Component.literal(finalName).withStyle(ChatFormatting.GREEN),
+                                    Component.empty())
+                    );
                 }
 
 

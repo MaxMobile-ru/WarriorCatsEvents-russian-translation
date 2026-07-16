@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.client.ClientPacketHandles;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 
 public class StCFinallySaveMorph implements CustomPacketPayload {
 
@@ -17,15 +17,20 @@ public class StCFinallySaveMorph implements CustomPacketPayload {
     private final WCGenetics.GeneticalVariants variants;
     private final WCGenetics chimeraGenetics;
     private final WCGenetics.GeneticalChimeraVariants chimeraVariants;
+    private final boolean onGeneticalSkin;
+    private final int presetVariant;
 
 
     public StCFinallySaveMorph(String key, WCGenetics genetics, WCGenetics.GeneticalVariants variants,
-                               WCGenetics chimeraGens, WCGenetics.GeneticalChimeraVariants chimeraVariants) {
+                               WCGenetics chimeraGens, WCGenetics.GeneticalChimeraVariants chimeraVariants,
+                               boolean onGeneticalSkin, int presetVariant) {
         this.Key = key;
         this.genetics = genetics;
         this.variants = variants;
         this.chimeraGenetics = chimeraGens;
         this.chimeraVariants = chimeraVariants;
+        this.onGeneticalSkin = onGeneticalSkin;
+        this.presetVariant = presetVariant;
     }
 
     public static StCFinallySaveMorph decode(FriendlyByteBuf buf) {
@@ -37,8 +42,10 @@ public class StCFinallySaveMorph implements CustomPacketPayload {
 
         WCGenetics chimeraGens = WCGenetics.decode(buf);
         WCGenetics.GeneticalChimeraVariants chimeraVariants = WCGenetics.GeneticalChimeraVariants.decode(buf);
+        boolean onGeneticalSkin = buf.readBoolean();
+        int presetVariant = buf.readInt();
 
-        return new StCFinallySaveMorph( key ,genetics, variants, chimeraGens, chimeraVariants);
+        return new StCFinallySaveMorph( key ,genetics, variants, chimeraGens, chimeraVariants, onGeneticalSkin, presetVariant);
     }
 
     public static void encode(StCFinallySaveMorph packet, FriendlyByteBuf buf) {
@@ -49,13 +56,15 @@ public class StCFinallySaveMorph implements CustomPacketPayload {
         packet.variants.encode(buf);
         packet.chimeraGenetics.encode(buf);
         packet.chimeraVariants.encode(buf);
+        buf.writeBoolean(packet.onGeneticalSkin);
+        buf.writeInt(packet.presetVariant);
 
     }
 
     public static void handle(StCFinallySaveMorph packet, IPayloadContext context) {
         context.enqueueWork(() -> {
             ClientPacketHandles.openSaveMorphScreen( packet.Key ,packet.genetics, packet.variants,
-                    packet.chimeraGenetics, packet.chimeraVariants);
+                    packet.chimeraGenetics, packet.chimeraVariants, packet.onGeneticalSkin, packet.presetVariant );
         });
     }
 

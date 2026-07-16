@@ -15,11 +15,9 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.attachments.ModAttachments;
 import net.snowteb.warriorcats_events.attachments.WCEPlayerData;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.sound.ModSounds;
 import tocraft.walkers.api.PlayerShape;
-
-import java.util.function.Supplier;
 
 public class CtSPlayCatSoundPacket implements CustomPacketPayload {
     private final int soundIndex;

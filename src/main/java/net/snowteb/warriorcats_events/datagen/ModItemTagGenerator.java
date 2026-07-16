@@ -3,6 +3,7 @@ package net.snowteb.warriorcats_events.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
@@ -26,5 +27,6 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         this.tag(CompatibilityTags.SERENE_SEASONS_AUTUMN_CROPS).add(ModItems.DEATHBERRIES.get(), ModItems.COMFREY_LEAVES.get(), ModItems.COMFREY_ROOT.get());
         this.tag(CompatibilityTags.SERENE_SEASONS_WINTER_CROPS).add(ModItems.JUNIPER_BERRIES.get());
 
+        this.tag(ItemTags.DYEABLE).add(ModItems.CAT_COLLAR.get());
     }
 }

@@ -41,6 +41,7 @@ public class WCEServerConfig {
         public final ModConfigSpec.DoubleValue SKILL_ARMOR_MULTIPLIER;
 
         public final ModConfigSpec.IntValue MAX_TERRITORY_TIME;
+        public final ModConfigSpec.IntValue MAX_TERRITORY_SIZE;
 
 
 
@@ -108,6 +109,11 @@ public class WCEServerConfig {
             MAX_TERRITORY_TIME = builder
                     .comment("The time in minutes it takes for a territory marker to fade.")
                     .defineInRange("fadingTime", 240, 10, Integer.MAX_VALUE);
+
+            MAX_TERRITORY_SIZE = builder
+                    .comment("The max number of chunks a clan can possess.")
+                    .comment("Increasing this number while having too many clans could be dangerous.")
+                    .defineInRange("maxTerritory", 169, 9, Integer.MAX_VALUE);
 
             ENFORCE_TERRITORIES = builder
                     .comment("Whether territories should be enforced.")

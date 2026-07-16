@@ -104,18 +104,18 @@ public class WhiskersItem extends Item {
         }
 
         if (InventoryScreen.hasShiftDown()) {
-            Component shiftRightClick = Component.literal("[Shift + Right-Click] ");
-            Component rightClick = Component.literal("[Right-Click] ");
+            Component shiftRightClick = Component.translatable("generic.shift_right_click").append(" ");
+            Component rightClick = Component.translatable("generic.right_click").append(" ");
 
             tooltipComponents.add(Component.empty());
-            tooltipComponents.add(rightClick.copy().append(Component.literal("On a nest to claim it.").withStyle(ChatFormatting.GRAY)));
-            tooltipComponents.add(shiftRightClick.copy().append(Component.literal("On a Wild Cat to change their clan role.").withStyle(ChatFormatting.GRAY)));
-            tooltipComponents.add(rightClick.copy().append(Component.literal("On a Wild Cat to display their profile.").withStyle(ChatFormatting.GRAY)));
-            tooltipComponents.add(rightClick.copy().append(Component.literal("On a Player to display their character profile.").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(rightClick.copy().append(Component.translatable("item.warriorcats_events.whiskers.tip1").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(shiftRightClick.copy().append(Component.translatable("item.warriorcats_events.whiskers.tip2").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(rightClick.copy().append(Component.translatable("item.warriorcats_events.whiskers.tip3").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(rightClick.copy().append(Component.translatable("item.warriorcats_events.whiskers.tip4").withStyle(ChatFormatting.GRAY)));
 
         } else {
             tooltipComponents.add(Component.empty());
-            tooltipComponents.add((Component.literal("[Hold Shift to display all usages]").withStyle(ChatFormatting.DARK_PURPLE)));
+            tooltipComponents.add((Component.translatable("item.warriorcats_events.claws.display_tips").withStyle(ChatFormatting.DARK_PURPLE)));
         }
     }
 }

@@ -2,9 +2,8 @@ package net.snowteb.warriorcats_events.entity.client;
 
 import net.minecraft.resources.ResourceLocation;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
-import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 
 public class ElytraModel extends GeoModel<WCatEntity> {

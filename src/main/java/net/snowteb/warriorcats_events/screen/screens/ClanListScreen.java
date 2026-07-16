@@ -51,7 +51,7 @@ public class ClanListScreen extends Screen {
             } else {
                 LocalPlayer localPlayer = Minecraft.getInstance().player;
                 if (localPlayer != null) Minecraft.getInstance().player
-                        .sendSystemMessage(Component.literal("You are not in a clan.")
+                        .sendSystemMessage(Component.translatable("clan.player_not_clan")
                                 .withStyle(ChatFormatting.YELLOW));
             }
         }
@@ -72,7 +72,7 @@ public class ClanListScreen extends Screen {
         }
 
         territoryMapButton = Button.builder(
-                Component.literal("Territory Map"),
+                Component.translatable("screen.clanlist.territory_map"),
                 btn -> {
                     this.onClose();
                     WCEClient.playLocalSound(ModSounds.MENU_ACCEPT.get(), SoundSource.AMBIENT, 0.2f, 1.0f);
@@ -102,7 +102,8 @@ public class ClanListScreen extends Screen {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
 
         pGuiGraphics.pose().scale(1.2f,1.2f,1.2f);
-        pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, "Existing Clans", 92, 20, 0xFFFFFF);
+        pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("screen.clanlist.existing_clans"),
+                92, 20, 0xFFFFFF);
         pGuiGraphics.pose().scale(5/6f,5/6f,5/6f);
 
         pGuiGraphics.renderOutline(10,10,200,this.height - 30,0xFFFFFFFF);

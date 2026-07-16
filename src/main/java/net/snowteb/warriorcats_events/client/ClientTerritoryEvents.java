@@ -3,6 +3,7 @@ package net.snowteb.warriorcats_events.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -84,7 +85,7 @@ public class ClientTerritoryEvents {
             int centerX = width / 2;
             int centerY = height / 2 + 10;
 
-            String text1 = clanName + " territory";
+            String text1 = Component.translatable("blockentity.clan.clanterritory", clanName).getString();
             String text2 = territoryName;
             int extraY = text2.isEmpty() ? 0 : 7;
 
@@ -92,7 +93,7 @@ public class ClientTerritoryEvents {
             pGuiGraphics.pose().translate(width - mcinstance.font.width(text1) - 20, 5, 0);
             float scale = 1.1f;
             pGuiGraphics.pose().scale(scale, scale, scale);
-            pGuiGraphics.drawString(mcinstance.font, clanName + " territory", 0, 0, clanColor);
+            pGuiGraphics.drawString(mcinstance.font, text1, 0, 0, clanColor);
             pGuiGraphics.pose().popPose();
 
             int barStart = width - mcinstance.font.width(text1) - 20;
@@ -114,7 +115,7 @@ public class ClientTerritoryEvents {
 
             float percentage = (float) territoryTime / (WCEServerConfig.SERVER.MAX_TERRITORY_TIME.get()*20*60);
             String percentageString = String.format("%.1f", percentage*100) + "%";
-            if (percentage <= 0) percentageString = "Time not synced, real time might be higher.";
+            if (percentage <= 0) percentageString = Component.translatable("clan.client_time_unsynced").getString();
 
             pGuiGraphics.pose().pushPose();
             pGuiGraphics.pose().translate(barStart, 32, 0);
@@ -137,7 +138,7 @@ public class ClientTerritoryEvents {
             int centerX = width / 2;
             int centerY = height / 2 + 10;
 
-            String text = "Unclaimed territory";
+            String text = Component.translatable("clan.territory_unclaimmed").getString();
             pGuiGraphics.pose().pushPose();
             pGuiGraphics.pose().translate(width - mcinstance.font.width(text) - 20, 5, 0);
             float scale = 1.1f;

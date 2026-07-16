@@ -40,7 +40,7 @@ public class CtSMoreJumpPacket implements CustomPacketPayload {
             ServerPlayer player = (ServerPlayer) context.player();
 
             if (!WCEServerConfig.SERVER.SKILL_TREE_SERVER.get()) {
-                player.sendSystemMessage(Component.literal("Skill tree is disabled for this world.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("generic.skill_tree_disabled").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -56,7 +56,7 @@ public class CtSMoreJumpPacket implements CustomPacketPayload {
             if (currentSpeedLevel == PlayerSkill.maxSpeedLevel && currentHPLevel == PlayerSkill.maxHPLevel) {
 
             if (player.totalExperience < cost && currentLevel < PlayerSkill.maxJumpLevel) {
-                player.sendSystemMessage(Component.literal("⚠ You need " + remaining + " XP more.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("generic.need_more_xp", remaining).withStyle(ChatFormatting.RED));
                 return;
             }
                 if (currentLevel < PlayerSkill.maxJumpLevel) {
@@ -78,7 +78,7 @@ public class CtSMoreJumpPacket implements CustomPacketPayload {
 
                     player.getPersistentData().putInt("skill_jump_level", currentLevel + 1);
 
-                    player.sendSystemMessage(Component.literal("Jump level increased to: " + (currentLevel + 1)));
+                    player.sendSystemMessage(Component.translatable("skills.jump_level_increased", (currentLevel + 1)));
 
                     if (currentLevel + 1 == PlayerSkill.maxJumpLevel) {
                         MinecraftServer server = player.getServer();
@@ -94,9 +94,11 @@ public class CtSMoreJumpPacket implements CustomPacketPayload {
                     }
                 }
                 else {
-                    player.sendSystemMessage(Component.literal("Jump skill is maxed! : Level " + (currentLevel)).withStyle(ChatFormatting.YELLOW));
+                    player.sendSystemMessage(Component.translatable("skills.jump_level_maxed", (currentLevel)).withStyle(ChatFormatting.YELLOW));
                 }
-            } else {player.sendSystemMessage(Component.literal("Requierements not present").withStyle(ChatFormatting.RED));}
+            } else {
+                player.sendSystemMessage(Component.translatable("skills.requierements_not_present").withStyle(ChatFormatting.RED));
+            }
 
 
         });

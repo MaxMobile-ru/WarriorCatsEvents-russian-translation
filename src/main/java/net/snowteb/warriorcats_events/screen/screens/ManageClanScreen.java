@@ -20,11 +20,10 @@ import net.minecraft.world.level.ChunkPos;
 import net.snowteb.warriorcats_events.WCEClient;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.client.ClanInfo;
-import net.snowteb.warriorcats_events.client.ClientClanCache;
 import net.snowteb.warriorcats_events.client.ClientPacketHandles;
 import net.snowteb.warriorcats_events.client.ClientTerritoryData;
 import net.snowteb.warriorcats_events.entity.ModEntities;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.c2s.clan.CtSClaimTerritory;
 import net.snowteb.warriorcats_events.network.packet.c2s.clan.CtSManageClanMemberPacket;
@@ -40,7 +39,6 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.List;
-import java.util.UUID;
 
 public class ManageClanScreen extends Screen {
 
@@ -99,7 +97,7 @@ public class ManageClanScreen extends Screen {
         claimTerritory = new GradientButton(
                 centerX - 85, 10,
                 80, 20,
-                Component.literal("Claim Territory"),
+                Component.translatable("screen.clanmanage.claimterritory"),
                 btn -> {
                     drawClaimChunkMenu();
                 }, ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/empty.png"),
@@ -109,7 +107,7 @@ public class ManageClanScreen extends Screen {
         unclaimTerritory = new GradientButton(
                 centerX + 5, 10,
                 80, 20,
-                Component.literal("Unclaim Territory"),
+                Component.translatable("screen.clanmanage.unclaimterritory"),
                 btn -> {
                     drawUnclaimChunkMenu();
                 }, ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/empty.png"),
@@ -135,7 +133,7 @@ public class ManageClanScreen extends Screen {
                 this.width - 140,
                 centerY + 20,
                 100, 20,
-                Component.literal("Kick"),
+                Component.translatable("screen.clanmanage.kickplayer"),
                 btn -> {
                     drawConfirmKickMenu();
                 },
@@ -144,22 +142,22 @@ public class ManageClanScreen extends Screen {
         );
 
         changeRank = new ModButton(
-                        this.width - 140,
-                        centerY + 45,
-                        100, 20,
-                        Component.literal("Change Rank"),
-                        btn -> {
-                                drawChangeRankMenu();
-                            },
-                        ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/empty.png"),
+                this.width - 140,
+                centerY + 45,
+                100, 20,
+                Component.translatable("screen.clanmanage.changerank"),
+                btn -> {
+                    drawChangeRankMenu();
+                },
+                ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/empty.png"),
                 80, 20
-                );
+        );
 
         changePerms = new ModButton(
                 this.width - 140,
                 centerY + 70,
                 100, 20,
-                Component.literal("Change Permissions"),
+                Component.translatable("screen.clanmanage.changeperms"),
                 btn -> {
                     drawChangePermsMenu();
                 },
@@ -213,7 +211,7 @@ public class ManageClanScreen extends Screen {
                 50,
                 10,
                 60, 10,
-                Component.literal("Rename"),
+                Component.translatable("screen.clanmanage.rename"),
                 btn -> {
                     drawRenameMenu();
                 },
@@ -222,7 +220,7 @@ public class ManageClanScreen extends Screen {
         );
 
         backButton = Button.builder(
-                Component.literal("Back"),
+                Component.translatable("screen.clanmanage.back"),
                 btn -> {
                     this.onClose();
                     WCEClient.playLocalSound(ModSounds.MENU_ACCEPT.get(), SoundSource.AMBIENT, 0.2f, 1.0f);
@@ -284,10 +282,10 @@ public class ManageClanScreen extends Screen {
 
 
 
-        pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.literal("Leader: " + clanInfo.leaderName).withStyle(ChatFormatting.GRAY),
+        pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("screen.clanmanage.leader", clanInfo.leaderName).withStyle(ChatFormatting.GRAY),
                 80, centerY - 80, 0);
 
-        pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.literal("Access: " + currentPermissionLevel).withStyle(ChatFormatting.DARK_GRAY),
+        pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("screen.clanmanage.perms", currentPermissionLevel).withStyle(ChatFormatting.DARK_GRAY),
                 80, centerY - 70, 0);
 
         int color = ChatFormatting.GRAY.getColor();
@@ -310,7 +308,7 @@ public class ManageClanScreen extends Screen {
 
         pGuiGraphics.setColor(1, 1, 1, 1);
 
-        pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.literal("Players: " + clanInfo.memberCount).withStyle(ChatFormatting.GRAY),
+        pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, Component.translatable("screen.clanmanage.player_count", clanInfo.memberCount).withStyle(ChatFormatting.GRAY),
                 80, centerY - 15, 0);
 
 
@@ -346,10 +344,10 @@ public class ManageClanScreen extends Screen {
             entityToRender.setVariant(selectedMember.getMorphVariant());
             entityToRender.setGender(1);
 
-            entityToRender.setGenetics(selectedMember.getGenetics());
-            entityToRender.setGeneticalVariants(selectedMember.getVariants());
-            entityToRender.setChimeraGenetics(selectedMember.getChimeraGenetics());
-            entityToRender.setGeneticalVariantsChimera(selectedMember.getChimeraVariants());
+            entityToRender.getGeneticsModule().setGenetics(selectedMember.getGenetics());
+            entityToRender.getGeneticsModule().setGeneticalVariants(selectedMember.getVariants());
+            entityToRender.getGeneticsModule().setChimeraGenetics(selectedMember.getChimeraGenetics());
+            entityToRender.getGeneticsModule().setGeneticalVariantsChimera(selectedMember.getChimeraVariants());
 
             entityToRender.setOnGround(true);
             entityToRender.setYRot(0);
@@ -396,14 +394,15 @@ public class ManageClanScreen extends Screen {
             infoY += 50;
 
             if (currentMenu.equals("main")) {
-                pGuiGraphics.drawCenteredString(font, "Rank: " + selectedMember.getRank(), infoX, infoY, 0xAAAAAA);
+                pGuiGraphics.drawCenteredString(font, Component.translatable("screen.clanmanage.rank", selectedMember.getRank()), infoX, infoY, 0xAAAAAA);
                 infoY += 12;
 
-                pGuiGraphics.drawCenteredString(font, "Age: " + selectedMember.getPlayerMorphAge(), infoX, infoY, 0xAAAAAA);
+                pGuiGraphics.drawCenteredString(font, Component.translatable("screen.clanmanage.age", selectedMember.getPlayerMorphAge()), infoX, infoY, 0xAAAAAA);
                 infoY += 12;
 
                 pGuiGraphics.drawCenteredString(font,
-                        (selectedMember.isPlayerOnline() ? "Online" : "Offline"),
+                        (selectedMember.isPlayerOnline() ?
+                                Component.translatable("screen.clanmanage.online") : Component.translatable("screen.clanmanage.offline")),
                         infoX,
                         infoY,
                         selectedMember.isPlayerOnline() ? 0x009100 : 0x910000
@@ -422,12 +421,10 @@ public class ManageClanScreen extends Screen {
             }
 
             if (currentMenu.equals("confirmKick")) {
-                Component text = Component.empty()
-                                .append("Do you want to kick ")
-                                        .append(Component.literal(selectedMember.getPlayerMorphName()).withStyle(ChatFormatting.GOLD))
-                                                .append(" from ")
-                                                        .append(Component.literal(clanInfo.name).withStyle(Style.EMPTY.withColor(clanInfo.color)))
-                                                                .append("?");
+                Component text = Component.translatable("screen.clanmanage.kick_confirm",
+                        Component.literal(selectedMember.getPlayerMorphName()).withStyle(ChatFormatting.GOLD),
+                        Component.literal(clanInfo.name).withStyle(Style.EMPTY.withColor(clanInfo.color)));
+
 
                 int textWidth = 130;
 
@@ -455,7 +452,7 @@ public class ManageClanScreen extends Screen {
 
             if (currentMenu.equals("claimChunk")) {
                 pGuiGraphics.drawCenteredString(this.font,
-                        Component.literal("Claim territory for").withStyle(ChatFormatting.GRAY),
+                        Component.translatable("screen.clanmanage.claim_territory_for").withStyle(ChatFormatting.GRAY),
                         centerX, centerY - 70, 0xFFFFFF);
 
                 pGuiGraphics.drawCenteredString(this.font,
@@ -463,26 +460,26 @@ public class ManageClanScreen extends Screen {
                         centerX, centerY - 60, 0xFFFFFF);
 
                 pGuiGraphics.drawCenteredString(this.font,
-                        Component.literal("Cost: 450-850XP").withStyle(ChatFormatting.GRAY),
+                        Component.translatable("screen.clanmanage.cost","450-850XP").withStyle(ChatFormatting.GRAY),
                         centerX, centerY - 40, 0xFFFFFF);
             }
 
             if (currentMenu.equals("unclaimChunk")){
-                String message = "";
+                Component message;
                 if (isInOwnTerritory) {
                     if (isTheCore) {
-                        message = "You are in core territory! Unclaiming this piece will unclaim every other piece of territory.";
+                        message = Component.translatable("screen.clanmanage.unclaim_chunk_core");
                     } else {
-                        message = "Unclaiming territory might also unclaim territory not connected to the core. Proceed with caution.";
+                        message = Component.translatable("screen.clanmanage.unclaim_chunk");
                     }
                     saveAndUnclaim.visible = true;
                 } else {
-                    message = "You cannot unclaim territory you don't own.";
+                    message = Component.translatable("screen.clanmanage.unclaim_chunk_not_claimed");
                     saveAndUnclaim.visible = false;
                 }
                 int y = 60;
 
-                List<FormattedCharSequence> wrapped = this.font.split(FormattedText.of(message), 120);
+                List<FormattedCharSequence> wrapped = this.font.split(message, 120);
                 for (FormattedCharSequence subLine : wrapped) {
 
                     pGuiGraphics.drawCenteredString(this.font,subLine, centerX, y, 0xFFFFFFFF);
@@ -492,11 +489,11 @@ public class ManageClanScreen extends Screen {
             }
 
             if (currentMenu.equals("renameClan")) {
-                String message = "Renaming clan";
+                Component message = Component.translatable("Renaming clan");
 
                 int y = 60;
 
-                List<FormattedCharSequence> wrapped = this.font.split(FormattedText.of(message), 120);
+                List<FormattedCharSequence> wrapped = this.font.split(message, 120);
                 for (FormattedCharSequence subLine : wrapped) {
 
                     pGuiGraphics.drawCenteredString(this.font,subLine, centerX, y, 0xFFFFFFFF);
@@ -555,7 +552,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 13,
-                Component.literal("Make Kit"),
+                Component.translatable("screen.clanmanage.make_kit"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("changerank", "kit", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -570,7 +567,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 13,
-                Component.literal("Make Apprentice"),
+                Component.translatable("screen.clanmanage.make_app"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("changerank", "apprentice", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -584,7 +581,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 13,
-                Component.literal("Make Warrior"),
+                Component.translatable("screen.clanmanage.make_warrior"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("changerank", "warrior", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -598,7 +595,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 13,
-                Component.literal("Make Elder"),
+                Component.translatable("screen.clanmanage.make_elder"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("changerank", "elder", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -612,7 +609,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 13,
-                Component.literal("Make Queen"),
+                Component.translatable("screen.clanmanage.make_queen"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("changerank", "queen", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -626,7 +623,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 13,
-                Component.literal("Make Medicine App"),
+                Component.translatable("screen.clanmanage.make_med_app"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("changerank", "medapp", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -640,7 +637,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 13,
-                Component.literal("Make Medicine"),
+                Component.translatable("screen.clanmanage.make_medicine"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("changerank", "medicine", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -654,7 +651,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 13,
-                Component.literal("Make Deputy"),
+                Component.translatable("screen.clanmanage.make_deputy"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("changerank", "deputy", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -690,7 +687,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 15,
-                Component.literal("Make Admin"),
+                Component.translatable("screen.clanmanage.make_admin"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("changeperms", "admin", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -705,7 +702,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 15,
-                Component.literal("Make Member"),
+                Component.translatable("screen.clanmanage.make_member"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("changeperms", "member", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -719,7 +716,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 15,
-                Component.literal("Make Guest"),
+                Component.translatable("screen.clanmanage.make_guest"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("changeperms", "guest", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -758,7 +755,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 20,
-                Component.literal("Confirm"),
+                Component.translatable("screen.clanmanage.confirm"),
                 btn -> {
                     ModPackets.sendToServer(new CtSManageClanMemberPacket("kick", "none", selectedMember.getPlayerUUID(), selectedMember.getPlayerMorphName()));
                     this.onClose();
@@ -773,7 +770,7 @@ public class ManageClanScreen extends Screen {
                 locX,
                 initialY,
                 90, 20,
-                Component.literal("Cancel"),
+                Component.translatable("screen.clanmanage.cancel"),
                 btn -> {
                     drawMainMenu();
                 },
@@ -796,15 +793,15 @@ public class ManageClanScreen extends Screen {
 
         territoryName = new EditBox(this.font, centerX - 50, centerY,
                 100, 20,
-                Component.literal("Optional name"));
-        territoryName.setHint(Component.literal("Optional name").withStyle(ChatFormatting.DARK_GRAY));
+                Component.translatable("screen.clanmanage.optional_name"));
+        territoryName.setHint(Component.translatable("screen.clanmanage.optional_name").withStyle(ChatFormatting.DARK_GRAY));
         territoryName.setMaxLength(25);
 
         closeClaimTerritory = new ModButton(
                 centerX - 65,
                 centerY + 40,
                 60, 15,
-                Component.literal("Back"),
+                Component.translatable("screen.clanmanage.back"),
                 btn -> {
                     drawMainMenu();
                 },
@@ -816,7 +813,7 @@ public class ManageClanScreen extends Screen {
                 centerX + 5,
                 centerY + 40,
                 60, 15,
-                Component.literal("Claim"),
+                Component.translatable("screen.clanmange.claim"),
                 btn -> {
                     saveAndClaimChunk();
                 },
@@ -845,7 +842,7 @@ public class ManageClanScreen extends Screen {
                 centerX - 65,
                 centerY + 40,
                 60, 15,
-                Component.literal("Back"),
+                Component.translatable("screen.clanmanage.back"),
                 btn -> {
                     drawMainMenu();
                     renameClan.active = true;
@@ -860,7 +857,7 @@ public class ManageClanScreen extends Screen {
                 centerX + 5,
                 centerY + 40,
                 60, 15,
-                Component.literal("Save"),
+                Component.translatable("screen.clanmanage.save"),
                 btn -> {
                     if (renameBox != null) {
                         ModPackets.sendToServer(new RenameClanPacket(renameBox.getValue()));
@@ -873,9 +870,9 @@ public class ManageClanScreen extends Screen {
 
         renameBox = new EditBox(this.font, centerX - 50, centerY,
                 100, 20,
-                Component.literal("Rename"));
+                Component.empty());
 
-        renameBox.setHint(Component.literal("New clan name").withStyle(ChatFormatting.DARK_GRAY));
+        renameBox.setHint(Component.translatable("screen.clanmanage.new_name").withStyle(ChatFormatting.DARK_GRAY));
 
         renameBox.setMaxLength(20);
 
@@ -906,7 +903,7 @@ public class ManageClanScreen extends Screen {
                 centerX - 65,
                 centerY + 40,
                 60, 15,
-                Component.literal("Back"),
+                Component.translatable("screen.clanmanage.back"),
                 btn -> {
                     drawMainMenu();
                 },
@@ -918,7 +915,7 @@ public class ManageClanScreen extends Screen {
                 centerX + 5,
                 centerY + 40,
                 60, 15,
-                Component.literal("Unclaim"),
+                Component.translatable("screen.clanmanage.unclaim"),
                 btn -> {
                     saveAndUnclaimChunk();
                 },

@@ -12,7 +12,7 @@ import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.damagesources.WCEDamageSources;
 import net.snowteb.warriorcats_events.diseases.kinds.*;
 import net.snowteb.warriorcats_events.effect.ModEffects;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.particles.WCEParticles;
 import tocraft.walkers.api.PlayerShape;
 

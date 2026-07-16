@@ -77,7 +77,7 @@ public class ImageScrollList extends AbstractSelectionList<ImageScrollList.Membe
 
 
             int bgColor = 0x22000000;
-            pGuiGraphics.fill(pLeft, pTop, pLeft + width, pTop + height, bgColor);
+            pGuiGraphics.fill(pLeft, pTop, pLeft + width, pTop + itemHeight, bgColor);
 
 
             pGuiGraphics.blit(

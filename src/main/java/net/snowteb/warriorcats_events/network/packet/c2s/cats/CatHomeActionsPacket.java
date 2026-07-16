@@ -22,7 +22,7 @@ import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.block.custom.NestBlock;
 import net.snowteb.warriorcats_events.block.entity.NestBlockEntity;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
 import java.util.UUID;
 
@@ -82,7 +82,7 @@ public class CatHomeActionsPacket implements CustomPacketPayload {
                     if (actionID == 0) {
                         BlockPos homePos = cat.getHomePosition();
                         if (homePos == null || homePos.equals(BlockPos.ZERO)) {
-                            player.sendSystemMessage(Component.literal("This cat doesn't have a home set.").withStyle(ChatFormatting.RED));
+                            player.sendSystemMessage(Component.translatable("generic.cat_has_no_home").withStyle(ChatFormatting.RED));
 
                             cat.mode = cat.lastMode;
                             if (cat.lastMode != WCatEntity.CatMode.SIT) {
@@ -116,7 +116,7 @@ public class CatHomeActionsPacket implements CustomPacketPayload {
                             }
                             cat.lastMode = cat.mode;
 
-                            player.sendSystemMessage(Component.literal("Home is too far.").withStyle(ChatFormatting.GRAY));
+                            player.sendSystemMessage(Component.translatable("generic.home_too_far").withStyle(ChatFormatting.GRAY));
                             return;
                         }
                         if (cat.getRank() != WCatEntity.Rank.KIT) {
@@ -150,10 +150,10 @@ public class CatHomeActionsPacket implements CustomPacketPayload {
                             if (result == -1) {
                             }
                             if (result == 0) {
-                                player.sendSystemMessage(Component.literal("No nests nearby.").withStyle(ChatFormatting.GRAY));
+                                player.sendSystemMessage(Component.translatable("generic.no_nests_nearby").withStyle(ChatFormatting.GRAY));
                             }
                             if (result == 2) {
-                                player.sendSystemMessage(Component.literal("This cat is already assigned to this nest.").withStyle(ChatFormatting.GRAY));
+                                player.sendSystemMessage(Component.translatable("generic.cat_already_asigned_nest").withStyle(ChatFormatting.GRAY));
                             }
                             return;
                         }
@@ -175,7 +175,7 @@ public class CatHomeActionsPacket implements CustomPacketPayload {
                         }
 
 
-                        player.sendSystemMessage(Component.literal("Home position set for " + catName).withStyle(ChatFormatting.GREEN));
+                        player.sendSystemMessage(Component.translatable("generic.home_pos_set", catName).withStyle(ChatFormatting.GREEN));
 
                     }
                 }
@@ -304,7 +304,7 @@ public class CatHomeActionsPacket implements CustomPacketPayload {
                             10, 0.2, 0.5, 0.2, 0.02
                     );
 
-                    player.sendSystemMessage(Component.literal("This nest is occupied by " + closestBed.getCatName()).withStyle(ChatFormatting.RED));
+                    player.sendSystemMessage(Component.translatable("generic.nest_occupied_by", closestBed.getCatName()).withStyle(ChatFormatting.RED));
 
                 }
                 if (uuid.equals(cat.getUUID())) {

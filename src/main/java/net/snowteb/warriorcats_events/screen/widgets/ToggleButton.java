@@ -31,11 +31,6 @@ public class ToggleButton extends Button {
 
 
         super.renderWidget(graphics, mouseX, mouseY, partialTick);
-//
-//        int bgColor = selected ? 0xFF6FAF6F : 0xFF444444;
-//        graphics.fill(getX(), getY(), getX() + width, getY() + height, bgColor);
-
-
 
         if (color != 0) {
             int alpha = 0xbd;

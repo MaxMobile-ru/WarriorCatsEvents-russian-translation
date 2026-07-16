@@ -17,7 +17,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.block.entity.TreeStumpBlockEntity;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,7 +103,7 @@ public class CtSSendPatrol implements CustomPacketPayload {
                 BlockPos homePos = deputy.getHomePosition();
 
                 if (homePos == null || homePos.equals(BlockPos.ZERO)) {
-                    player.sendSystemMessage(Component.literal("This deputy doesn't have a home to return to.").withStyle(ChatFormatting.RED));
+                    player.sendSystemMessage(Component.translatable("generic.deputy_has_no_home").withStyle(ChatFormatting.RED));
 
                     deputy.mode = deputy.lastMode;
                     if (deputy.lastMode != WCatEntity.CatMode.SIT) {
@@ -172,8 +172,9 @@ public class CtSSendPatrol implements CustomPacketPayload {
                 int cats = catsToPatrol.size();
                 int chunks = finalMap.size();
 
-                Component playerMessage = Component.literal(cats + " cats sent to patrol " + chunks + " chunks")
-                        .withStyle(ChatFormatting.GREEN);
+                Component playerMessage = Component.translatable("generic.cats_sent_to_patrol",
+                        cats,
+                        chunks).withStyle(ChatFormatting.GREEN);
 
                 player.displayClientMessage(playerMessage,true);
 
@@ -189,7 +190,7 @@ public class CtSSendPatrol implements CustomPacketPayload {
             BlockPos homePos = catSent.getHomePosition();
 
             if (homePos == null || homePos.equals(BlockPos.ZERO)) {
-                player.sendSystemMessage(Component.literal("This cat doesn't have a home to return to.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("generic.cat_has_no_home").withStyle(ChatFormatting.RED));
 
                 catSent.mode = catSent.lastMode;
                 if (catSent.lastMode != WCatEntity.CatMode.SIT) {
@@ -253,8 +254,9 @@ public class CtSSendPatrol implements CustomPacketPayload {
 
             int chunks = finalMap.size();
 
-            Component playerMessage = Component.literal(catName + " sent to patrol " + chunks + " chunks")
-                    .withStyle(ChatFormatting.GREEN);
+            Component playerMessage = Component.translatable("generic.cat_sent_to_patrol",
+                    catName,
+                    chunks).withStyle(ChatFormatting.GREEN);
 
             player.displayClientMessage(playerMessage,true);
 

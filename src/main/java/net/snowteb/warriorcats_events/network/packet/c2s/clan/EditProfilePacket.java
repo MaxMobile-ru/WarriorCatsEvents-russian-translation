@@ -10,6 +10,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.attachments.CapabilityManager;
 import net.snowteb.warriorcats_events.attachments.ModAttachments;
+import net.snowteb.warriorcats_events.attachments.WCEPlayerDataUtils;
 import tocraft.walkers.api.PlayerShape;
 
 public class EditProfilePacket implements CustomPacketPayload {
@@ -53,7 +54,7 @@ public class EditProfilePacket implements CustomPacketPayload {
                     player.sendSystemMessage(Component.literal("Invalid key provided."));
                 }
 
-                PlayerShape.updateShapes(player, cap.createMorph(player, player.serverLevel()));
+                PlayerShape.updateShapes(player, WCEPlayerDataUtils.createShape(player, player.serverLevel()));
             });
 
 

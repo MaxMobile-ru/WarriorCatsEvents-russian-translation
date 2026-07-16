@@ -12,7 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.commands.ClanListCommand;
+import net.snowteb.warriorcats_events.commands.WCECommandHandles;
 
 import java.util.*;
 
@@ -58,15 +58,15 @@ public class CtSRegisterLogPacket implements CustomPacketPayload {
 
                 data.registerLog(player.serverLevel().getServer().overworld(), clan.clanUUID, finalMessage);
 
-                player.displayClientMessage(Component.literal("Log successfully registered").withStyle(ChatFormatting.GREEN), false);
+                player.displayClientMessage(Component.translatable("clan.log_registered").withStyle(ChatFormatting.GREEN), false);
 
 
-                ClanListCommand.getList(player, true, false);
+                WCECommandHandles.clanList(player, true, false);
 
 //                ModPackets.sendToPlayer(new OpenSpecificClanScreen(clan.name, clan.clanUUID), player);
 
             } else {
-                player.sendSystemMessage(Component.literal("You are not in a clan.").withStyle(ChatFormatting.GRAY));
+                player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.GRAY));
             }
 
         });

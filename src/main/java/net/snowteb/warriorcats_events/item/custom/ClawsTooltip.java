@@ -49,7 +49,7 @@ import net.snowteb.warriorcats_events.attachments.ModAttachments;
 import net.snowteb.warriorcats_events.block.ModBlocks;
 import net.snowteb.warriorcats_events.block.custom.MakeshiftBedBlock;
 import net.snowteb.warriorcats_events.attachments.WCEPlayerData;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.s2c.others.StCFishingScreenPacket;
@@ -111,22 +111,22 @@ public class ClawsTooltip extends ShearsItem {
         }
 
         if (InventoryScreen.hasShiftDown()) {
-            Component shiftRightClick = Component.literal("[Shift + Right-Click] ");
-            Component rightClick = Component.literal("[Right-Click] ");
+            Component shiftRightClick = Component.translatable("generic.shift_right_click").append(" ");
+            Component rightClick = Component.translatable("generic.right_click").append(" ");
 
             tooltipComponents.add(Component.empty());
-            tooltipComponents.add(shiftRightClick.copy().append(Component.literal("On a Crafting Rock to prepare a recipe.").withStyle(ChatFormatting.GRAY)));
-            tooltipComponents.add(shiftRightClick.copy().append(Component.literal("On a Wild Cat to open their inventory.").withStyle(ChatFormatting.GRAY)));
-            tooltipComponents.add(rightClick.copy().append(Component.literal("On a kit to carry them.").withStyle(ChatFormatting.GRAY)));
-            tooltipComponents.add(shiftRightClick.copy().append(Component.literal("On a player to send a carry request.").withStyle(ChatFormatting.GRAY)));
-            tooltipComponents.add(rightClick.copy().append(Component.literal("On the ground while being under leaves to make a Makeshift Nest.").withStyle(ChatFormatting.GRAY)));
-            tooltipComponents.add(rightClick.copy().append(Component.literal("On mossy blocks to obtain Moss Blocks.").withStyle(ChatFormatting.GRAY)));
-            tooltipComponents.add(rightClick.copy().append(Component.literal("On logs to repair your claws.").withStyle(ChatFormatting.GRAY)));
-            tooltipComponents.add(shiftRightClick.copy().append(Component.literal("On water to start fishing.").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(shiftRightClick.copy().append(Component.translatable("item.warriorcats_events.claws.tip2").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(rightClick.copy().append(Component.translatable("item.warriorcats_events.claws.tip3").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(shiftRightClick.copy().append(Component.translatable("item.warriorcats_events.claws.tip4").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(rightClick.copy().append(Component.translatable("item.warriorcats_events.claws.tip5").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(rightClick.copy().append(Component.translatable("item.warriorcats_events.claws.tip6").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(rightClick.copy().append(Component.translatable("item.warriorcats_events.claws.tip7").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(shiftRightClick.copy().append(Component.translatable("item.warriorcats_events.claws.tip8").withStyle(ChatFormatting.GRAY)));
+            tooltipComponents.add(rightClick.copy().append(Component.translatable("item.warriorcats_events.claws.tip9").withStyle(ChatFormatting.GRAY)));
 
         } else {
             tooltipComponents.add(Component.empty());
-            tooltipComponents.add((Component.literal("[Hold Shift to display all usages]").withStyle(ChatFormatting.DARK_PURPLE)));
+            tooltipComponents.add((Component.translatable("item.warriorcats_events.claws.display_tips").withStyle(ChatFormatting.DARK_PURPLE)));
         }
 
     }
@@ -496,7 +496,7 @@ public class ClawsTooltip extends ShearsItem {
                 if (!pLevel.isClientSide) {
                     if (PlayerShape.getCurrentShape(pPlayer) instanceof Animal) {
                         if (pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getDamageValue() >= this.getMaxDamage(itemstack) - 5) {
-                            pPlayer.displayClientMessage(Component.literal("Your claws are too damaged.").withStyle(ChatFormatting.RED), true);
+                            pPlayer.displayClientMessage(Component.translatable("item.warriorcats_events.claws.too_damaged").withStyle(ChatFormatting.RED), true);
                             return InteractionResultHolder.fail(itemstack);
                         }
                         boolean canFish = isRiverOrOcean(pLevel, pos);
@@ -536,7 +536,7 @@ public class ClawsTooltip extends ShearsItem {
 
                         } else {
                             pPlayer.displayClientMessage(
-                                    Component.literal("There is no fish here. Try in a bigger pond.")
+                                    Component.translatable("item.warriorcats_events.claws.not_fish_here")
                                             .withStyle(ChatFormatting.YELLOW),
                                     true
                             );
@@ -583,66 +583,19 @@ public class ClawsTooltip extends ShearsItem {
                         CarryPlayerRequestManager.request((ServerPlayer) targetPlayer, (ServerPlayer) playerIn);
 
                         playerIn.sendSystemMessage(
-                                Component.empty()
-                                        .append("Carry request sent to ")
-                                        .append(Component.literal(morphNameTarget).withStyle(ChatFormatting.AQUA)
+                                Component.translatable("item.warriorcats_events.claws.carry_request_sent",
+                                        Component.literal(morphNameTarget).withStyle(ChatFormatting.AQUA)
                                                 .append(Component.literal( "(" + targetPlayer.getName().getString() + ")").withStyle(ChatFormatting.GRAY))
-                        ));
+                                ));
 
                         targetPlayer.sendSystemMessage(
-                                Component.empty()
-                                        .append(Component.literal(morphName).withStyle(ChatFormatting.AQUA)
+                                Component.translatable("item.warriorcats_events.claws.carry_request_received",
+                                        Component.literal(morphName).withStyle(ChatFormatting.AQUA)
                                                 .append(Component.literal( "(" + playerIn.getName().getString() + ")").withStyle(ChatFormatting.GRAY))
-                                        .append(" wants to carry you ")
-                        ));
+                                ));
 
                         targetPlayer.sendSystemMessage(
-                                Component.empty()
-                                        .append(
-                                                Component.literal("[ACCEPT]")
-                                                        .withStyle(style -> style
-                                                                .withColor(ChatFormatting.GREEN)
-                                                                .withItalic(true)
-                                                                .withUnderlined(true)
-                                                                .withClickEvent(
-                                                                        new ClickEvent(
-                                                                                ClickEvent.Action.RUN_COMMAND,
-                                                                                "/wce carryRequest accept"
-                                                                        )
-                                                                )
-                                                                .withHoverEvent(
-                                                                        new HoverEvent(
-                                                                                HoverEvent.Action.SHOW_TEXT,
-                                                                                Component.literal("Allow carry")
-                                                                                        .withStyle(ChatFormatting.GREEN)
-                                                                        )
-                                                                )
-                                                        )
-                                        )
-
-                                        .append("       ")
-
-                                        .append(
-                                                Component.literal("[DENY]")
-                                                        .withStyle(style -> style
-                                                                .withColor(ChatFormatting.RED)
-                                                                .withItalic(true)
-                                                                .withUnderlined(true)
-                                                                .withClickEvent(
-                                                                        new ClickEvent(
-                                                                                ClickEvent.Action.RUN_COMMAND,
-                                                                                "/wce carryRequest deny"
-                                                                        )
-                                                                )
-                                                                .withHoverEvent(
-                                                                        new HoverEvent(
-                                                                                HoverEvent.Action.SHOW_TEXT,
-                                                                                Component.literal("Decline carry")
-                                                                                        .withStyle(ChatFormatting.RED)
-                                                                        )
-                                                                )
-                                                        )
-                                        )
+                                CarryPlayerRequestManager.getMessage()
                         );
 
                         return InteractionResult.SUCCESS;

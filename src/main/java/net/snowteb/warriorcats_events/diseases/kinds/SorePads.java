@@ -14,8 +14,7 @@ import net.snowteb.warriorcats_events.attachments.ModAttachments;
 import net.snowteb.warriorcats_events.attachments.WCEPlayerData;
 import net.snowteb.warriorcats_events.diseases.Disease;
 import net.snowteb.warriorcats_events.diseases.Diseaseable;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
-import net.snowteb.warriorcats_events.attachments.ISkillData;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import tocraft.walkers.api.PlayerShape;
 
 public class SorePads extends Disease<SorePads> {
@@ -36,7 +35,7 @@ public class SorePads extends Disease<SorePads> {
     public <T extends LivingEntity> void onAdd(Diseaseable<T> tDiseaseable, boolean organic) {
         if (tDiseaseable.getEntity() instanceof Player player && PlayerShape.getCurrentShape(player) instanceof WCatEntity) {
             player.displayClientMessage(
-                    Component.literal("Your paw pads start to hurt")
+                    Component.translatable("managers.disease_paw_pads_hurt")
                             .withStyle(ChatFormatting.GRAY)
                             .withStyle(ChatFormatting.ITALIC),
                     true);
@@ -48,7 +47,7 @@ public class SorePads extends Disease<SorePads> {
     public boolean allowClimb(Diseaseable<?> tDiseaseable) {
         if (this.getLevel() > 1) {
             if (tDiseaseable.getEntity() instanceof Player player && player.getRandom().nextFloat() < 0.3*(this.getLevel() - 1)) {
-                player.displayClientMessage(Component.literal("You tried to climb but your pads hurt...")
+                player.displayClientMessage(Component.translatable("managers.disease_cant_climb_sore_pads")
                         .withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC), true);
                 return false;
             }
@@ -61,7 +60,7 @@ public class SorePads extends Disease<SorePads> {
         if (this.getLevel() > 1) {
             LivingEntity livingEntity = tDiseaseable.getEntity();
             if (livingEntity.getRandom().nextFloat() < 0.2*(this.getLevel() - 1) && livingEntity instanceof Player player) {
-                player.displayClientMessage(Component.literal("You tried to leap but your pads hurt...")
+                player.displayClientMessage(Component.translatable("managers.disease_cant_leap_sore_pads")
                         .withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC), true);
 
                 float leapPower = (float) 10 /100;

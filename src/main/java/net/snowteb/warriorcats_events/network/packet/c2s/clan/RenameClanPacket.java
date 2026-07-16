@@ -52,7 +52,7 @@ public class RenameClanPacket implements CustomPacketPayload {
 
                 if (packet.name.isEmpty()) return;
                 if (data.getClanByName(packet.name) != null) {
-                    player.sendSystemMessage(Component.literal("A clan with this name already exists.").withStyle(ChatFormatting.YELLOW));
+                    player.sendSystemMessage(Component.translatable("clan.clan_already_exists").withStyle(ChatFormatting.YELLOW));
                     return;
                 }
 
@@ -61,27 +61,21 @@ public class RenameClanPacket implements CustomPacketPayload {
                 boolean success = data.renameClan(clan, packet.name, level);
                 if (!success) return;
 
-                player.sendSystemMessage(Component.literal("Clan successfully renamed!").withStyle(ChatFormatting.GRAY));
+                player.sendSystemMessage(Component.translatable("clan.clan_renamed").withStyle(ChatFormatting.GRAY));
 
                 String morphName = player.getData(ModAttachments.PLAYER_WCE_DATA).getMorphName();
 
-                Component clanCreatedLog = Component.empty()
-                        .append(Component.literal(morphName).withStyle(ChatFormatting.AQUA))
-                        .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.GRAY))
-                        .append(Component.literal(")").withStyle(ChatFormatting.GRAY))
-                        .append(" has renamed ")
-                        .append(Component.literal(oldName).withStyle(Style.EMPTY.withColor(clan.color)))
-                        .append(" to ")
-                        .append(Component.literal(packet.name).withStyle(Style.EMPTY.withColor(clan.color)))
-                        .append(".");
+                Component clanCreatedLog = Component.translatable("clan.clan_renamed_log",
+                        ClanData.logFormattedPlayerName(player),
+                        Component.literal(oldName).withStyle(Style.EMPTY.withColor(clan.color)),
+                        Component.literal(packet.name).withStyle(Style.EMPTY.withColor(clan.color)));
 
                 data.registerLog(level, clan.clanUUID, clanCreatedLog);
 
                 data.setDirty();
 
             } else {
-                player.sendSystemMessage(Component.literal("You are not in a clan.").withStyle(ChatFormatting.GRAY));
+                player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.GRAY));
             }
 
 

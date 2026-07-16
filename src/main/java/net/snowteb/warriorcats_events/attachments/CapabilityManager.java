@@ -12,4 +12,5 @@ public class CapabilityManager {
         T data = player.getData(attachment);
         consumer.accept(data);
     }
+
 }

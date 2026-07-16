@@ -228,6 +228,11 @@ public class ModItems {
             ITEMS.register("pebbles",
                     () -> new BlockItem(ModBlocks.PEBBLES.get(), new Item.Properties()));
 
+    public static final DeferredHolder<Item, Item> CARVED_STONE_ITEM =
+            ITEMS.register("carved_stone",
+                    () -> new BlockItem(ModBlocks.CARVED_STONE.get(), new Item.Properties()));
+
+
     public static final DeferredHolder<Item, Item> MOSS_BALL =
             ITEMS.register("moss_ball",
                     () -> new MossBallItem(new Item.Properties()));
@@ -240,11 +245,15 @@ public class ModItems {
                         public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                             tooltipComponents.add(Component.translatable("block.warriorcats_events.stone_crafting_table.tooltip").withStyle(ChatFormatting.GRAY));
 
+                        }
+                    });
 
-                            tooltipComponents.add(Component.empty());
-                            Component shiftRightClick = Component.literal("[Shift + Right-Click] ");
-                            tooltipComponents.add(shiftRightClick.copy().append(Component.literal("On the block with an ingredient to put it on the rock.").withStyle(ChatFormatting.GRAY)));
-                            tooltipComponents.add(shiftRightClick.copy().append(Component.literal("On the block with your claws to prepare a recipe.").withStyle(ChatFormatting.GRAY)));
+    public static final DeferredHolder<Item, Item> HERB_MIXING_ROCK =
+            ITEMS.register("herb_rock",
+                    () -> new BlockItem(ModBlocks.HERB_MIXING_ROCK.get(), new Item.Properties()) {
+                        @Override
+                        public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                            tooltipComponents.add(Component.translatable("block.warriorcats_events.herb_rock.tooltip").withStyle(ChatFormatting.GRAY));
                         }
                     });
 
@@ -422,8 +431,7 @@ public static final DeferredHolder<Item, Item> FLOWER_CROWN = ITEMS.register("fl
             () -> new Item(new Item.Properties().stacksTo(16)));
 
     public static final DeferredHolder<Item, Item> WARRIOR_NAMETAG = ITEMS.register("warrior_nametag",
-            () -> new ItemWithToolTip(new Item.Properties().stacksTo(8),
-                    "item.warriorcats_events.warrior_nametag.tooltip"));
+            () -> new WarriorNametag(new Item.Properties().stacksTo(8)));
 
 
     public static final DeferredHolder<Item, Item> DOCK_LEAVES = ITEMS.register("dock_leaves",
@@ -607,21 +615,7 @@ public static final DeferredHolder<Item, Item> FLOWER_CROWN = ITEMS.register("fl
             () -> new FeathersArmorItem());
 
 
-    public static final DeferredHolder<Item, Item> BLACK_CAT_COLLAR = ITEMS.register("black_cat_collar",
-            () -> new CollarArmorItem());
-    public static final DeferredHolder<Item, Item> BROWN_CAT_COLLAR = ITEMS.register("brown_cat_collar",
-            () -> new CollarArmorItem());
-    public static final DeferredHolder<Item, Item> WHITE_CAT_COLLAR = ITEMS.register("white_cat_collar",
-            () -> new CollarArmorItem());
-    public static final DeferredHolder<Item, Item> PINK_CAT_COLLAR = ITEMS.register("pink_cat_collar",
-            () -> new CollarArmorItem());
-    public static final DeferredHolder<Item, Item> ORANGE_CAT_COLLAR = ITEMS.register("orange_cat_collar",
-            () -> new CollarArmorItem());
-    public static final DeferredHolder<Item, Item> RED_CAT_COLLAR = ITEMS.register("red_cat_collar",
-            () -> new CollarArmorItem());
-    public static final DeferredHolder<Item, Item> BLUE_CAT_COLLAR = ITEMS.register("blue_cat_collar",
-            () -> new CollarArmorItem());
-    public static final DeferredHolder<Item, Item> PURPLE_CAT_COLLAR = ITEMS.register("purple_cat_collar",
+    public static final DeferredHolder<Item, Item> CAT_COLLAR = ITEMS.register("cat_collar",
             () -> new CollarArmorItem());
 
     public static final DeferredHolder<Item, Item> COLLAR_BELL = ITEMS.register("collar_bell",

@@ -31,6 +31,8 @@ import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
 import org.slf4j.Logger;
 import tocraft.walkers.integrations.Integrations;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -39,29 +41,38 @@ import java.util.concurrent.Executors;
 @Mod(WarriorCatsEvents.MODID)
 public class WarriorCatsEvents {
     public static final String MODID = "warriorcats_events";
-    public static final String MOD_VERSION = "1.10.0";
+    public static final String MOD_VERSION = "1.11.0";
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static final ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
 
 
     public static class Collaborators {
-        private static final Set<UUID> CONTRIBUTORS = Set.of(
-                UUID.fromString("76754682-2435-4a2e-b2b5-c3ee99782812"),
 
-                UUID.fromString("380df991-f603-344c-a090-369bad2a924a"),
-                UUID.fromString("bd10cd3b-b641-4db7-839b-691339fcbfaf"),
-                UUID.fromString("02c910cd-3367-4ce8-80d3-04e803bf580a"),
-                UUID.fromString("cead1fe2-b208-4886-a17c-f486ba511d63"),
-                UUID.fromString("c10ad235-4fa9-4d3a-9343-0e59c424b1d3"),
+        private static final Set<UUID> CONTRIBUTORS = Collections.synchronizedSet(new HashSet<>());
 
-                UUID.fromString("714870da-15d4-47f1-8a53-05015326a09d"),
-                UUID.fromString("9289ae40-9cae-419b-b4c1-3109eca4b15d"),
-                UUID.fromString("cf7dda00-f2fe-4cb5-99f7-251cbebc7e0c"),
-                UUID.fromString("011869e2-c199-433f-96ae-b6311cd478f2"),
+        static {
+            Set<UUID> initial = Set.of(
+                    UUID.fromString("76754682-2435-4a2e-b2b5-c3ee99782812"),
 
-                UUID.fromString("bc526ba0-c886-4241-8df0-85702f2250e5")
-        );
+                    UUID.fromString("380df991-f603-344c-a090-369bad2a924a"),
+                    UUID.fromString("bd10cd3b-b641-4db7-839b-691339fcbfaf"),
+                    UUID.fromString("02c910cd-3367-4ce8-80d3-04e803bf580a"),
+                    UUID.fromString("cead1fe2-b208-4886-a17c-f486ba511d63"),
+                    UUID.fromString("c10ad235-4fa9-4d3a-9343-0e59c424b1d3"),
+
+                    UUID.fromString("714870da-15d4-47f1-8a53-05015326a09d"),
+                    UUID.fromString("9289ae40-9cae-419b-b4c1-3109eca4b15d"),
+                    UUID.fromString("cf7dda00-f2fe-4cb5-99f7-251cbebc7e0c"),
+                    UUID.fromString("011869e2-c199-433f-96ae-b6311cd478f2"),
+                    UUID.fromString("eedf3c55-2e73-4e73-99a7-81d953745f0a"),
+                    UUID.fromString("44a1e9eb-684c-47ff-ae9b-8a5d63ee31a9"),
+                    UUID.fromString("1b676d0f-8bb2-49c9-9937-14371c655364"),
+
+                    UUID.fromString("bc526ba0-c886-4241-8df0-85702f2250e5")
+            );
+            CONTRIBUTORS.addAll(initial);
+        }
 
         public static boolean isContributor(UUID uuid) {
             return CONTRIBUTORS.contains(uuid);
@@ -69,6 +80,10 @@ public class WarriorCatsEvents {
 
         public static boolean isOwner(UUID uuid) {
             return uuid.equals(UUID.fromString("76754682-2435-4a2e-b2b5-c3ee99782812"));
+        }
+
+        public static Set<UUID> getList() {
+            return CONTRIBUTORS;
         }
     }
 

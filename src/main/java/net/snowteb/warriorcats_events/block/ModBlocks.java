@@ -228,9 +228,16 @@ public class ModBlocks {
                     BlockBehaviour.Properties.of().sound(SoundType.STONE).strength(0.25F).noOcclusion()
             ));
 
+    public static final DeferredHolder<Block, Block> CARVED_STONE = BLOCKS.register("carved_stone",
+            () -> new WCEStoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion().noLootTable()));
+
 
     public static final DeferredHolder<Block, Block> STONE_CRAFTING_TABLE = BLOCKS.register("stone_crafting_table",
             ()  -> new StoneCraftingTable(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(0.2F).noOcclusion()));
+
+    public static final DeferredHolder<Block, Block> HERB_MIXING_ROCK = BLOCKS.register("herb_rock",
+            ()  -> new HerbMixingRockBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(0.2F).noOcclusion()));
+
 
     public static final DeferredHolder<Block, Block> DOCK = BLOCKS.register("dock",
             () -> new GenericBushBlock(

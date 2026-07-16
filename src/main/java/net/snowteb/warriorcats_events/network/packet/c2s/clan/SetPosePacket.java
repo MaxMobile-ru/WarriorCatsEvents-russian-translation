@@ -13,7 +13,7 @@ import net.snowteb.warriorcats_events.attachments.ModAttachments;
 import net.snowteb.warriorcats_events.diseases.DiseaseTypes;
 import net.snowteb.warriorcats_events.diseases.Diseaseable;
 import net.snowteb.warriorcats_events.diseases.kinds.BrokenPaw;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import tocraft.walkers.api.PlayerShape;
 
 public class SetPosePacket implements CustomPacketPayload {

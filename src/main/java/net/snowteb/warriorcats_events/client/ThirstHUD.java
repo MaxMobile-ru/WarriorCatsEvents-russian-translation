@@ -64,7 +64,7 @@ public class ThirstHUD {
         boolean lowThirst = thirst <= 5;
         boolean extraLowThirst = thirst <= 3;
 
-        int tickCount = net.minecraft.client.Minecraft.getInstance().player.tickCount;
+        int tickCount = Minecraft.getInstance().player.tickCount;
 
         for (int i = 0; i < iconCount; i++) {
             int index = iconCount - 1 - i;

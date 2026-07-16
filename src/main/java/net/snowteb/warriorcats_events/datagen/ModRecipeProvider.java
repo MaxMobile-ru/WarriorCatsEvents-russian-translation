@@ -209,9 +209,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("   ")
                 .pattern("BDB")
                 .pattern("DBD")
-                .define('B', Items.STONE)
+                .define('B', Items.COBBLESTONE)
                 .define('D', ModTags.Items.FEATHERS)
-                .unlockedBy("has_item", has(Items.STONE))
+                .unlockedBy("has_item", has(Items.COBBLESTONE))
                 .save(pWriter);
 
 
@@ -718,111 +718,29 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_item", has(ModBlocks.LAVENDER.get()))
                 .save(pWriter);
 
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.BLACK_CAT_COLLAR.get(), 1)
-                .pattern(" B ")
-                .pattern("AAA")
-                .define('A', Items.LEATHER)
-                .define('B', Items.BLACK_DYE)
-                .unlockedBy("has_item", has(Items.LEATHER))
-                .save(pWriter);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.BROWN_CAT_COLLAR.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CAT_COLLAR.get(), 1)
                 .pattern("AAA")
                 .define('A', Items.LEATHER)
                 .unlockedBy("has_item", has(ItemTags.CREEPER_DROP_MUSIC_DISCS))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.WHITE_CAT_COLLAR.get(), 1)
-                .pattern(" B ")
-                .pattern("AAA")
-                .define('A', Items.LEATHER)
-                .define('B', Items.WHITE_DYE)
-                .unlockedBy("has_item", has(Items.LEATHER))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModBlocks.HERB_MIXING_ROCK.get(), 1)
+                .requires(ModTags.Items.HERBS)
+                .requires(ModTags.Items.HERBS)
+                .requires(ModTags.Items.HERBS)
+                .requires(ModBlocks.STONE_CRAFTING_TABLE.get())
+                .unlockedBy("has_item", has(ModBlocks.STONE_CRAFTING_TABLE.get()))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.PINK_CAT_COLLAR.get(), 1)
-                .pattern(" B ")
-                .pattern("AAA")
-                .define('A', Items.LEATHER)
-                .define('B', Items.PINK_DYE)
-                .unlockedBy("has_item", has(Items.LEATHER))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Blocks.COBBLESTONE, 1)
+                .requires(ModBlocks.PEBBLES.get(), 9)
+                .unlockedBy("has_item", has(ModBlocks.PEBBLES.get()))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.ORANGE_CAT_COLLAR.get(), 1)
-                .pattern(" B ")
-                .pattern("AAA")
-                .define('A', Items.LEATHER)
-                .define('B', Items.ORANGE_DYE)
-                .unlockedBy("has_item", has(Items.LEATHER))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.MAGENTA_DYE, 1)
+                .requires(ModBlocks.LAVENDER_PETALS.get())
+                .unlockedBy("has_item", has(ModBlocks.LAVENDER_PETALS.get()))
                 .save(pWriter);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.RED_CAT_COLLAR.get(), 1)
-                .pattern(" B ")
-                .pattern("AAA")
-                .define('A', Items.LEATHER)
-                .define('B', Items.RED_DYE)
-                .unlockedBy("has_item", has(Items.LEATHER))
-                .save(pWriter);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.BLUE_CAT_COLLAR.get(), 1)
-                .pattern(" B ")
-                .pattern("AAA")
-                .define('A', Items.LEATHER)
-                .define('B', Items.BLUE_DYE)
-                .unlockedBy("has_item", has(Items.LEATHER))
-                .save(pWriter);
-
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.PURPLE_CAT_COLLAR.get(), 1)
-                .pattern(" B ")
-                .pattern("AAA")
-                .define('A', Items.LEATHER)
-                .define('B', Items.PURPLE_DYE)
-                .unlockedBy("has_item", has(Items.LEATHER))
-                .save(pWriter);
-
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BLACK_CAT_COLLAR.get(), 1)
-                .requires(ModItems.BROWN_CAT_COLLAR.get())
-                .requires(Items.BLACK_DYE)
-                .unlockedBy("has_item", has(ModItems.BROWN_CAT_COLLAR.get()))
-                .save(pWriter, ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "black_collar_recolored"));
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.WHITE_CAT_COLLAR.get(), 1)
-                .requires(ModItems.BROWN_CAT_COLLAR.get())
-                .requires(Items.WHITE_DYE)
-                .unlockedBy("has_item", has(ModItems.BROWN_CAT_COLLAR.get()))
-                .save(pWriter, ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "white_collar_recolored"));
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.PINK_CAT_COLLAR.get(), 1)
-                .requires(ModItems.BROWN_CAT_COLLAR.get())
-                .requires(Items.PINK_DYE)
-                .unlockedBy("has_item", has(ModItems.BROWN_CAT_COLLAR.get()))
-                .save(pWriter, ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "pink_collar_recolored"));
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.ORANGE_CAT_COLLAR.get(), 1)
-                .requires(ModItems.BROWN_CAT_COLLAR.get())
-                .requires(Items.ORANGE_DYE)
-                .unlockedBy("has_item", has(ModItems.BROWN_CAT_COLLAR.get()))
-                .save(pWriter, ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "orange_collar_recolored"));
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.RED_CAT_COLLAR.get(), 1)
-                .requires(ModItems.BROWN_CAT_COLLAR.get())
-                .requires(Items.RED_DYE)
-                .unlockedBy("has_item", has(ModItems.BROWN_CAT_COLLAR.get()))
-                .save(pWriter, ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "red_collar_recolored"));
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BLUE_CAT_COLLAR.get(), 1)
-                .requires(ModItems.BROWN_CAT_COLLAR.get())
-                .requires(Items.BLUE_DYE)
-                .unlockedBy("has_item", has(ModItems.BROWN_CAT_COLLAR.get()))
-                .save(pWriter, ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "blue_collar_recolored"));
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.PURPLE_CAT_COLLAR.get(), 1)
-                .requires(ModItems.BROWN_CAT_COLLAR.get())
-                .requires(Items.PURPLE_DYE)
-                .unlockedBy("has_item", has(ModItems.BROWN_CAT_COLLAR.get()))
-                .save(pWriter, ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "purple_collar_recolored"));
 
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.COLLAR_BELL.get(), 1)

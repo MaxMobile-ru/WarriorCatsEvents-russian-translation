@@ -201,7 +201,10 @@ public class TreeStumpBlock extends BaseEntityBlock implements SimpleWaterlogged
                                     String closestMorphName = "";
 
                                     for (Player player : list) {
-                                        player.sendSystemMessage(Component.literal("Territory " + clan.claimedTerritory.get(treeStumpBlockEntity.getTerritoryPos()).name + " remarked").withStyle(ChatFormatting.GREEN));
+                                        Component message = Component.translatable("blockinteraction.treestump.territoryname",
+                                                clan.claimedTerritory.get(treeStumpBlockEntity.getTerritoryPos()).name);
+
+                                        player.sendSystemMessage(message.copy().withStyle(ChatFormatting.GREEN));
 
                                         if (pPos.getCenter().distanceTo(player.position()) < distance) {
                                             closestPlayer = player.getName().getString();
@@ -226,21 +229,21 @@ public class TreeStumpBlock extends BaseEntityBlock implements SimpleWaterlogged
 
                                         ChunkPos claimedPos = clan.claimedTerritory.get(treeStumpBlockEntity.getTerritoryPos()).chunkPos;
 
-                                        Component log = Component.empty()
-                                                .append(Component.literal(closestMorphName).withStyle(ChatFormatting.AQUA))
-                                                .append(Component.literal("(").withStyle(ChatFormatting.DARK_GRAY))
-                                                .append(Component.literal(closestPlayer).withStyle(ChatFormatting.DARK_GRAY))
-                                                .append(Component.literal(")").withStyle(ChatFormatting.DARK_GRAY))
-                                                .append(" has remarked territory ")
-                                                .append(Component.literal(clan.claimedTerritory.get(treeStumpBlockEntity.getTerritoryPos()).name + " ").withStyle(ChatFormatting.GOLD))
-                                                .append("at ")
-                                                .append(Component.literal(
+                                        Component log1 = Component.translatable("blockinteraction.treestump.territoryremarkedlog",
+                                                Component.empty()
+                                                        .append(Component.literal(closestMorphName).withStyle(ChatFormatting.AQUA))
+                                                        .append(Component.literal("(").withStyle(ChatFormatting.DARK_GRAY))
+                                                        .append(Component.literal(closestPlayer).withStyle(ChatFormatting.DARK_GRAY))
+                                                        .append(Component.literal(")").withStyle(ChatFormatting.DARK_GRAY)),
+                                                Component.literal(clan.claimedTerritory.get(treeStumpBlockEntity.getTerritoryPos()).name).withStyle(ChatFormatting.GOLD),
+                                                Component.literal(
                                                         String.format("X=%d, Z=%d", claimedPos.x, claimedPos.z)
-                                                ).withStyle(ChatFormatting.AQUA))
-                                                .append(", new percentage: ")
-                                                .append(Component.literal(percentageString).withStyle(ChatFormatting.GOLD));
+                                                ).withStyle(ChatFormatting.AQUA),
+                                                Component.literal(percentageString).withStyle(ChatFormatting.GOLD)
+                                        );
 
-                                        data.registerLog(pLevel.getServer().overworld(), clanUUID, log);
+
+                                        data.registerLog(pLevel.getServer().overworld(), clanUUID, log1);
 
                                     }
 

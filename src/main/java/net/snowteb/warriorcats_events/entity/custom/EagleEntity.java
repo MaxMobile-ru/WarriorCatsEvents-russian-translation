@@ -1,7 +1,6 @@
 package net.snowteb.warriorcats_events.entity.custom;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -47,9 +46,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
-import net.minecraft.world.scores.Team;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.effect.ModEffects;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.sound.ModSounds;
 import net.snowteb.warriorcats_events.util.ModTags;
@@ -467,7 +466,7 @@ public class EagleEntity extends FlyingMob implements GeoEntity, OwnableEntity {
                                     if (this.getRandom().nextFloat() < 0.04F) {
                                         this.tamingStage.remove(player.getUUID());
                                         this.canFinallyTame.put(player.getUUID(), true);
-                                        player.displayClientMessage(Component.literal("The eagle starts to trust you.").withStyle(ChatFormatting.GREEN), true);
+                                        player.displayClientMessage(Component.translatable("entity.eagle_starts_trust").withStyle(ChatFormatting.GREEN), true);
                                         if (this.level() instanceof ServerLevel sLevel) {
                                             sLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, this.getX(), this.getY() + 0.5, this.getZ(),
                                                     30, 0.2f, 0.2f, 0.2f, 0.1f);
@@ -1390,7 +1389,7 @@ public class EagleEntity extends FlyingMob implements GeoEntity, OwnableEntity {
                         if (tameRoll == 0) {
                             this.tame(pPlayer);
                             this.level().broadcastEntityEvent(this, (byte) 7);
-                            pPlayer.displayClientMessage(Component.literal("The eagle fully trusts you!").withStyle(ChatFormatting.AQUA), true);
+                            pPlayer.displayClientMessage(Component.translatable("entity.eagle_fully_trusts").withStyle(ChatFormatting.AQUA), true);
 
                             if (pPlayer instanceof ServerPlayer serverPlayer) {
                                 MinecraftServer server = serverPlayer.getServer();

@@ -1,6 +1,6 @@
 package net.snowteb.warriorcats_events.util;
 
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 
 public class GeneticsForVariant {
 
@@ -14,7 +14,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -24,7 +23,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 1;
                 genetics.whiteRatio = "w-w";
                 genetics.albino = "cs-cs";
             }
@@ -34,7 +32,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 2;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -44,7 +41,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "Mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "w-w";
                 genetics.albino = "C-cs";
             }
@@ -54,7 +50,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -64,7 +59,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 2;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -74,7 +68,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 0;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -84,7 +77,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "Mc-mc";
-                genetics.rufousing = 4;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -94,7 +86,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -104,7 +95,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 1;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -114,7 +104,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -124,7 +113,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "Mc-mc";
-                genetics.rufousing = 0;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -134,7 +122,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 0;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -144,7 +131,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 2;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -154,7 +140,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -164,7 +149,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -174,7 +158,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 0;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -184,7 +167,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -194,7 +176,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -204,7 +185,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -214,7 +194,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 0;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -224,7 +203,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 2;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -234,7 +212,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -244,7 +221,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 1;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -254,7 +230,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 1;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -264,7 +239,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 2;
                 genetics.whiteRatio = "w-w";
                 genetics.albino = "C-cs";
             }
@@ -274,7 +248,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -284,7 +257,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "cb-cs";
             }
@@ -294,7 +266,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "Mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -304,7 +275,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -314,7 +284,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "c-c";
             }
@@ -324,7 +293,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -334,7 +302,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -344,7 +311,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 2;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -354,7 +320,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -364,7 +329,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -374,7 +338,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -384,7 +347,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 0;
                 genetics.whiteRatio = "w-w";
                 genetics.albino = "cb-cs";
             }
@@ -394,7 +356,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "Mc-mc";
-                genetics.rufousing = 2;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -404,7 +365,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 0;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -414,7 +374,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -424,7 +383,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "Mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "w-w";
                 genetics.albino = "C-cs";
             }
@@ -434,7 +392,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "w-w";
                 genetics.albino = "cs-cs";
             }
@@ -444,7 +401,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -454,7 +410,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "w-w";
                 genetics.albino = "C-cs";
             }
@@ -464,7 +419,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 0;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -474,7 +428,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 0;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -484,7 +437,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 2;
                 genetics.whiteRatio = "w-w";
                 genetics.albino = "C-cs";
             }
@@ -494,7 +446,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "a-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "w-w";
                 genetics.albino = "C-cs";
             }
@@ -504,7 +455,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "mc-mc";
-                genetics.rufousing = 5;
                 genetics.whiteRatio = "S-S";
                 genetics.albino = "C-cs";
             }
@@ -514,7 +464,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "D-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "Mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "C-cs";
             }
@@ -524,7 +473,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "Mc-mc";
-                genetics.rufousing = 3;
                 genetics.whiteRatio = "S-ws";
                 genetics.albino = "C-cs";
             }
@@ -534,7 +482,6 @@ public class GeneticsForVariant {
                 genetics.dilute = "d-d";
                 genetics.agouti = "A-a";
                 genetics.tabbyStripes = "Mc-mc";
-                genetics.rufousing = 2;
                 genetics.whiteRatio = "S-w";
                 genetics.albino = "cs-cs";
             }

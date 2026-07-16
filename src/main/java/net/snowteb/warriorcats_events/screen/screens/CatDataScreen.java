@@ -12,17 +12,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.snowteb.warriorcats_events.WCEClient;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.client.ClanInfo;
 import net.snowteb.warriorcats_events.client.ClientClanData;
-import net.snowteb.warriorcats_events.diseases.Diseaseable;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.c2s.cats.*;
 import net.snowteb.warriorcats_events.network.packet.s2c.cats.SyncCatDataPacket;
 import net.snowteb.warriorcats_events.screen.widgets.ModButton;
 import org.lwjgl.glfw.GLFW;
 
-import static net.snowteb.warriorcats_events.entity.custom.WCatEntity.AGE_SYNC;
+import static net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity.AGE_SYNC;
 
 public class CatDataScreen extends Screen {
     WCatEntity wCatEntity;
@@ -204,32 +202,32 @@ public class CatDataScreen extends Screen {
 
         {
             if (friendshipLevel >= 0 && wCatEntity.isTame()) {
-                friendshipLevelText = Component.empty().append(Component.literal("Clanmates"))
+                friendshipLevelText = Component.empty().append(Component.translatable("screen.catdata.clanmates"))
                         .append(Component.literal( " (" + friendshipLevel + "/100)").withStyle(ChatFormatting.GRAY));
             }
             if (friendshipLevel > 20) {
-                friendshipLevelText = Component.empty().append(Component.literal("Trusted clanmates"))
+                friendshipLevelText = Component.empty().append(Component.translatable("screen.catdata.trusted_clanmates"))
                         .append(Component.literal( " (" + friendshipLevel + "/100)").withStyle(ChatFormatting.GRAY));
             }
             if (friendshipLevel > 40) {
-                friendshipLevelText = Component.empty().append(Component.literal("Friends"))
+                friendshipLevelText = Component.empty().append(Component.translatable("screen.catdata.frieds"))
                         .append(Component.literal( " (" + friendshipLevel + "/100)").withStyle(ChatFormatting.GRAY));
             }
             if (friendshipLevel > 60) {
-                friendshipLevelText = Component.empty().append(Component.literal("Good friends"))
+                friendshipLevelText = Component.empty().append(Component.translatable("screen.catdata.good_friends"))
                         .append(Component.literal( " (" + friendshipLevel + "/100)").withStyle(ChatFormatting.GRAY));
             }
             if (friendshipLevel > 80) {
-                friendshipLevelText = Component.empty().append(Component.literal("Real friends"))
+                friendshipLevelText = Component.empty().append(Component.translatable("screen.catdata.real_friends"))
                         .append(Component.literal( " (" + friendshipLevel + "/100)").withStyle(ChatFormatting.GRAY));
             }
             if (friendshipLevel > 95) {
-                friendshipLevelText = Component.empty().append(Component.literal("Best friends"))
+                friendshipLevelText = Component.empty().append(Component.translatable("screen.catdata.best_friends"))
                         .append(Component.literal( " (" + friendshipLevel + "/100)").withStyle(ChatFormatting.GRAY));
                 if (Minecraft.getInstance().player != null) {
                     if (ClientClanData.get().getMateUUID() != null) {
                         if (ClientClanData.get().getMateUUID().equals(wCatEntity.getUUID())) {
-                            friendshipLevelText = Component.empty().append(Component.literal("Mates"))
+                            friendshipLevelText = Component.empty().append(Component.translatable("screen.catdata.mates"))
                                     .append(Component.literal( " (" + friendshipLevel + "/100)").withStyle(ChatFormatting.GRAY));
                         }
                     }
@@ -295,35 +293,32 @@ public class CatDataScreen extends Screen {
         catFather = wCatEntity.getFather();
 
         if (catMother.equals(Component.literal("None")) && catFather.equals(Component.literal("None"))) {
-            parentsText = Component.literal("Parents: Parents unknown");
+            parentsText = Component.translatable("screen.catdata.no_parents");
         } else {
             if (catMother.equals(Component.literal("None")) && !catFather.equals(Component.literal("None"))) {
-                parentsText = Component.empty()
-                        .append(Component.literal("Parents: ").withStyle(ChatFormatting.WHITE))
-                        .append(catFather.copy().withStyle(ChatFormatting.AQUA));
+                parentsText = Component.translatable("screen.catdata.one_parent",
+                        catFather.copy().withStyle(ChatFormatting.AQUA));
             } else if (!catMother.equals(Component.literal("None")) && catFather.equals(Component.literal("None"))) {
-                parentsText = Component.empty()
-                        .append(Component.literal("Parents: ").withStyle(ChatFormatting.WHITE))
-                        .append(catMother.copy().withStyle(ChatFormatting.AQUA));
+                parentsText = Component.translatable("screen.catdata.one_parent",
+                        catMother.copy().withStyle(ChatFormatting.AQUA));
             } else {
-                parentsText = Component.empty()
-                        .append(Component.literal("Parents: ").withStyle(ChatFormatting.WHITE))
-                        .append(catMother.copy().withStyle(ChatFormatting.AQUA))
-                        .append(Component.literal(" & ").withStyle(ChatFormatting.WHITE))
-                        .append(catFather.copy().withStyle(ChatFormatting.AQUA));
+                parentsText = Component.translatable("screen.catdata.both_parents",
+                        catMother.copy().withStyle(ChatFormatting.AQUA),
+                        catFather.copy().withStyle(ChatFormatting.AQUA));
             }
         }
 
         if (wCatEntity.getMate().equals(Component.literal("None"))) {
-            catMate = Component.literal("No mate");
+            catMate = Component.translatable("screen.catdata.no_mate");
         } else {
-            catMate = Component.literal("Mate: ").append(wCatEntity.getMate().copy().withStyle(ChatFormatting.AQUA));
+            catMate = Component.translatable("screen.catdata.mate",
+                    wCatEntity.getMate().copy().withStyle(ChatFormatting.AQUA));
         }
 
         if (wCatEntity.getClan().equals(Component.literal("None")) || wCatEntity.getClan() == null || wCatEntity.getClan().getString().isEmpty()) {
-            clanName = Component.literal("No clan");
+            clanName = Component.translatable("screen.catdata.no_clan");
         } else {
-            clanName = Component.literal("From ").append(wCatEntity.getClan().copy());
+            clanName = Component.translatable("screen.catdata.clan", wCatEntity.getClan().copy());
         }
 
         if (wCatEntity.getPersonality() != null) {
@@ -418,31 +413,31 @@ public class CatDataScreen extends Screen {
         };
 
         personalityText = switch (wCatEntity.getPersonality()) {
-            case NONE -> Component.literal("Personality: None");
-            case CALM -> Component.literal("Personality: Gentle");
-            case GRUMPY -> Component.literal("Personality: Grumpy");
-            case CAUTIOUS -> Component.literal("Personality: Cautious");
-            case INDEPENDENT -> Component.literal("Personality: Independent");
-            case FRIENDLY -> Component.literal("Personality: Friendly");
-            case SHY -> Component.literal("Personality: Shy");
-            case AMBITIOUS -> Component.literal("Personality: Ambitious");
-            case HUMBLE -> Component.literal("Personality: Humble");
-            case RECKLESS -> Component.literal("Personality: Reckless");
+            case NONE -> Component.translatable("screen.catdata.personality_none");
+            case CALM -> Component.translatable("screen.catdata.personality_calm");
+            case GRUMPY -> Component.translatable("screen.catdata.personality_grumpy");
+            case CAUTIOUS -> Component.translatable("screen.catdata.personality_cautious");
+            case INDEPENDENT -> Component.translatable("screen.catdata.personality_independent");
+            case FRIENDLY -> Component.translatable("screen.catdata.personality_friendly");
+            case SHY -> Component.translatable("screen.catdata.personality_shy");
+            case AMBITIOUS -> Component.translatable("screen.catdata.personality_ambitious");
+            case HUMBLE -> Component.translatable("screen.catdata.personality_humble");
+            case RECKLESS -> Component.translatable("screen.catdata.personality_reckless");
         };
 
         if (wCatEntity.hasCustomName()) {
             moodText = switch (wCatEntity.getMood()) {
-                case HAPPY -> Component.empty().append(name).append(Component.literal(" feels happy"));
-                case CALM -> Component.empty().append(name).append(Component.literal(" feels calm"));
-                case SAD -> Component.empty().append(name).append(Component.literal(" feels sad"));
-                case STRESSED ->  Component.empty().append(name).append(Component.literal(" feels stressed"));
+                case HAPPY -> Component.translatable("screen.catdata.mood_happy", name);
+                case CALM -> Component.translatable("screen.catdata.mood_calm", name);
+                case SAD -> Component.translatable("screen.catdata.mood_sad", name);
+                case STRESSED -> Component.translatable("screen.catdata.mood_stressed", name);
             };
         } else {
             moodText = switch (wCatEntity.getMood()) {
-                case HAPPY -> Component.empty().append("This cat").append(Component.literal(" feels happy"));
-                case CALM -> Component.empty().append("This cat").append(Component.literal(" feels calm"));
-                case SAD -> Component.empty().append("This cat").append(Component.literal(" feels sad"));
-                case STRESSED ->  Component.empty().append("This cat").append(Component.literal(" feels stressed"));
+                case HAPPY -> Component.translatable("screen.catdata.mood_happy", Component.translatable("generic.this_cat"));
+                case CALM -> Component.translatable("screen.catdata.mood_calm", Component.translatable("generic.this_cat"));
+                case SAD -> Component.translatable("screen.catdata.mood_sad", Component.translatable("generic.this_cat"));
+                case STRESSED -> Component.translatable("screen.catdata.mood_stressed", Component.translatable("generic.this_cat"));
             };
         }
 
@@ -461,21 +456,21 @@ public class CatDataScreen extends Screen {
         if (ticks % 20 == 0) {
             if (wCatEntity.getAge() < 0) {
                 moons = wCatEntity.getEntityData().get(AGE_SYNC);
-                ageText = Component.literal(String.format("%.2f moons", moons));
+                ageText = Component.translatable("screen.catdata.age_moons" ,String.format("%.2f", moons));
             } else {
-                ageText = Component.literal("Fully grown");
+                ageText = Component.translatable("screen.catdata.fully_grown");
             }
 
             kittingTime = ((wCatEntity.getKittingTime()) - wCatEntity.getKittingTicks()) / (20f * 60f);
 
             if (wCatEntity.getKittingTicks() > 20) {
-                KitTime = Component.literal(String.format("%.2f min", kittingTime));
+                KitTime = Component.translatable("screen.catdata.kitting_time",String.format("%.2f", kittingTime));
             } else {
-                KitTime = Component.literal("Not expecting kits");
+                KitTime = Component.translatable("screen.catdata.not_expecting_kits");
             }
 
             expectingKits = wCatEntity.isExpectingKits();
-            expectingText = expectingKits ? Component.literal("Expecting kits") : Component.literal("Not expecting kits");
+            expectingText = expectingKits ? Component.translatable("screen.catdata.expecting_kits") : Component.translatable("screen.catdata.not_expecting_kits");
 
             if (Minecraft.getInstance().player != null) {
                 friendshipLevel = wCatEntity.getEntityData().get(WCatEntity.FRIENDSHIP_SYNC);
@@ -496,7 +491,7 @@ public class CatDataScreen extends Screen {
 
         if (wCatEntity.isTame() && wCatEntity.getInteractionCooldown() <=0) {
             this.addRenderableWidget(Button.builder(
-                    Component.literal("Interact"),
+                    Component.translatable("screen.catdata.interact"),
                     btn -> {
                         activeMenu = "interact";
                         drawInteractMenu();
@@ -508,7 +503,7 @@ public class CatDataScreen extends Screen {
 
         if (wCatEntity.isTame() && wCatEntity.getOwner() == Minecraft.getInstance().player) {
             this.addRenderableWidget(Button.builder(
-                    Component.literal("Mode"),
+                    Component.translatable("screen.catdata.home"),
                     btn -> {
                         activeMenu = "mode";
                         drawModeMenu();
@@ -516,7 +511,7 @@ public class CatDataScreen extends Screen {
             ).bounds(this.width - 85, 35, 80, 20).build());
 
             this.addRenderableWidget(Button.builder(
-                    Component.literal("Home"),
+                    Component.translatable("screen.catdata.home"),
                     btn -> {
                         activeMenu = "home";
                         drawHomeMenu();
@@ -526,7 +521,7 @@ public class CatDataScreen extends Screen {
             if (!wCatEntity.getClanUUID().equals(ClanData.EMPTY_UUID)){
                 if (wCatEntity.getClanUUID().equals(ClientClanData.get().getCurrentClanUUID())) {
                     this.addRenderableWidget(Button.builder(
-                            Component.literal("Take"),
+                            Component.translatable("screen.catdata.take"),
                             btn -> {
                                 ModPackets.sendToServer(new CtSTakeCatPacket(wCatEntity.getId()));
                                 onClose();
@@ -537,7 +532,7 @@ public class CatDataScreen extends Screen {
         }
 
         this.addRenderableWidget(Button.builder(
-                Component.literal("Close"),
+                Component.translatable("screen.catdata.close"),
                 btn -> {
                     this.onClose();
                 }
@@ -545,7 +540,7 @@ public class CatDataScreen extends Screen {
 
         if ((wCatEntity.isTame() && wCatEntity.getOwner() == Minecraft.getInstance().player && wCatEntity.getRank() == WCatEntity.Rank.DEPUTY) || isPlayerValidDeputy){
             this.addRenderableWidget(Button.builder(
-                    Component.literal("Patrol"),
+                    Component.translatable("screen.catdata.patrol"),
                     btn -> {
                         ModPackets.sendToServer(new CtSRequestPatrolData(wCatEntity.getId(), isPlayerValidDeputy));
                         Minecraft.getInstance().setScreen(null);
@@ -561,7 +556,7 @@ public class CatDataScreen extends Screen {
         int centerY = this.height / 2;
 
         this.addRenderableWidget(Button.builder(
-                Component.literal("< Back"),
+                Component.translatable("screen.catdata.back"),
                 btn -> {
                     activeMenu = "main";
                     drawMainMenu();
@@ -574,7 +569,7 @@ public class CatDataScreen extends Screen {
                 centerX - 40,
                 centerY - 20,
                 80, 15,
-                Component.literal("Give prey"),
+                Component.translatable("screen.catdata.give_prey"),
                 b ->  {
                     ModPackets.sendToServer(new PerformInteractionPacket(wCatEntity.getId(), WCatEntity.CatInteraction.GIVE_ITEM));
                     this.onClose();
@@ -586,7 +581,7 @@ public class CatDataScreen extends Screen {
                 centerX - 40,
                 centerY + 0,
                 80, 15,
-                Component.literal("Show affection"),
+                Component.translatable("screen.catdata.show_affection"),
                 b ->  {
                     ModPackets.sendToServer(new PerformInteractionPacket(wCatEntity.getId(), WCatEntity.CatInteraction.SHOW_AFFECTION));
                     this.onClose();
@@ -599,7 +594,7 @@ public class CatDataScreen extends Screen {
                     centerX - 40,
                     centerY + 20,
                     80, 15,
-                    Component.literal("Talk"),
+                    Component.translatable("screen.catdata.talk"),
                     b ->  {
                         ModPackets.sendToServer(new PerformInteractionPacket(wCatEntity.getId(), WCatEntity.CatInteraction.TALK));
                         this.onClose();
@@ -616,12 +611,13 @@ public class CatDataScreen extends Screen {
                             centerX - 40,
                             centerY + 40,
                             80, 15,
-                            Component.literal("Have kits"),
+                            Component.translatable("screen.catdata.have_kits"),
                             b ->  {
                                 if (wCatEntity.getKittingInteractCooldown() > 0) {
-                                    Minecraft.getInstance().player.displayClientMessage(Component.empty()
-                                            .append(wCatEntity.hasCustomName() ? wCatEntity.getCustomName().copy() : Component.literal("This cat").withStyle(ChatFormatting.YELLOW))
-                                            .append(Component.literal(" already had kits recently!").withStyle(ChatFormatting.YELLOW))
+                                    Minecraft.getInstance().player.displayClientMessage(
+                                            Component.translatable("generic.cat_had_kits_recently",
+                                                    wCatEntity.hasCustomName() ? wCatEntity.getCustomName().copy()
+                                                            : Component.translatable("generic.this_cat").withStyle(ChatFormatting.YELLOW))
                                             , true
                                     );
                                     this.onClose();
@@ -646,7 +642,7 @@ public class CatDataScreen extends Screen {
         int centerY = this.height / 2;
 
         this.addRenderableWidget(Button.builder(
-                Component.literal("< Back"),
+                Component.translatable("screen.catdata.back"),
                 btn -> {
                     activeMenu = "main";
                     drawMainMenu();
@@ -659,7 +655,7 @@ public class CatDataScreen extends Screen {
                 centerX - 40,
                 centerY - 20,
                 80, 15,
-                Component.literal("Follow me"),
+                Component.translatable("screen.catdata.follow"),
                 b ->  {
                     ModPackets.sendToServer(new CatSetModePacket(wCatEntity.getId(), WCatEntity.CatMode.FOLLOW));
                     Minecraft.getInstance().setScreen(null);
@@ -671,7 +667,7 @@ public class CatDataScreen extends Screen {
                 centerX - 40,
                 centerY,
                 80, 15,
-                Component.literal("Stay"),
+                Component.translatable("screen.catdata.stay"),
                 b ->  {
                     ModPackets.sendToServer(new CatSetModePacket(wCatEntity.getId(), WCatEntity.CatMode.SIT));
                     Minecraft.getInstance().setScreen(null);
@@ -683,7 +679,7 @@ public class CatDataScreen extends Screen {
                 centerX - 55,
                 centerY + 20,
                 110, 15,
-                Component.literal("Do whatever you want"),
+                Component.translatable("screen.catdata.wander"),
                 b ->  {
                     ModPackets.sendToServer(new CatSetModePacket(wCatEntity.getId(), WCatEntity.CatMode.WANDER));
                     Minecraft.getInstance().setScreen(null);
@@ -700,7 +696,7 @@ public class CatDataScreen extends Screen {
         int centerY = this.height / 2;
 
         this.addRenderableWidget(Button.builder(
-                Component.literal("< Back"),
+                Component.translatable("screen.catdata.back"),
                 btn -> {
                     activeMenu = "main";
                     drawMainMenu();
@@ -713,7 +709,7 @@ public class CatDataScreen extends Screen {
                 centerX - 40,
                 centerY - 20,
                 80, 15,
-                Component.literal("Set home"),
+                Component.translatable("screen.catdata.sethome"),
                 b ->  {
                     ModPackets.sendToServer(new CatHomeActionsPacket(wCatEntity.getId(), 1));
                     Minecraft.getInstance().setScreen(null);
@@ -725,7 +721,7 @@ public class CatDataScreen extends Screen {
                 centerX - 40,
                 centerY,
                 80, 15,
-                Component.literal("Return home"),
+                Component.translatable("screen.catdata.return_home"),
                 b ->  {
                     ModPackets.sendToServer(new CatHomeActionsPacket(wCatEntity.getId(), 0));
                     Minecraft.getInstance().setScreen(null);

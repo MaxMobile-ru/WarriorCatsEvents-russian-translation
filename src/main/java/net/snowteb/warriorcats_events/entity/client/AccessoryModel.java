@@ -2,8 +2,7 @@ package net.snowteb.warriorcats_events.entity.client;
 
 import net.minecraft.resources.ResourceLocation;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
-import software.bernie.geckolib.animation.AnimationState;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import software.bernie.geckolib.model.GeoModel;
 
 public class AccessoryModel extends GeoModel<WCatEntity> {
@@ -22,17 +21,6 @@ public class AccessoryModel extends GeoModel<WCatEntity> {
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/accessories/crow_feathers.png"),
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/accessories/american_goldfinch_feathers.png"),
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/accessories/red_cardinal_feathers.png"),
-    };
-
-    public static final ResourceLocation[] COLLAR_TEXTURES = {
-            ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/accessories/collar_black.png"),
-            ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/accessories/collar_brown.png"),
-            ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/accessories/collar_white.png"),
-            ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/accessories/collar_pink.png"),
-            ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/accessories/collar_orange.png"),
-            ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/accessories/collar_red.png"),
-            ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/accessories/collar_blue.png"),
-            ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/entity/accessories/collar_purple.png"),
     };
 
     public static final ResourceLocation[] BERRY_TEXTURES = {

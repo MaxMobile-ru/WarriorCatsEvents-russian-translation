@@ -14,7 +14,7 @@ import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.attachments.CapabilityManager;
 import net.snowteb.warriorcats_events.attachments.ModAttachments;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.s2c.clan.S2CSyncClanDataPacket;
 
@@ -59,7 +59,7 @@ public class C2SRegisterClanPacket implements CustomPacketPayload {
 
             if (packet.name.isEmpty()) return;
             if (data.getClanByName(packet.name) != null) {
-                player.sendSystemMessage(Component.literal("A clan with this name already exists.").withStyle(ChatFormatting.YELLOW));
+                player.sendSystemMessage(Component.translatable("clan.clan_already_exists").withStyle(ChatFormatting.YELLOW));
                 return;
             }
 
@@ -74,7 +74,7 @@ public class C2SRegisterClanPacket implements CustomPacketPayload {
             ClanData.Clan clan = data.createClan(packet.name, packet.color, leaderUUID, leaderName, finalClanSentence, packet.clanSymbolIndex);
             data.syncTerritoriesToClients(level);
 
-            player.sendSystemMessage(Component.literal("Clan successfully created!").withStyle(ChatFormatting.GRAY));
+            player.sendSystemMessage(Component.translatable("clan.clan_succesfully_created").withStyle(ChatFormatting.GRAY));
 
             CapabilityManager.attachmentProvider(player, ModAttachments.PLAYER_WCE_DATA, cap -> {
                 cap.setCurrentClanUUID(clan.clanUUID);
@@ -83,14 +83,9 @@ public class C2SRegisterClanPacket implements CustomPacketPayload {
                 ModPackets.sendToPlayer(new S2CSyncClanDataPacket(cap), player);
             });
 
-            Component clanCreatedLog = Component.empty()
-                            .append(Component.literal(leaderName).withStyle(ChatFormatting.AQUA))
-                    .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal(")").withStyle(ChatFormatting.GRAY))
-                    .append(" has founded ")
-                            .append(Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)))
-                            .append("!");
+            Component clanCreatedLog = Component.translatable("clan.player_founded_clan",
+                    ClanData.logFormattedPlayerName(player),
+                    Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
 
             data.registerLog(level, clan.clanUUID, clanCreatedLog);
 
@@ -100,11 +95,9 @@ public class C2SRegisterClanPacket implements CustomPacketPayload {
                         cat.setClanUUID(clan.clanUUID);
                         data.addClanCat(clan, cat);
 
-                        Component catJoinedClanLog = Component.empty()
-                                .append(cat.hasCustomName() ? cat.getCustomName().copy() : Component.literal("A Cat"))
-                                .append(" has joined ")
-                                .append(Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)))
-                                .append("!");
+                        Component catJoinedClanLog = Component.translatable("clan.player_joined_log",
+                                cat.hasCustomName() ? cat.getCustomName().copy() : Component.translatable("generic.catname"),
+                                Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
 
                         if (cat.level() instanceof ServerLevel serverLevel) {
                             data.registerLog(serverLevel, clan.clanUUID, catJoinedClanLog);

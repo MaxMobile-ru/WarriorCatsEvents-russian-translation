@@ -35,12 +35,12 @@ public class ResetSkillsPacket implements CustomPacketPayload {
 
             int climbLevel = (player.getData(ModAttachments.PLAYER_SKILL).isClimbUnlocked()) ? 1 : 0;
 
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultSpeedCost()* speedLevel)/ 0.32));
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultHPCost()* hpLevel)/ 0.32));
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultDMGCost()* dmgLevel)/ 0.32));
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultJumpCost()* jumpLevel)/ 0.32));
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultArmorCost()* armorLevel)/ 0.32));
-            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultClimbCost()* climbLevel)/ 0.32));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultSpeedCost()* speedLevel)* 0.66));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultHPCost()* hpLevel)* 0.66));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultDMGCost()* dmgLevel)* 0.66));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultJumpCost()* jumpLevel)* 0.66));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultArmorCost()* armorLevel)* 0.66));
+            player.giveExperiencePoints((int) ((PlayerSkill.getDefaultClimbCost()* climbLevel)* 0.66));
 
             CapabilityManager.attachmentProvider(player, ModAttachments.PLAYER_SKILL, data -> {
                 data.setSpeedLevel(0);

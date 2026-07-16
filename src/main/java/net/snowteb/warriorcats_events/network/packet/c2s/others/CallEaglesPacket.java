@@ -73,13 +73,13 @@ public class CallEaglesPacket implements CustomPacketPayload {
 
             if (eaglesCalled > 0) {
                 level.playSound(null, player.blockPosition(), ModSounds.LEADER_CALL.get(), SoundSource.PLAYERS, 0.7F, pitch);
-                player.displayClientMessage(Component.empty()
-                        .append(Component.literal(String.valueOf(eaglesCalled)).withStyle(ChatFormatting.GOLD))
-                        .append(Component.literal(" eagles called.").withStyle(ChatFormatting.GREEN)),true
+                player.displayClientMessage(Component.translatable("generic.eagles_called",
+                                Component.literal(String.valueOf(eaglesCalled)).withStyle(ChatFormatting.GOLD))
+                        ,true
                 );
             } else {
                 player.displayClientMessage(Component.empty()
-                        .append(Component.literal("No eagles in range.").withStyle(ChatFormatting.GRAY)),true
+                        .append(Component.translatable("generic.no_eagles_in_range").withStyle(ChatFormatting.GRAY)),true
                 );
             }
 

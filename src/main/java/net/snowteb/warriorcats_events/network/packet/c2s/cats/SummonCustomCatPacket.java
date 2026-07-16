@@ -11,8 +11,8 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.entity.ModEntities;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
 public class SummonCustomCatPacket implements CustomPacketPayload {
 
@@ -95,20 +95,15 @@ public class SummonCustomCatPacket implements CustomPacketPayload {
         cat.setOnGeneticalSkin(onGeneticalSkin);
 
         if (onGeneticalSkin) {
-            cat.setGenetics(genetics);
+            cat.getGeneticsModule().setGenetics(genetics);
 
-            cat.setGeneticalVariants(variants.eyeColorLeft, variants.eyeColorRight, variants.rufousingVariant
-                    , variants.blueRufousingVariant, variants.orangeVar, variants.whiteVar, variants.tabbyVar
-                    , variants.albinoVar, variants.leftEyeVar, variants.rightEyeVar, variants.noise,
-                    variants.size, variants.silverVar, variants.scars);
-            cat.setChimeraGenetics(chimeraGenetics);
+            cat.getGeneticsModule().setGeneticalVariants(variants);
+            cat.getGeneticsModule().setChimeraGenetics(chimeraGenetics);
 
-            cat.setGeneticalVariantsChimera(variantsChimera.chimeraVariant, variantsChimera.rufousingVariant,
-                    variantsChimera.blueRufousingVariant, variantsChimera.orangeVar, variantsChimera.whiteVar, variantsChimera.tabbyVar
-                    , variantsChimera.albinoVar, variantsChimera.noise, variantsChimera.silverVar);
+            cat.getGeneticsModule().setGeneticalVariantsChimera(variantsChimera);
 
         } else {
-            cat.setNonGeneticalValues(genetics, variants.size);
+            cat.getGeneticsModule().setNonGeneticalValues(genetics, variants.size);
         }
 
         return cat;

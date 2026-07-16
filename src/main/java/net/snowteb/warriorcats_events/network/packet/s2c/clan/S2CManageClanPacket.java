@@ -8,7 +8,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.client.ClanInfo;
 import net.snowteb.warriorcats_events.client.ClientPacketHandles;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 
 import java.util.*;
 

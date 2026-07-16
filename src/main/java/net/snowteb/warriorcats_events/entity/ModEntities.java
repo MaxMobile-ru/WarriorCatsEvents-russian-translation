@@ -8,6 +8,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.entity.custom.*;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
 import java.util.function.Supplier;
 

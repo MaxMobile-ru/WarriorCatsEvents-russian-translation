@@ -138,7 +138,7 @@ public class CreateClanScreen extends Screen {
                 this.font,
                 centerX - 40, centerY - 35,
                 80, 15,
-                Component.literal("Clan Name")
+                Component.translatable("screen.createclan.clan_name")
         );
         clanNameBox.setMaxLength(20);
         clanNameBox.setHint(Component.literal("'Bengalclan'").withStyle(ChatFormatting.DARK_GRAY).withStyle(ChatFormatting.ITALIC));
@@ -148,7 +148,7 @@ public class CreateClanScreen extends Screen {
                 this.font,
                 centerX - 60, centerY - 12,
                 120, 15,
-                Component.literal("Clan Sentence")
+                Component.translatable("screen.createclan.clan_sentence")
         );
         clanSentenceBox.setHint(Component.literal("'Bengalclan is...'").withStyle(ChatFormatting.DARK_GRAY).withStyle(ChatFormatting.ITALIC));
         clanSentenceBox.setMaxLength(130);
@@ -482,11 +482,10 @@ public class CreateClanScreen extends Screen {
         pGuiGraphics.setColor(1f, 1f, 1f, 1f);
 
 
-        Component text = Component.empty()
-                        .append("And ")
-                        .append(morphName).withStyle(ChatFormatting.WHITE)
-                        .append(" founded ")
-                        .append(Component.literal(!clanNameBox.getValue().trim().isEmpty() ? clanNameBox.getValue().trim() : "...").withStyle(Style.EMPTY.withColor(color)));
+        Component text = Component.translatable("screen.createclan.and_founded",
+                Component.literal(morphName).withStyle(ChatFormatting.WHITE),
+                Component.literal(!clanNameBox.getValue().trim().isEmpty() ? clanNameBox.getValue().trim() : "...").withStyle(Style.EMPTY.withColor(color)))
+                ;
 
         pGuiGraphics.drawCenteredString(Minecraft.getInstance().font, text, centerx, centery - 50, 0xFFFFFF);
 
@@ -497,13 +496,14 @@ public class CreateClanScreen extends Screen {
                 && pMouseY > centery - 35 && pMouseY < centery - 20;
 
         if (showSentenceToolTip) {
-            pGuiGraphics.renderTooltip(this.font,Component.literal("A short bio or sentence for your clan!").withStyle(ChatFormatting.GRAY), pMouseX, pMouseY);
+            pGuiGraphics.renderTooltip(this.font,
+                    Component.translatable("screen.createclan.bio_tip").withStyle(ChatFormatting.GRAY),
+                    pMouseX, pMouseY);
         }
 
         if (showClanNameTooltip) {
             List<Component> textWithNewlines = new ArrayList<>();
-            textWithNewlines.add(Component.literal("The name of your clan.").withStyle(ChatFormatting.GRAY));
-            textWithNewlines.add(Component.literal("Two clans can't have the same name.").withStyle(ChatFormatting.GRAY));
+            textWithNewlines.add(Component.translatable("screen.createclan.clan_name_tip").withStyle(ChatFormatting.GRAY));
             pGuiGraphics.renderComponentTooltip(this.font, textWithNewlines, pMouseX, pMouseY);
         }
 
@@ -521,7 +521,7 @@ public class CreateClanScreen extends Screen {
         pGuiGraphics.disableScissor();
 
         if (textCooldown > 0) {
-            pGuiGraphics.drawString(Minecraft.getInstance().font, "Some fields are empty",
+            pGuiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("screen.createclan.fields_empty"),
                     centerx - 55, centery + 75, 0xFFFF0000);
         }
 
@@ -545,7 +545,6 @@ public class CreateClanScreen extends Screen {
         }
 
         ModPackets.sendToServer(new C2SRegisterClanPacket(color, clanName, clanSentence, symbolIndex));
-        Minecraft.getInstance().player.displayClientMessage(Component.literal("Registering clan...").withStyle(ChatFormatting.GRAY), true);
         Minecraft.getInstance().setScreen(null);
 
     }

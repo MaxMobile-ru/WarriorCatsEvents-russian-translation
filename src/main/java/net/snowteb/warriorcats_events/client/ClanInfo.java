@@ -1,7 +1,7 @@
 package net.snowteb.warriorcats_events.client;
 
 import net.minecraft.network.chat.Component;
-import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 
 import java.util.*;
 

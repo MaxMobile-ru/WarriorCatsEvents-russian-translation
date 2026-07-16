@@ -21,19 +21,20 @@ public class WCESereneSeasonsClient {
 
         ISeasonState state = SeasonHelper.getSeasonState(level);
         Component text = switch (state.getSubSeason()) {
-            case EARLY_SPRING -> Component.literal("─ Early Newleaf \uD83C\uDF31").withStyle(Style.EMPTY.withColor(0xff50d773));
-            case MID_SPRING -> Component.literal("─ Mid Newleaf \uD83C\uDF31").withStyle(Style.EMPTY.withColor(0xff49d956));
-            case LATE_SPRING -> Component.literal("─ Late Newleaf \uD83C\uDF31").withStyle(Style.EMPTY.withColor(0xff2ddc3a));
-            case EARLY_SUMMER -> Component.literal("─ Early Greenleaf \uD83C\uDF3F").withStyle(Style.EMPTY.withColor(0xff34bf30));
-            case MID_SUMMER -> Component.literal("─ Mid Greenleaf \uD83C\uDF3F").withStyle(Style.EMPTY.withColor(0xff56bc13));
-            case LATE_SUMMER -> Component.literal("─ Late Greenleaf \uD83C\uDF3F").withStyle(Style.EMPTY.withColor(0xff69b81a));
-            case EARLY_AUTUMN -> Component.literal("─ Early Leaf-fall \uD83C\uDF43").withStyle(Style.EMPTY.withColor(0xff94ad2b));
-            case MID_AUTUMN -> Component.literal("─ Mid Leaf-fall \uD83C\uDF43").withStyle(Style.EMPTY.withColor(0xffb79f29));
-            case LATE_AUTUMN -> Component.literal("─ Late Leaf-fall \uD83C\uDF43").withStyle(Style.EMPTY.withColor(0xffce9249));
-            case EARLY_WINTER -> Component.literal("─ Early Leaf-bare ❄").withStyle(Style.EMPTY.withColor(0xffa19cb3));
-            case MID_WINTER -> Component.literal("─ Mid Leaf-bare ❄").withStyle(Style.EMPTY.withColor(0xff879aeb));
-            case LATE_WINTER -> Component.literal("─ Late Leaf-bare ❄").withStyle(Style.EMPTY.withColor(0xff5dadc1));
+            case EARLY_SPRING -> Component.translatable("wce.ss.early_newleaf").withStyle(Style.EMPTY.withColor(0xff50d773));
+            case MID_SPRING -> Component.translatable("wce.ss.mid_newleaf").withStyle(Style.EMPTY.withColor(0xff49d956));
+            case LATE_SPRING -> Component.translatable("wce.ss.late_newleaf").withStyle(Style.EMPTY.withColor(0xff2ddc3a));
+            case EARLY_SUMMER -> Component.translatable("wce.ss.early_greenleaf").withStyle(Style.EMPTY.withColor(0xff34bf30));
+            case MID_SUMMER -> Component.translatable("wce.ss.mid_greenleaf").withStyle(Style.EMPTY.withColor(0xff56bc13));
+            case LATE_SUMMER -> Component.translatable("wce.ss.late_greenleaf").withStyle(Style.EMPTY.withColor(0xff69b81a));
+            case EARLY_AUTUMN -> Component.translatable("wce.ss.early_leaffall").withStyle(Style.EMPTY.withColor(0xff94ad2b));
+            case MID_AUTUMN -> Component.translatable("wce.ss.mid_leaffall").withStyle(Style.EMPTY.withColor(0xffb79f29));
+            case LATE_AUTUMN -> Component.translatable("wce.ss.late_leaffall").withStyle(Style.EMPTY.withColor(0xFFce9249));
+            case EARLY_WINTER -> Component.translatable("wce.ss.early_leafbare").withStyle(Style.EMPTY.withColor(0xffa19cb3));
+            case MID_WINTER -> Component.translatable("wce.ss.mid_leafbare").withStyle(Style.EMPTY.withColor(0xff879aeb));
+            case LATE_WINTER -> Component.translatable("wce.ss.late_leafbare").withStyle(Style.EMPTY.withColor(0xff5dadc1));
         };
+
 
         {
             int lineLenght = mc.font.width(text.getString()) + 5;

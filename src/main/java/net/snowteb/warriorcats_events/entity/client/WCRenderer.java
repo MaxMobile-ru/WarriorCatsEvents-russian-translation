@@ -1,6 +1,5 @@
 package net.snowteb.warriorcats_events.entity.client;
 
-import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.ChatFormatting;
@@ -8,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.debug.DebugRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.network.chat.Component;
@@ -20,12 +18,11 @@ import net.minecraft.world.entity.player.Player;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.clan.ClanData;
 import net.snowteb.warriorcats_events.client.EntityChatBubbleManager;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.zconfig.WCEClientConfig;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import tocraft.walkers.api.PlayerShape;
 
@@ -38,7 +35,7 @@ import java.util.regex.Pattern;
 
 public class WCRenderer extends GeoEntityRenderer<WCatEntity> {
 
-    private static final Map<String, ResourceLocation> TEXTURE_CACHE = new HashMap<>();
+    public static final Map<String, ResourceLocation> TEXTURE_CACHE = new HashMap<>();
 
     private static final ResourceLocation PLAYER_MORPH_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/hud/player_morph_icon.png");
@@ -51,6 +48,7 @@ public class WCRenderer extends GeoEntityRenderer<WCatEntity> {
 
     public WCRenderer(EntityRendererProvider.Context context) {
         super(context, new WCModel());
+        WCModel.TEXTURES = WCModel.getTextures();
         this.addRenderLayer(new WCHeldItemLayer(this));
         this.addRenderLayer(new WCAccesoriesLayer(this, context));
         this.shadowRadius = 0.4F;
@@ -66,9 +64,9 @@ public class WCRenderer extends GeoEntityRenderer<WCatEntity> {
             return WCModel.TEXTURES[Math.max(0, Math.min(variant, WCModel.TEXTURES.length - 1))];
         }
 
-        String[] layers = cat.getTextureLayersPaths();
+        String[] layers = cat.getGeneticsModule().getTextureLayersPaths();
 
-        String key = cat.getCatTextureKey();
+        String key = cat.getGeneticsModule().getCatTextureKey();
 
         ResourceLocation texture = TEXTURE_CACHE.get(key);
 
@@ -103,16 +101,18 @@ public class WCRenderer extends GeoEntityRenderer<WCatEntity> {
     /**
      * Depending on the variant, set a different visual size.
      */
-
+    public boolean isAccessory = false;
 
     @Override
     public void render(WCatEntity entity, float entityYaw, float partialTick,
                        PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 
+        if (entity.getVehicle() instanceof Player && !isAccessory) return;
+
         if (entity.getPlayerBoundUuid().equals(ClanData.EMPTY_UUID) && !entity.isAnImage()) {
             float ageMoons = entity.getAgeInMoons();
             float percentage = ageMoons / 12.0F;
-            float scale = (float) (0.4 + (percentage * 0.6));
+            float scale = (float) Math.max(0.4 + (percentage * 0.6), 0.4);
             poseStack.scale(scale, scale, scale);
         } else {
             if (entity.isBaby()) {
@@ -228,7 +228,6 @@ public class WCRenderer extends GeoEntityRenderer<WCatEntity> {
                             Font font = Minecraft.getInstance().font;
 
                             Component message = bubble.message;
-                            message = formatOriginalMessage(message);
 
                             poseStack.translate(0.0D, -25D, 0.0D);
                             if (!canShowThisName) {
@@ -360,7 +359,7 @@ public class WCRenderer extends GeoEntityRenderer<WCatEntity> {
         super.renderNameTag(entity, displayName, poseStack, bufferSource, packedLight, partialTick);
     }
 
-    private float getVisualScale(WCatEntity pEntity) {
+    float getVisualScale(WCatEntity pEntity) {
         float scale;
         scale = switch (pEntity.getVariant()) {
             case 0 -> 0.8f;
@@ -420,58 +419,11 @@ public class WCRenderer extends GeoEntityRenderer<WCatEntity> {
             default -> 0.8f;
         };
 
-        if (pEntity.getSize() > 0.4) {
+        if (pEntity.getSize() >= 0.4) {
             scale = pEntity.getSize();
         }
 
         return scale;
-    }
-
-
-    public static Component formatOriginalMessage(Component original) {
-
-        String text = original.getString();
-
-        text = text.replace(":sob:", "\uD83D\uDE2D");
-        text = text.replace(":cry:", "\uD83D\uDE2D");
-        text = text.replace(":sparkles:", "✨");
-        text = text.replace(":sparkle:", "✨");
-        text = text.replace(":cat:", "\uD83D\uDC08");
-        text = text.replace(":cat2:", "\uD83D\uDC31");
-        text = text.replace(":plead:", "\uD83E\uDD79");
-        text = text.replace(":pleading:", "\uD83E\uDD79");
-        text = text.replace(":wilted_rose:", "\uD83E\uDD40");
-        text = text.replace(":wil_rose:", "\uD83E\uDD40");
-        text = text.replace(":heart:", "❤");
-        text = text.replace(":fire:", "\uD83D\uDD25");
-        text = text.replace(":flame:", "\uD83D\uDD25");
-        text = text.replace(":smile:", "\uD83D\uDE3A");
-
-
-        MutableComponent result = Component.empty();
-
-        Matcher matcher = Pattern.compile("\\*(.*?)\\*").matcher(text);
-
-        int lastEnd = 0;
-
-        while (matcher.find()) {
-
-            if (matcher.start() > lastEnd) {
-                result.append(Component.literal(text.substring(lastEnd, matcher.start())));
-            }
-
-            String part = matcher.group(1);
-
-            result.append(Component.literal(part).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY));
-
-            lastEnd = matcher.end();
-        }
-
-        if (lastEnd < text.length()) {
-            result.append(Component.literal(text.substring(lastEnd)));
-        }
-
-        return result;
     }
 
     @Override

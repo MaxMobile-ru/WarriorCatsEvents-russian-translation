@@ -77,14 +77,7 @@
     }
   ],
   "items": [
-    "warriorcats_events:red_cat_collar",
-    "warriorcats_events:blue_cat_collar",
-    "warriorcats_events:black_cat_collar",
-    "warriorcats_events:brown_cat_collar",
-    "warriorcats_events:white_cat_collar",
-    "warriorcats_events:pink_cat_collar",
-    "warriorcats_events:orange_cat_collar",
-    "warriorcats_events:purple_cat_collar",
+    "warriorcats_events:cat_collar",
 
     "warriorcats_events:head_pink_bow",
     "warriorcats_events:head_red_bow",

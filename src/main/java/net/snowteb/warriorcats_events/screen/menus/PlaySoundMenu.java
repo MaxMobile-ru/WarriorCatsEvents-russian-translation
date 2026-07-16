@@ -3,6 +3,7 @@ package net.snowteb.warriorcats_events.screen.menus;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.snowteb.warriorcats_events.WCEClient;
 
@@ -31,7 +32,7 @@ public class PlaySoundMenu {
                 firstPose.scale(0.8f, 0.8f, 1f);
                 guiGraphics.drawCenteredString(
                         Minecraft.getInstance().font,
-                        "Play Sound",
+                        Component.translatable("screen.playsound"),
                         0,
                         5,
                         0xFFFFFF

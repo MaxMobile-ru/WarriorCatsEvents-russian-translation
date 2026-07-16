@@ -60,10 +60,10 @@ public class LegWrapItem extends ArmorItem {
                         stack.shrink(1);
                         return InteractionResultHolder.success(stack);
                     } else {
-                        player.displayClientMessage(Component.literal("The leg is already wrapped").withStyle(ChatFormatting.GRAY), true);
+                        player.displayClientMessage(Component.translatable("item.warriorcats_events.leg_wrap.already_wraped").withStyle(ChatFormatting.GRAY), true);
                     }
                 } else {
-                    player.displayClientMessage(Component.literal("No broken bone to heal").withStyle(ChatFormatting.GRAY), true);
+                    player.displayClientMessage(Component.translatable("item.warriorcats_events.leg_wrap.no_broken_bone").withStyle(ChatFormatting.GRAY), true);
                 }
             }
 
@@ -87,11 +87,10 @@ public class LegWrapItem extends ArmorItem {
                         pStack.shrink(1);
                         return InteractionResult.SUCCESS;
                     } else {
-                        pPlayer.displayClientMessage(Component.literal("The leg is already wrapped").withStyle(ChatFormatting.GRAY), true);
+                        pPlayer.displayClientMessage(Component.translatable("item.warriorcats_events.leg_wrap.already_wraped").withStyle(ChatFormatting.GRAY), true);
                     }
-
                 } else {
-                    pPlayer.displayClientMessage(Component.literal("No broken bone to heal").withStyle(ChatFormatting.GRAY), true);
+                    pPlayer.displayClientMessage(Component.translatable("item.warriorcats_events.leg_wrap.no_broken_bone").withStyle(ChatFormatting.GRAY), true);
                 }
             }
 

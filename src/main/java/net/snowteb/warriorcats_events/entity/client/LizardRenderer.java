@@ -4,8 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.entity.custom.LizardEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class LizardRenderer extends GeoEntityRenderer<LizardEntity> {
@@ -27,7 +29,7 @@ public class LizardRenderer extends GeoEntityRenderer<LizardEntity> {
     public void render(LizardEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
                        MultiBufferSource bufferSource, int packedLight) {
 
-        if (entity.isPassenger() && !isAccessory) return;
+        if (entity.getVehicle() instanceof Player && !isAccessory) return;
 
         poseStack.pushPose();
 

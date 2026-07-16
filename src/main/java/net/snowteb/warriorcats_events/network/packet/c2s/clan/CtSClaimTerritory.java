@@ -58,12 +58,12 @@ public class CtSClaimTerritory implements CustomPacketPayload {
             String morphName = player.getData(ModAttachments.PLAYER_WCE_DATA).getMorphName();
 
             if (player.level().dimension() != Level.OVERWORLD) {
-                player.sendSystemMessage(Component.literal("Territory not available in other dimensions.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("territory.not_available_in_dimensions").withStyle(ChatFormatting.RED));
                 return;
             }
 
             if (uuid.equals(ClanData.EMPTY_UUID)) {
-                player.sendSystemMessage(Component.literal("You are not in a clan.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -77,12 +77,12 @@ public class CtSClaimTerritory implements CustomPacketPayload {
             ChunkPos currentPosition = player.chunkPosition();
 
             if (!data.canManage(clan, player.getUUID())) {
-                player.sendSystemMessage(Component.literal("You don't have permission to claim territory.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("clan.no_permissions").withStyle(ChatFormatting.RED));
                 return;
             }
 
             if (clan.claimedTerritory.containsKey(currentPosition)) {
-                player.sendSystemMessage(Component.literal("Territory already claimed. Try renewing scent markers instead.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("clan.territory_already_claimed").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -93,12 +93,12 @@ public class CtSClaimTerritory implements CustomPacketPayload {
                     || overworldLevel.getBlockState(player.blockPosition()).is(Blocks.TALL_GRASS)
             )
                     || !overworldLevel.getBlockState(player.blockPosition().below()).isSolid()) {
-                player.sendSystemMessage(Component.literal("Your position is not an empty block or is invalid.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("territory.invalid_position").withStyle(ChatFormatting.RED));
                 return;
             }
 
-            if (clan.claimedTerritory.size() >= 169) {
-                player.sendSystemMessage(Component.literal("Max territory reached. Try unclaiming some chunks to claim new chunks.").withStyle(ChatFormatting.RED));
+            if (clan.claimedTerritory.size() >= WCEServerConfig.SERVER.MAX_TERRITORY_SIZE.get()) {
+                player.sendSystemMessage(Component.translatable("territory.max_territory").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -108,15 +108,10 @@ public class CtSClaimTerritory implements CustomPacketPayload {
 
                 if (!packet.takeXPfromPlayer(player, 450)) return;
 
-                Component log = Component.empty()
-                                .append(Component.literal(morphName).withStyle(ChatFormatting.GOLD))
-                        .append(Component.literal(" [").withStyle(ChatFormatting.DARK_GRAY))
-                        .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.DARK_GRAY))
-                        .append(Component.literal("]").withStyle(ChatFormatting.DARK_GRAY))
-                        .append(" has set the core territory ")
-                        .append(Component.literal(packet.name).withStyle(ChatFormatting.LIGHT_PURPLE))
-                        .append(" at: ")
-                        .append(Component.literal(
+                Component log = Component.translatable("territory.core_territory_set_log",
+                        ClanData.logFormattedPlayerName(player),
+                        Component.literal(packet.name).withStyle(ChatFormatting.LIGHT_PURPLE),
+                        Component.literal(
                                 String.format("X=%d, Z=%d", currentPosition.x, currentPosition.z)
                         ).withStyle(ChatFormatting.AQUA));
 
@@ -125,10 +120,10 @@ public class CtSClaimTerritory implements CustomPacketPayload {
                 if (success) {
                     data.registerLog(overworldLevel, clan.clanUUID, log);
                     clan.coreTerritory = currentPosition;
-                    player.sendSystemMessage(Component.literal("Core territory successfully claimed."));
+                    player.sendSystemMessage(Component.translatable("territory.core_territory_claimed"));
                     handled = true;
                 } else {
-                    player.sendSystemMessage(Component.literal("This chunk is claimed by another clan.").withStyle(ChatFormatting.RED));
+                    player.sendSystemMessage(Component.translatable("territory.territory_already_claimed").withStyle(ChatFormatting.RED));
                     player.giveExperiencePoints(450);
                 }
 
@@ -154,15 +149,10 @@ public class CtSClaimTerritory implements CustomPacketPayload {
 
                 if (isTerritoryConnected) {
 
-                    Component log = Component.empty()
-                            .append(Component.literal(morphName).withStyle(ChatFormatting.GOLD))
-                            .append(Component.literal(" [").withStyle(ChatFormatting.DARK_GRAY))
-                            .append(Component.literal(player.getName().getString()).withStyle(ChatFormatting.DARK_GRAY))
-                            .append(Component.literal("]").withStyle(ChatFormatting.DARK_GRAY))
-                            .append(" has claimed new territory ")
-                            .append(Component.literal(packet.name).withStyle(ChatFormatting.LIGHT_PURPLE))
-                            .append(" at: ")
-                            .append(Component.literal(
+                    Component log = Component.translatable("territory.new_territory_claimed",
+                            ClanData.logFormattedPlayerName(player),
+                            Component.literal(packet.name).withStyle(ChatFormatting.LIGHT_PURPLE),
+                            Component.literal(
                                     String.format("X=%d, Z=%d", currentPosition.x, currentPosition.z)
                             ).withStyle(ChatFormatting.AQUA));
 
@@ -170,15 +160,15 @@ public class CtSClaimTerritory implements CustomPacketPayload {
                     boolean result = data.claimChunk(clan.clanUUID, currentPosition, packet.name);
                     if (result) {
                         data.registerLog(overworldLevel, clan.clanUUID, log);
-                        player.sendSystemMessage(Component.literal("New territory successfully claimed."));
+                        player.sendSystemMessage(Component.translatable("territory.new_territory_succesfully_claimed"));
                         handled = true;
                     } else {
-                        player.sendSystemMessage(Component.literal("This chunk is claimed by another clan.").withStyle(ChatFormatting.RED));
+                        player.sendSystemMessage(Component.translatable("territory.territory_already_claimed").withStyle(ChatFormatting.RED));
                         player.giveExperiencePoints(850);
                     }
 
                 } else {
-                    player.sendSystemMessage(Component.literal("You can't claim territory not connected to the core.").withStyle(ChatFormatting.RED));
+                    player.sendSystemMessage(Component.translatable("territory.territory_not_connected").withStyle(ChatFormatting.RED));
                     player.giveExperiencePoints(850);
                 }
             }
@@ -244,7 +234,7 @@ public class CtSClaimTerritory implements CustomPacketPayload {
         int remaining = cost - player.totalExperience;
 
         if (player.totalExperience < cost) {
-            player.sendSystemMessage(Component.literal("⚠ You need " + remaining + " XP more.")
+            player.sendSystemMessage(Component.translatable("generic.need_more_xp", remaining)
                     .withStyle(ChatFormatting.RED));
             return false;
         }

@@ -13,8 +13,8 @@
 //import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
 //import net.snowteb.warriorcats_events.diseases.DiseaseManager;
 //import net.snowteb.warriorcats_events.entity.ModEntities;
-//import net.snowteb.warriorcats_events.entity.custom.WCGenetics;
-//import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+//import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
+//import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 //import tocraft.walkers.api.PlayerShape;
 //
 //import java.util.UUID;

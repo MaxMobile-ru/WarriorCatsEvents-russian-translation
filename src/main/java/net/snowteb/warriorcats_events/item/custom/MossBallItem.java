@@ -30,7 +30,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.snowteb.warriorcats_events.datacomponents.ModDataComponents;
 import net.snowteb.warriorcats_events.entity.custom.MossBallEntity;
-import net.snowteb.warriorcats_events.entity.custom.WCatEntity;
+import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import tocraft.walkers.api.PlayerShape;
 
 import java.util.List;
@@ -90,7 +90,7 @@ public class MossBallItem extends Item {
 
                         if (pPlayer.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof MossBallItem item) {
                             if (getWaterLevel(single) >= 10) {
-                                pPlayer.displayClientMessage(Component.literal("Already full of water!").withStyle(ChatFormatting.GRAY), true);
+                                pPlayer.displayClientMessage(Component.translatable("item.warriorcats_events.moss_ball.full_of_water").withStyle(ChatFormatting.GRAY), true);
                                 return InteractionResultHolder.fail(single);
                             }
                         }
@@ -196,10 +196,10 @@ public class MossBallItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         if (getWaterLevel(stack) > 0) {
-            tooltipComponents.add(Component.literal("Water: " + getWaterLevel(stack)).withStyle(ChatFormatting.AQUA));
+            tooltipComponents.add(Component.translatable("item.warriorcats_events.moss_ball.water_level", getWaterLevel(stack)).withStyle(ChatFormatting.AQUA));
         }
         if (getHoneyLevel(stack) > 0) {
-            tooltipComponents.add(Component.literal("Honey: " + getHoneyLevel(stack)).withStyle(ChatFormatting.GOLD));
+            tooltipComponents.add(Component.translatable("item.warriorcats_events.moss_ball.honey_level", getHoneyLevel(stack)).withStyle(ChatFormatting.GOLD));
         }
     }
 

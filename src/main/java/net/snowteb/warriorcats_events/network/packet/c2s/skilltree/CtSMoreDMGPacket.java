@@ -41,7 +41,7 @@ public class CtSMoreDMGPacket implements CustomPacketPayload {
             ServerPlayer player = (ServerPlayer) context.player();
 
             if (!WCEServerConfig.SERVER.SKILL_TREE_SERVER.get()) {
-                player.sendSystemMessage(Component.literal("Skill tree is disabled for this world.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("generic.skill_tree_disabled").withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -53,7 +53,7 @@ public class CtSMoreDMGPacket implements CustomPacketPayload {
 
 
             if (player.totalExperience < cost && currentLevel < PlayerSkill.maxDMGLevel) {
-                player.sendSystemMessage(Component.literal("⚠ You need " + remaining + " XP more.").withStyle(ChatFormatting.RED));
+                player.sendSystemMessage(Component.translatable("generic.need_more_xp", remaining).withStyle(ChatFormatting.RED));
                 return;
             }
 
@@ -76,7 +76,7 @@ public class CtSMoreDMGPacket implements CustomPacketPayload {
 
                 player.getPersistentData().putInt("skill_dmg_level", currentLevel + 1);
 
-                player.sendSystemMessage(Component.literal("Claws level increased to: " + (currentLevel + 1)));
+                player.sendSystemMessage(Component.translatable("skills.claws_level_increased", (currentLevel + 1)));
 
                 if (currentLevel + 1 == PlayerSkill.maxDMGLevel) {
                     MinecraftServer server = player.getServer();
@@ -90,9 +90,8 @@ public class CtSMoreDMGPacket implements CustomPacketPayload {
                         }
                     }
                 }
-            }
-            else {
-                player.sendSystemMessage(Component.literal("Claws skill is maxed! : Level " + (currentLevel)).withStyle(ChatFormatting.YELLOW));
+            } else {
+                player.sendSystemMessage(Component.translatable("skills.claws_level_maxed", (currentLevel)).withStyle(ChatFormatting.YELLOW));
             }
 
         });

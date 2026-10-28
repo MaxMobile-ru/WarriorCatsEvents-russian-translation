@@ -2,16 +2,14 @@ package net.snowteb.warriorcats_events.network.packet.c2s.others;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.managers.PlayerKittingRequestManager;
 
 import java.util.UUID;

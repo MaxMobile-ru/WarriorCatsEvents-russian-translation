@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Кислый щавель",
+  "icon": "warriorcats_events:sorrel_leaves",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Листья кислого щавеля можно получить из растений кислого щавеля. Листья кислого щавеля в первую очередь известны тем, что являются травой путника, которая способна утолить жажду и разжечь аппетит.",
+      "title": "Кислый щавель"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/sorrel_stage3.png",
+        "warriorcats_events:textures/book/herbs/sorrel_leaves.png"
+      ],
+      "title": "Кислый щавель"
+    }
+
+  ]
+
+
+}

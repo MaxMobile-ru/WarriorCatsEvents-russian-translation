@@ -1,0 +1,19 @@
+{
+  "name": "- Жар",
+  "icon": "warriorcats_events:feverfew_leaves",
+  "category": "warriorcats_events:diseases_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Жар не является обязательно заболеванием, но он может быть знаком другого, возможно, более тяжёлого состояния.$(br2)Если у кота есть жар... Вам следует проверить, каково его состояние в целом.$(br)",
+      "title": "Жар"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "warriorcats_events:feverfew_leaves",
+      "title": "Жар",
+      "text": "Пижма прекрасна в регуляции температуры тела, и в этом кроется причина, по которой Жар следует лечить именно Листьями пижмы.$(br)"
+    }
+  ]
+
+}

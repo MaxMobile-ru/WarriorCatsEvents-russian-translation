@@ -24,14 +24,18 @@ public class FancySwitchButton extends Button implements SubRenderable {
     final int xBlockSize;
 
     final int originalYPos0;
+    final int originalXPos0;
     final int originalYPos1;
+    final int originalXPos1;
 
     private BiPredicate<Double, Double> isClickableIn;
 
-    public FancySwitchButton(int x, int y, int height, String key, boolean initialValue, OnPress onPress, int color, float scale) {
+    public FancySwitchButton(int x, int y, int height, String key, boolean initialValue, OnPress onPress, float scale) {
         super(x, y, FancySwitchButton.getKeyBasedWidth(key, scale), height, Component.empty(), onPress, DEFAULT_NARRATION);
         this.originalYPos0 = y;
         this.originalYPos1 = originalYPos0 + height;
+        this.originalXPos0 = x;
+        this.originalXPos1 = originalXPos0 + width;
 
         Component left = Component.translatable(key + ".false");
         Component right = Component.translatable(key + ".true");
@@ -44,6 +48,8 @@ public class FancySwitchButton extends Button implements SubRenderable {
         this.targetX = this.getWidth() - xBlockSize;
 
         this.scale = scale;
+
+        this.xSwitchPos = initialValue ? this.targetX : 0;
     }
 
     public boolean getValue() {
@@ -227,6 +233,21 @@ public class FancySwitchButton extends Button implements SubRenderable {
     @Override
     public void setClickableIn(BiPredicate<Double, Double> predicate) {
         isClickableIn = predicate;
+    }
+
+    @Override
+    public void adjustXPos(int xOffset) {
+        this.setX(this.originalXPos0 + xOffset);
+    }
+
+    @Override
+    public int getOriginalXPos0() {
+        return originalXPos0;
+    }
+
+    @Override
+    public int getOriginalXPos1() {
+        return originalXPos1;
     }
 
     @Override

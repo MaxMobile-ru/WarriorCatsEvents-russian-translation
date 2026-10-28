@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Мышь",
+  "icon": "warriorcats_events:mouse_spawn_egg",
+  "category": "warriorcats_events:creatures_category",
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:mouse",
+      "rotate": false,
+      "default_rotation": -30,
+      "text": "Это мышь. Они известны как маленькие и быстрые грызуны, любящие семена и травы!"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "warriorcats_events:mouse",
+      "title": "О мышах",
+      "text": "Мышей можно найти в таких биомах, как лес и равнина. $(br2)Мыши склонны прятаться в траве, а если их напугать, то они убегут прочь. Они не столь быстры, как белки и голуби, так что поймать их очень легко. $(br2)Мышь - это не только достойная кота жертва, но и очень вкусное лакомство!$(br)"
+    }
+
+  ]
+
+
+}

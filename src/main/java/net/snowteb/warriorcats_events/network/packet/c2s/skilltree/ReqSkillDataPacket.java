@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.s2c.skilltree.SyncSkillDataPacket;
+import net.snowteb.warriorcats_events.skills.PlayerSkill;
 import net.snowteb.warriorcats_events.skills.PlayerSkillProvider;
 
 import java.util.function.Supplier;
@@ -24,9 +25,7 @@ public class ReqSkillDataPacket {
             if (player == null) return;
 
             player.getCapability(PlayerSkillProvider.SKILL_DATA).ifPresent(data -> {
-                ModPackets.sendToPlayer(new SyncSkillDataPacket(data.getSpeedLevel(),
-                        data.getHPLevel(), data.getDMGLevel(), data.getJumpLevel(),
-                        data.getArmorLevel(), data.isClimbUnlocked()), player);
+                ModPackets.sendToPlayer(new SyncSkillDataPacket((PlayerSkill) data), player);
             });
 
         });

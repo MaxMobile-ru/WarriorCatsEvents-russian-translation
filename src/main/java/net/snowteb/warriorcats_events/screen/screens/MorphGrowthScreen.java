@@ -6,7 +6,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
 import net.snowteb.warriorcats_events.client.ClientClanData;
 import net.snowteb.warriorcats_events.client.MorphStatsClientData;
 import net.snowteb.warriorcats_events.network.ModPackets;

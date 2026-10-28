@@ -115,6 +115,14 @@ public class WCECommands {
 
         dispatcher.register(
                 Commands.literal("wce")
+                        .then(Commands.literal("reloadContributors")
+                                .requires(src -> src.hasPermission(2))
+                                .executes(ctx -> WCECommandHandles.reloadContributors(ctx.getSource()))
+                        )
+        );
+
+        dispatcher.register(
+                Commands.literal("wce")
                         .then(Commands.literal("chatMorphName")
                                 .then(Commands.literal("toggleChatMorphName")
                                         .executes(ctx -> WCECommandHandles.toggleChatMorph(ctx.getSource().getPlayerOrException()))
@@ -258,15 +266,6 @@ public class WCECommands {
                                 )
                                 .then(Commands.literal("divorce")
                                         .executes(ctx -> WCECommandHandles.mateDivorce(ctx.getSource()))
-                                )
-                        )
-        );
-
-        dispatcher.register(
-                Commands.literal("wce")
-                        .then(Commands.literal("clan")
-                                .then(Commands.literal("manage")
-                                        .executes(ctx -> WCECommandHandles.manageClan(ctx.getSource(), ctx.getSource().getPlayerOrException()))
                                 )
                         )
         );
@@ -427,7 +426,7 @@ public class WCECommands {
                 Commands.literal("wce")
                         .then(Commands.literal("clan")
                                 .then(Commands.literal("list")
-                                        .executes(ctx -> WCECommandHandles.clanList(ctx.getSource().getPlayerOrException(), false, false))
+                                        .executes(ctx -> WCECommandHandles.clans(ctx.getSource().getPlayerOrException(), false, false))
                                 )
                         )
         );
@@ -435,7 +434,7 @@ public class WCECommands {
         dispatcher.register(
                 Commands.literal("wce")
                         .then(Commands.literal("clan")
-                                .executes(ctx -> WCECommandHandles.clanList(ctx.getSource().getPlayerOrException(), true, false))
+                                .executes(ctx -> WCECommandHandles.clans(ctx.getSource().getPlayerOrException(), true, false))
                         )
         );
 
@@ -443,7 +442,7 @@ public class WCECommands {
                 Commands.literal("wce")
                         .then(Commands.literal("clan")
                                 .then(Commands.literal("map")
-                                        .executes(ctx -> WCECommandHandles.clanList(ctx.getSource().getPlayerOrException(), false, true))
+                                        .executes(ctx -> WCECommandHandles.clans(ctx.getSource().getPlayerOrException(), false, true))
                                 )
                         )
         );
@@ -530,5 +529,13 @@ public class WCECommands {
                         )
         );
 
+        dispatcher.register(
+                Commands.literal("wce")
+                        .then(Commands.literal("clan")
+                                .then(Commands.literal("toggleClanChat")
+                                        .executes(ctx -> WCECommandHandles.toggleClanChat(ctx.getSource().getPlayerOrException()))
+                                )
+                        )
+        );
     }
 }

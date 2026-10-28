@@ -13,9 +13,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.animal.AbstractFish;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.effect.ModEffects;
@@ -79,8 +77,8 @@ public class CtSFishSuccesful {
                         .subtract(Vec3.atCenterOf(msg.pos)).add(0,2,0)
                         .normalize();
                 fish.setDeltaMovement(direction.scale(0.8));
-                new Sequence(level).wait(20).then(
-                        () -> fish.addEffect(new MobEffectInstance(ModEffects.NUMB_EFFECT.get(),
+                new Sequence(level).thenWait(20).then(
+                        (lvl) -> fish.addEffect(new MobEffectInstance(ModEffects.NUMB_EFFECT.get(),
                                 1000, 0, false, false))
                 ).run();
             }

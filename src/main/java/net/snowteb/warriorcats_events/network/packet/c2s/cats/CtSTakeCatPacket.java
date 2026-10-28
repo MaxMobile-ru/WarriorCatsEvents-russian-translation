@@ -7,8 +7,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clan.ClanObjects;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
 import java.util.Objects;
@@ -68,14 +69,11 @@ public class CtSTakeCatPacket {
 
                 cat.setOwnerUUID(player.getUUID());
 
-                String morphName = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
-                        .map(WCEPlayerData::getMorphName).orElse(player.getName().getString());
-
                 Component message = Component.translatable("clan.player_took_cat",
                         ClanData.logFormattedPlayerName(player),
                         cat.hasCustomName() ? cat.getCustomName().copy() : Component.translatable("generic.catname"));
 
-                cat.registerClanLog(message);
+                cat.registerClanLog(message, ClanObjects.ClanLogEntry.Type.OTHERS);
 
 
                 Component catName = cat.hasCustomName() ? cat.getCustomName() : Component.translatable("generic.catname");

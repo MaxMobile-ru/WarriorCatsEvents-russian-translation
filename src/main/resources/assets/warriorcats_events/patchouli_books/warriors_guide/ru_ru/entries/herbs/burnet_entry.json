@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Кровохлёбка",
+  "icon": "warriorcats_events:burnet_leaves",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Листья кровохлёбки можно получить из растений кровохлёбки. Они часто используются в качестве трав путника. Причина этого заключается в том, что они могут усилить физические способности кота.",
+      "title": "Кровохлёбка"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/burnet_stage3.png",
+        "warriorcats_events:textures/book/herbs/burnet_leaves.png"
+      ],
+      "title": "Кровохлёбка"
+    }
+
+  ]
+
+
+}

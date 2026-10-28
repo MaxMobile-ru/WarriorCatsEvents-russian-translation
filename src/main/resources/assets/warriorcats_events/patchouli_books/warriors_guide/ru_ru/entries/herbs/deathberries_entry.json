@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Смерть-ягоды",
+  "icon": "warriorcats_events:deathberries",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Смерть-ягоды считаются самым опасным видом трав. Это и есть то, о чём я ранее говорил вам! Это тот самый вид трав, к которому вам НИКОГДА не следует даже прикасаться. $(br2)Смерть-ягоды содержат смертельно опасный яд, который убивает любого кота за считанные минуты, если только не вывести этот яд. Смерть-ягоды можно получить с куста со смерть-ягодами.",
+      "title": "Смерть-ягоды"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/deathberries_stage3.png",
+        "warriorcats_events:textures/book/herbs/deathberries.png"
+      ],
+      "title": "Смерть-ягоды"
+    }
+
+  ]
+
+
+}

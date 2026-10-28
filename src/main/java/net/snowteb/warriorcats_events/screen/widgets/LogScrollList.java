@@ -5,7 +5,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractSelectionList;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.util.FormattedCharSequence;
-import net.snowteb.warriorcats_events.client.ClanInfo;
+import net.snowteb.warriorcats_events.clan.ClanObjects;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class LogScrollList extends AbstractSelectionList<LogScrollList.LogEntry>
     @Override
     public void updateNarration(NarrationElementOutput narration) {}
 
-    public void setLogs(List<ClanInfo.ClientLogEntry> logs) {
+    public void setLogs(List<ClanObjects.ClanLogEntry> logs) {
         this.clearEntries();
 
         for (int i = logs.size() - 1; i >= 0; i--) {
@@ -39,10 +39,10 @@ public class LogScrollList extends AbstractSelectionList<LogScrollList.LogEntry>
 
     public static class LogEntry extends AbstractSelectionList.Entry<LogEntry> {
 
-        private final ClanInfo.ClientLogEntry log;
+        private final ClanObjects.ClanLogEntry log;
         private List<FormattedCharSequence> lines;
 
-        public LogEntry(ClanInfo.ClientLogEntry log) {
+        public LogEntry(ClanObjects.ClanLogEntry log) {
             this.log = log;
         }
 
@@ -62,7 +62,7 @@ public class LogScrollList extends AbstractSelectionList<LogScrollList.LogEntry>
             guiGraphics.fill(left, top, left + width, top + height, 0x22000000);
 
             if (lines == null) {
-                lines = mc.font.split(log.message, width - 12);
+                lines = mc.font.split(log.message(), width - 12);
             }
 
             int y = top + 4;

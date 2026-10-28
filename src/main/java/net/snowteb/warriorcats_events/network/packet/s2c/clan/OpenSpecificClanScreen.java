@@ -2,6 +2,7 @@ package net.snowteb.warriorcats_events.network.packet.s2c.clan;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
+import net.snowteb.warriorcats_events.client.ClientClans;
 import net.snowteb.warriorcats_events.client.ClientPacketHandles;
 
 import java.util.UUID;
@@ -9,30 +10,25 @@ import java.util.function.Supplier;
 
 public class OpenSpecificClanScreen {
 
-    private final String clanName;
-    private final UUID clanUUID;
+    private final ClientClans.Entry entry;
 
-    public OpenSpecificClanScreen(String clanName, UUID clanUUID) {
-        this.clanName = clanName;
-        this.clanUUID = clanUUID;
+    public OpenSpecificClanScreen(ClientClans.Entry entry) {
+        this.entry = entry;
     }
 
     public static void encode(OpenSpecificClanScreen msg, FriendlyByteBuf buf) {
-        buf.writeUtf(msg.clanName);
-        buf.writeUUID(msg.clanUUID);
+        msg.entry.writeToBuf(buf);
     }
 
     public static OpenSpecificClanScreen decode(FriendlyByteBuf buf) {
-        return new OpenSpecificClanScreen(
-                buf.readUtf(), buf.readUUID()
-        );
+        return new OpenSpecificClanScreen(ClientClans.Entry.readFromBuf(buf));
     }
 
     public static void handle(OpenSpecificClanScreen msg,
                               Supplier<NetworkEvent.Context> ctx) {
 
         ctx.get().enqueueWork(() -> {
-            ClientPacketHandles.openSpecificClan(msg.clanName, msg.clanUUID);
+            ClientPacketHandles.openSpecificClan(msg.entry);
         });
 
         ctx.get().setPacketHandled(true);

@@ -25,7 +25,9 @@ public class FancySimpleButton extends AbstractButton implements SubRenderable {
     private BiPredicate<Double, Double> isClickableIn;
 
     final int originalYPos0;
+    final int originalXPos0;
     final int originalYPos1;
+    final int originalXPos1;
 
     @Override
     public void adjustYPos(int yOffset) {
@@ -77,6 +79,8 @@ public class FancySimpleButton extends AbstractButton implements SubRenderable {
         super(x, y, width, height, text);
         this.originalYPos0 = y;
         this.originalYPos1 = originalYPos0 + height;
+        this.originalXPos0 = x;
+        this.originalXPos1 = originalXPos0 + width;
 
         this.onPress = onPress;
         this.textScale = textScale;
@@ -110,10 +114,25 @@ public class FancySimpleButton extends AbstractButton implements SubRenderable {
     }
 
     @Override
-    public void tick() {
+    public void tickkkk() {
         if (clickedTime > 0) {
             clickedTime--;
         }
+    }
+
+    @Override
+    public void adjustXPos(int xOffset) {
+        this.setX(this.originalXPos0 + xOffset);
+    }
+
+    @Override
+    public int getOriginalXPos0() {
+        return originalXPos0;
+    }
+
+    @Override
+    public int getOriginalXPos1() {
+        return originalXPos1;
     }
 
     @Override
@@ -140,7 +159,7 @@ public class FancySimpleButton extends AbstractButton implements SubRenderable {
     @Override
     protected void renderWidget(GuiGraphics pGuiGraphics, int mouseX, int mouseY, float partialTicks) {
 
-        boolean hovered = this.isHovered();
+        boolean hovered = this.isHovered() && this.active;
 
         {
             RenderSystem.enableBlend();

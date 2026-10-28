@@ -10,6 +10,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.common.MinecraftForge;
+import net.snowteb.warriorcats_events.battlemoves.BattleMoveRegistry;
 import net.snowteb.warriorcats_events.block.ModBlocks;
 import net.snowteb.warriorcats_events.block.entity.ModBlockEntities;
 import net.snowteb.warriorcats_events.diseases.DiseaseRegistry;
@@ -42,7 +43,7 @@ import java.util.concurrent.Executors;
 @Mod(WarriorCatsEvents.MODID)
 public class WarriorCatsEvents {
     public static final String MODID = "warriorcats_events";
-    public static final String MOD_VERSION = "1.12.2";
+    public static final String MOD_VERSION = "1.13.0";
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static final ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
@@ -118,6 +119,7 @@ public class WarriorCatsEvents {
         WCEParticles.register(modEventBus);
         WCERecipes.register(modEventBus);
         DiseaseRegistry.init();
+        BattleMoveRegistry.init();
         ModFeatures.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);

@@ -3,7 +3,7 @@ package net.snowteb.warriorcats_events.network.packet.c2s.clan;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 
 import java.util.function.Supplier;
 

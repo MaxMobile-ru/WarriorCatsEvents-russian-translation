@@ -13,19 +13,23 @@ import net.snowteb.warriorcats_events.entity.ModEntities;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Quaternionf;
 
 import java.util.function.BiPredicate;
 
-import static net.snowteb.warriorcats_events.screen.screens.ManageClanScreen.pose;
-import static net.snowteb.warriorcats_events.screen.screens.ManageClanScreen.rotation;
 
 public class FancyMorphButton extends AbstractButton implements SubRenderable {
+
+    public static final Quaternionf rotation = new Quaternionf(0.0F, 0.0F, 0.0F, 0.0F);
+    public static final Quaternionf pose = new Quaternionf(1.9F, 0.0F, 0.6F, 0.0F);
 
     private BiPredicate<Double, Double> isClickableIn;
     private BiPredicate<Double, Double> isHoverableIn;
 
     final int originalYPos0;
+    final int originalXPos0;
     final int originalYPos1;
+    final int originalXPos1;
 
     @Override
     public void adjustYPos(int yOffset) {
@@ -45,6 +49,21 @@ public class FancyMorphButton extends AbstractButton implements SubRenderable {
     @Override
     public void setClickableIn(BiPredicate<Double, Double> predicate) {
         isClickableIn = predicate;
+    }
+
+    @Override
+    public void adjustXPos(int xOffset) {
+        this.setX(this.originalXPos0 + xOffset);
+    }
+
+    @Override
+    public int getOriginalXPos0() {
+        return originalXPos0;
+    }
+
+    @Override
+    public int getOriginalXPos1() {
+        return originalXPos1;
     }
 
     @Override
@@ -79,6 +98,8 @@ public class FancyMorphButton extends AbstractButton implements SubRenderable {
         super(x, y, width, height, Component.literal(name));
         this.originalYPos0 = y;
         this.originalYPos1 = originalYPos0 + height;
+        this.originalXPos0 = x;
+        this.originalXPos1 = originalXPos0 + width;
         this.onClick = onClick;
 
         this.morph = new WCatEntity(ModEntities.WCAT.get(), Minecraft.getInstance().level);

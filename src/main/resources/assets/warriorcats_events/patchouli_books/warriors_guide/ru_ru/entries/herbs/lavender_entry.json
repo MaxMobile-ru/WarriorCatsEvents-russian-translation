@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Лаванда",
+  "icon": "warriorcats_events:lavender_petals",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Лаванду можно найти в каждом биоме. Лепестки лаванды используется для чистки гнёзд и оставления отметок. Положите лепестки куда угодно, и кот обязательно захочет прийти туда!",
+      "title": "Лаванда"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/lavender_1.png",
+        "warriorcats_events:textures/book/herbs/lavender_2.png"
+      ],
+      "title": "Лаванда"
+    }
+
+  ]
+
+
+}

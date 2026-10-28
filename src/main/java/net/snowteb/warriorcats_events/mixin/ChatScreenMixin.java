@@ -4,6 +4,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.ChatScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -14,6 +15,7 @@ public class ChatScreenMixin {
     @Shadow
     protected EditBox input;
 
+    @Unique
     private String lastText = "";
 
     @Inject(method = "tick", at = @At("HEAD"))
@@ -37,6 +39,7 @@ public class ChatScreenMixin {
         }
     }
 
+    @Unique
     private String replaceEmojis(String text) {
         text = text.replace(":sob:", "\uD83D\uDE2D");
         text = text.replace(":cry:", "\uD83D\uDE2D");

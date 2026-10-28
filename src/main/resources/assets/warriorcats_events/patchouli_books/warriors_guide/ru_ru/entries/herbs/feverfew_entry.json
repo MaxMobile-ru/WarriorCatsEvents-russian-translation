@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Пижма",
+  "icon": "warriorcats_events:feverfew_leaves",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Листья пижмы можно получить из растений пижмы. Это растение с острым запахом, его листья используются для изменения температуры тела.",
+      "title": "Пижма"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/feverfew_stage3.png",
+        "warriorcats_events:textures/book/herbs/feverfew_leaves.png"
+      ],
+      "title": "Пижма"
+    }
+
+  ]
+
+
+}

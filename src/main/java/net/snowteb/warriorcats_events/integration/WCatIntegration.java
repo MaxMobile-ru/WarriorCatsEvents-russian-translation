@@ -20,7 +20,7 @@ public class WCatIntegration extends AbstractIntegration {
 
 //        WalkersTickHandlers.register(ModEntities.WCAT.get(), new WalkersTickHandler<WCatEntity>() {
 //            @Override
-//            public void tick(Player player, WCatEntity entity) {
+//            public void tickkkk(Player player, WCatEntity entity) {
 //
 //            }
 //        });

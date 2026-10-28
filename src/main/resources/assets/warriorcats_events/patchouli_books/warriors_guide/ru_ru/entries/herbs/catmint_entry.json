@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Кошачья мята",
+  "icon": "warriorcats_events:catmint_leaves",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Кошачья мята - это... Ууу... Какой прекрасный запах; такое чувство, будто я улечу от этого запаха... $(br2)Как бы то ни было, листья кошачьей мяты можно получить из растений кошачьей мяты. Они самые вкусные травы из всех существующих, только не увлекайтесь ими слишком сильно! Кошачья мята считается одной из самых эффективных целебных трав.$(br)",
+      "title": "Кошачья мята"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/catmint_stage3.png",
+        "warriorcats_events:textures/book/herbs/catmint_leaves.png"
+      ],
+      "title": "Кошачья мята"
+    }
+
+  ]
+
+
+}

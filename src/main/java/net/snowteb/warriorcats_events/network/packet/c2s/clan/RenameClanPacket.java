@@ -8,9 +8,17 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clan.ClanObjects;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.client.ClientClans;
+import net.snowteb.warriorcats_events.network.ModPackets;
+import net.snowteb.warriorcats_events.network.packet.s2c.clan.DisplayClanMenuMessage;
+import net.snowteb.warriorcats_events.network.packet.s2c.clan.UpdateClanEntryPacket;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 public class RenameClanPacket {
@@ -48,12 +56,17 @@ public class RenameClanPacket {
                     .map(WCEPlayerData::getCurrentClanUUID).orElse(ClanData.EMPTY_UUID));
 
             if (clan != null) {
-                if (!data.canManage(clan, player.getUUID())) return;
+                if (!data.canManage(clan, player.getUUID())) {
+                    Component error = Component.translatable("clan.no_permissions");
+                    ModPackets.sendToPlayer(new DisplayClanMenuMessage(error, true), player);
+                    return;
+                }
 
 
                 if (packet.name.isEmpty()) return;
                 if (data.getClanByName(packet.name) != null) {
-                    player.sendSystemMessage(Component.translatable("clan.clan_already_exists").withStyle(ChatFormatting.YELLOW));
+                    Component error = Component.translatable("clan.clan_already_exists");
+                    ModPackets.sendToPlayer(new DisplayClanMenuMessage(error, true), player);
                     return;
                 }
 
@@ -62,19 +75,19 @@ public class RenameClanPacket {
                 boolean success = data.renameClan(clan, packet.name, level);
                 if (!success) return;
 
-                player.sendSystemMessage(Component.translatable("clan.clan_renamed").withStyle(ChatFormatting.GRAY));
-
-                String morphName = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
-                        .map(WCEPlayerData::getMorphName).orElse(player.getGameProfile().getName());
+                Component successMsg = Component.translatable("clan.clan_renamed");
+                ModPackets.sendToPlayer(new DisplayClanMenuMessage(successMsg, false), player);
 
                 Component clanCreatedLog = Component.translatable("clan.clan_renamed_log",
                         ClanData.logFormattedPlayerName(player),
                         Component.literal(oldName).withStyle(Style.EMPTY.withColor(clan.color)),
                         Component.literal(packet.name).withStyle(Style.EMPTY.withColor(clan.color)));
 
-                data.registerLog(level, clan.clanUUID, clanCreatedLog);
+                data.registerLog(level, clan.clanUUID, clanCreatedLog, ClanObjects.ClanLogEntry.Type.PLAYERS);
 
                 data.setDirty();
+
+                data.updateScreen(clan, player);
 
             } else {
                 player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.GRAY));

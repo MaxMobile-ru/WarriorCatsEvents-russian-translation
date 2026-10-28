@@ -1,7 +1,6 @@
 package net.snowteb.warriorcats_events.screen.screens.createmorph;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
@@ -11,7 +10,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
@@ -389,12 +387,12 @@ public class BaseMorphScreen extends Screen {
     public void tick() {
         for (Renderable renderable : this.renderables) {
             if (renderable instanceof SubRenderable sub) {
-                sub.tick();
+                sub.tickkkk();
             }
         }
         for (Renderable renderable : this.subSectionRenderables) {
             if (renderable instanceof SubRenderable sub) {
-                sub.tick();
+                sub.tickkkk();
             }
         }
         if (displayErrorTime > 0) displayErrorTime--;

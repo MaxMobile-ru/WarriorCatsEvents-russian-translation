@@ -943,7 +943,7 @@ public class GeneticsModule {
             silver2 = folderPath + "empty";
         }
         /**
-         *  // WCatEntity.BASE -> 0-4
+         *  // WCatEntity.BASE_CHAR -> 0-4
          *  // WCatEntity.ORANGE_BASE -> 0-4
          *  // WHITE_MARKS -> 0-3
          *  // WCatEntity.ALBINO -> 0-2

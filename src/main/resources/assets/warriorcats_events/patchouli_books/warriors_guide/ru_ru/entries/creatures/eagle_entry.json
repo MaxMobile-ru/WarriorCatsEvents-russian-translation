@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Золотой орёл",
+  "icon": "warriorcats_events:golden_eagle_spawn_egg",
+  "category": "warriorcats_events:creatures_category",
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:golden_eagle{OnGround:0b}",
+      "rotate": false,
+      "default_rotation": -30,
+      "text": "Это Золотой орёл. Золотые орлы известны как непревзойдённые и смертельно опасные охотники."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "warriorcats_events:golden_eagle_meat",
+      "title": "О Золотых орлах",
+      "text": "Золотых орлов иногда можно найти на земле или в небе. $(br2)Эти животные большую часть своего времени тратят на охоту за котами и котятами. $(br2)Крайне редко можно встретить Золотого орла, который неагрессивен... Отсутствие агрессии - знак возможной дружбы! Нужно лишь показать, что вы доверяете ему. Как же замечательно было бы, если бы коты могли летать на орлах...$(br)"
+    }
+
+  ]
+
+
+}

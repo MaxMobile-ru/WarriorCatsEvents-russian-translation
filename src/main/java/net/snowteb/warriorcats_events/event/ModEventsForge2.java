@@ -7,8 +7,10 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.PlayerList;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -38,6 +40,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -54,8 +57,8 @@ import net.snowteb.warriorcats_events.block.ModBlocks;
 import net.snowteb.warriorcats_events.block.custom.*;
 import net.snowteb.warriorcats_events.block.entity.KittypetBowlBlockEntity;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.diseases.*;
 import net.snowteb.warriorcats_events.entity.custom.EagleEntity;
 import net.snowteb.warriorcats_events.entity.custom.MossBallEntity;
@@ -63,10 +66,12 @@ import net.snowteb.warriorcats_events.entity.custom.WCatAvoidGoal;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModFoodHerbs;
 import net.snowteb.warriorcats_events.item.ModItems;
+import net.snowteb.warriorcats_events.managers.ClanSymbol;
+import net.snowteb.warriorcats_events.managers.MorphNameUtils;
 import net.snowteb.warriorcats_events.managers.Sequence;
 import net.snowteb.warriorcats_events.network.ModPackets;
+import net.snowteb.warriorcats_events.network.packet.s2c.others.SendBubbleMessagePacket;
 import net.snowteb.warriorcats_events.network.packet.s2c.others.ThirstDataSyncStCPacket;
-import net.snowteb.warriorcats_events.particles.WCEParticles;
 import net.snowteb.warriorcats_events.skills.PlayerSkill;
 import net.snowteb.warriorcats_events.skills.PlayerSkillProvider;
 import net.snowteb.warriorcats_events.thirst.PlayerThirstProvider;
@@ -79,6 +84,66 @@ import java.util.*;
 
 @Mod.EventBusSubscriber(modid = WarriorCatsEvents.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEventsForge2 {
+
+    @SubscribeEvent
+    public static void onChatMessage(ServerChatEvent event) {
+        ServerPlayer sender = event.getPlayer();
+        sender.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA).ifPresent(playerData -> {
+            ServerLevel overworld = sender.level().getServer().overworld();
+            ClanData data = ClanData.get(overworld);
+            ClanData.Clan clan = data.getClan(playerData.getCurrentClanUUID());
+            boolean hasClan = clan != null;
+
+            if (playerData.isInClanChat() && hasClan) {
+                Component original = event.getMessage();
+
+                Component newMessage = Component.empty()
+                        .append(Component.literal("[").withStyle(Style.EMPTY.withColor(clan.color)))
+                        .append(ClanSymbol.symbolComponent(clan.clanSymbolIndex).withStyle(Style.EMPTY.withColor(clan.color)))
+                        .append(Component.literal("] ").withStyle(Style.EMPTY.withColor(clan.color)))
+                        .append("<")
+                        .append(MorphNameUtils.getChatMorphName(sender))
+                        .append("> ")
+                        .append(original).withStyle(ChatFormatting.ITALIC);
+
+                broadcastClanMessage(((ServerLevel) sender.level()).getServer().getPlayerList(), newMessage, original, sender);
+                event.setCanceled(true);
+            } else {
+                playerData.setInClanChat(false);
+            }
+        });
+
+    }
+
+    private static void broadcastClanMessage(PlayerList playerList, Component message, Component body, ServerPlayer sender) {
+        for(ServerPlayer receiver : playerList.getPlayers()) {
+
+            boolean isClanMember = false;
+
+            UUID targetClanUUID = receiver.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
+                    .map(WCEPlayerData::getCurrentClanUUID).orElse(ClanData.EMPTY_UUID);
+            UUID senderClanUUID = sender.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
+                    .map(WCEPlayerData::getCurrentClanUUID).orElse(ClanData.EMPTY_UUID);
+
+            if (targetClanUUID.equals(senderClanUUID)) isClanMember = true;
+
+            boolean shouldReceive = (isClanMember) || receiver.hasPermissions(3);
+
+            if (shouldReceive) {
+                if (!isClanMember) {
+                    receiver.sendSystemMessage(Component.empty()
+                            .append(Component.literal("\uD83D\uDEE0 ").withStyle(ChatFormatting.DARK_PURPLE))
+                            .append(message.copy().withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC)));
+
+                    ModPackets.sendToPlayer(new SendBubbleMessagePacket(sender.getUUID(), body.copy().withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)), receiver);
+                } else {
+                    receiver.sendSystemMessage(message);
+
+                    ModPackets.sendToPlayer(new SendBubbleMessagePacket(sender.getUUID(), body.copy().withStyle(ChatFormatting.ITALIC)), receiver);
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void onCheckSpawn(MobSpawnEvent.PositionCheck event) {
@@ -534,7 +599,7 @@ public class ModEventsForge2 {
 
         if (event.getEntity() instanceof Diseaseable<?> diseaseable) {
             ServerLevel sLevel = ((ServerLevel) event.getLevel());
-            new Sequence(sLevel).wait(10).then(() -> diseaseable.onChange()).run();
+            new Sequence(sLevel).thenWait(10).then((lvl) -> diseaseable.onChange()).run();
         }
 
         if (event.getEntity() instanceof Creeper creeper) {
@@ -583,9 +648,22 @@ public class ModEventsForge2 {
                 wolf.goalSelector.getAvailableGoals().removeIf(g
                         -> g.getGoal() instanceof NearestAttackableTargetGoal<?>);
 
-                wolf.goalSelector.addGoal(4,
-                        new NearestAttackableTargetGoal<>(wolf, LivingEntity.class, 10, false, false,
-                                (animal) -> (animal instanceof Player player && PlayerShape.getCurrentShape(player) instanceof WCatEntity) || animal instanceof WCatEntity || animal instanceof AbstractSkeleton));
+                wolf.goalSelector.addGoal(4, new NearestAttackableTargetGoal<>(wolf, LivingEntity.class, 10, false, false, (entity) -> {
+                    if (entity instanceof AbstractSkeleton) return true;
+
+                    if (wolf.getOwnerUUID() == null) {
+                        if (entity instanceof Player player && PlayerShape.getCurrentShape(player) instanceof WCatEntity) {
+                            return true;
+                        }
+
+                        if (entity instanceof WCatEntity) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }));
+
 
                 if (!tag.getBoolean("wolf_enhanced")) {
                     tag.putBoolean("wolf_enhanced", true);
@@ -602,7 +680,7 @@ public class ModEventsForge2 {
         if (event.getEntity() instanceof WCatEntity wCat) {
             CompoundTag tag = wCat.getPersistentData();
 
-            if (wCat.isTame()) {
+            if (wCat.isTame() && wCat.getRank() != WCatEntity.Rank.NONE) {
                 LivingEntity owner = wCat.getOwner();
                 if (owner instanceof ServerPlayer serverPlayer) {
                     UUID clanUUID = serverPlayer.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)

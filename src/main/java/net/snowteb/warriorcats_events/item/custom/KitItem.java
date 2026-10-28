@@ -1,6 +1,5 @@
 package net.snowteb.warriorcats_events.item.custom;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,8 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.entity.ModEntities;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
@@ -77,7 +76,7 @@ public class KitItem extends Item {
 
                 if (kitten == null) return InteractionResult.FAIL;
 
-                new Sequence(sPlayer.serverLevel()).wait(2).then(() -> {
+                new Sequence(sPlayer.serverLevel()).thenWait(2).then((lvl) -> {
                     ModPackets.sendToPlayer(new StCKitCreateScreenPacket(kitten.getId()), sPlayer);
                 }).run();
             }

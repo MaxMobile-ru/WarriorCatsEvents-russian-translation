@@ -261,6 +261,11 @@ public class KittyPetBowl extends BaseEntityBlock implements SimpleWaterloggedBl
     }
 
 
+    @Override
+    public ItemStack pickupBlock(LevelAccessor pLevel, BlockPos pPos, BlockState pState) {
+        return ItemStack.EMPTY;
+    }
+
     public void updateBlockStateFromEntity(KittypetBowlBlockEntity bowlEntity, BlockState pState, Level pLevel, BlockPos pPos) {
         BlockState newState = pState;
 

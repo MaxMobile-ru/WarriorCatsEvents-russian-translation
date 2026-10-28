@@ -27,29 +27,14 @@ public class PlayerSkillProvider implements ICapabilityProvider, INBTSerializabl
 
     @Override
     public CompoundTag serializeNBT() {
-        CompoundTag tag = new CompoundTag();
         PlayerSkill s = createSkills();
-        tag.putInt("speedLevel", s.getSpeedLevel());
-        tag.putInt("hpLevel", s.getHPLevel());
-        tag.putInt("dmgLevel", s.getDMGLevel());
-        tag.putInt("jumpLevel", s.getJumpLevel());
-        tag.putInt("armorLevel", s.getArmorLevel());
-        tag.putBoolean("climbUnlocked", s.isClimbUnlocked());
-        return tag;
+        return s.serializeNBT();
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         PlayerSkill s = createSkills();
-        s.setSpeedLevel(nbt.getInt("speedLevel"));
-        s.setHPLevel(nbt.getInt("hpLevel"));
-        s.setDMGLevel(nbt.getInt("dmgLevel"));
-        s.setJumpLevel(nbt.getInt("jumpLevel"));
-        s.setArmorLevel(nbt.getInt("armorLevel"));
-        s.setClimbUnlocked(nbt.getBoolean("climbUnlocked"));
+        s.deserializeNBT(nbt);
     }
 
-    public PlayerSkill getOrCreateSkills() {
-        return createSkills();
-    }
 }

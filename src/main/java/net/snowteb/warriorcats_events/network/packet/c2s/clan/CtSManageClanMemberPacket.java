@@ -8,10 +8,17 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clan.ClanObjects;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.client.ClientClans;
+import net.snowteb.warriorcats_events.network.ModPackets;
+import net.snowteb.warriorcats_events.network.packet.s2c.clan.DisplayClanMenuMessage;
+import net.snowteb.warriorcats_events.network.packet.s2c.clan.UpdateClanEntryPacket;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -63,8 +70,14 @@ public class CtSManageClanMemberPacket {
 
             if (clan != null) {
                 if (!data.canManage(clan, player.getUUID())) return;
+
+                if (Objects.equals(player.getUUID(), packet.playerUUID)) {
+                    ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.cant_manage_self"), true), player);
+                    return;
+                }
+
                 if (!data.canManagePlayer(clan.clanUUID, player.getUUID(), packet.playerUUID)) {
-                    player.sendSystemMessage(Component.translatable("clan.no_permissions").withStyle(ChatFormatting.RED));
+                    ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.no_permissions"), true), player);
                     return;
                 }
                 if (!clan.members.containsKey(packet.playerUUID)) return;
@@ -94,9 +107,13 @@ public class CtSManageClanMemberPacket {
                     }
                 }
                 if (packet.key.equals("changeperms")) {
-                    if (!(clan.memberPerms.get(player.getUUID()) == ClanData.ClanPermissions.OWNER || clan.members.get(player.getUUID()) == ClanData.ClanPlayerRank.LEADER)
-                            && packet.rank.equals("admin")) {
-                        player.sendSystemMessage(Component.translatable("clan.no_permissions").withStyle(ChatFormatting.RED));
+                    ClanData.Clan.Member member = clan.members.getOrDefault(player.getUUID(), ClanData.Clan.Member.empty());
+
+                    boolean isLeader = member.getPermissions() == ClanData.ClanPermissions.OWNER
+                            || member.getRank() == ClanData.ClanPlayerRank.LEADER;
+
+                    if (!isLeader && packet.rank.equals("admin")) {
+                        ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.no_permissions"), true), player);
                         return;
                     }
 
@@ -124,49 +141,43 @@ public class CtSManageClanMemberPacket {
 
     private static void changeRank(UUID targetUUID,ServerPlayer target, ServerPlayer leader, String morphName, ClanData.ClanPlayerRank rank, ClanData.Clan clan, ClanData data) {
 
-        ClanData.ClanPlayerRank currentRank = clan.members.get(targetUUID);
+        ClanData.ClanPlayerRank currentRank = clan.members.get(targetUUID).getRank();
 
         if (target == leader) {
-            leader.sendSystemMessage(Component.literal("You can't change your own role.").withStyle(ChatFormatting.YELLOW));
+            ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.cant_change_own_role"), true), leader);
             return;
         }
 
         if (currentRank == rank) {
-            leader.sendSystemMessage(Component.translatable("clan.player_is_already_a", rank).withStyle(ChatFormatting.YELLOW));
+            ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.player_is_already_a", rank), true), leader);
             return;
         }
 
         int deputies = 0;
         int medicine = 0;
         int medicineApp = 0;
-        for (Map.Entry<UUID, ClanData.ClanPlayerRank> entry : clan.members.entrySet()) {
-            if (entry.getValue() == ClanData.ClanPlayerRank.DEPUTY) deputies++;
-            if (entry.getValue() == ClanData.ClanPlayerRank.MEDICINE) medicine++;
-            if (entry.getValue() == ClanData.ClanPlayerRank.MEDICINEAPP) medicineApp++;
+        for (Map.Entry<UUID, ClanData.Clan.Member> entry : clan.members.entrySet()) {
+            if (entry.getValue().getRank() == ClanData.ClanPlayerRank.DEPUTY) deputies++;
+            if (entry.getValue().getRank() == ClanData.ClanPlayerRank.MEDICINE) medicine++;
+            if (entry.getValue().getRank() == ClanData.ClanPlayerRank.MEDICINEAPP) medicineApp++;
         }
 
         if (rank == ClanData.ClanPlayerRank.DEPUTY && deputies >= 1) {
-            leader.sendSystemMessage(
-                    Component.translatable("clan.role_limit_reached",
-                            Component.literal("(" + deputies + ")").withStyle(ChatFormatting.GOLD))
-                            .withStyle(ChatFormatting.YELLOW)
-            );
+            ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.role_limit_reached",
+                    Component.literal("(" + deputies + ")").withStyle(ChatFormatting.GOLD)), true), leader);
+
             return;
         }
         if (rank == ClanData.ClanPlayerRank.MEDICINE && medicine >= 2) {
-            leader.sendSystemMessage(
-                    Component.translatable("clan.role_limit_reached",
-                                    Component.literal("(" + medicine + ")").withStyle(ChatFormatting.GOLD))
-                            .withStyle(ChatFormatting.YELLOW)
-            );
+            ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.role_limit_reached",
+                    Component.literal("(" + medicine + ")").withStyle(ChatFormatting.GOLD)),true), leader);
+
             return;
         }
         if (rank == ClanData.ClanPlayerRank.MEDICINEAPP && medicineApp >= 1) {
-            leader.sendSystemMessage(
-                    Component.translatable("clan.role_limit_reached",
-                                    Component.literal("(" + medicineApp + ")").withStyle(ChatFormatting.GOLD))
-                            .withStyle(ChatFormatting.YELLOW)
-            );
+            ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.role_limit_reached",
+                    Component.literal("(" + medicineApp + ")").withStyle(ChatFormatting.GOLD)),true), leader);
+
             return;
         }
 
@@ -175,22 +186,25 @@ public class CtSManageClanMemberPacket {
             data.setDirty();
         } else {
             data.changeMemberRank(targetUUID, clan.clanUUID, rank);
+
+            String username = data.getPlayer(targetUUID) != null ? data.getPlayer(targetUUID).getUsername() : "player";
+
             Component playerRankChangeLog = Component.translatable("clan.player_changerank_log",
                     Component.literal(morphName).withStyle(ChatFormatting.AQUA)
                             .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                            .append(Component.literal("player")),
+                            .append(Component.literal(username).withStyle(ChatFormatting.GRAY))
+                            .append(Component.literal(")").withStyle(ChatFormatting.GRAY)),
                     Component.literal(rank.name()).withStyle(ChatFormatting.GOLD));
 
-            data.registerLog(leader.serverLevel().getServer().overworld(), clan.clanUUID, playerRankChangeLog);
+            data.registerLog(leader.serverLevel().getServer().overworld(), clan.clanUUID, playerRankChangeLog, ClanObjects.ClanLogEntry.Type.PLAYERS);
 
             data.setDirty();
         }
 
-        leader.sendSystemMessage(
-                Component.translatable("clan.player_role_promoted",
-                        Component.literal(morphName).withStyle(ChatFormatting.GOLD),
-                        Component.literal(String.valueOf(rank)).withStyle(ChatFormatting.AQUA))
-        );
+        ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.player_role_promoted",
+                Component.literal(morphName).withStyle(ChatFormatting.GOLD),
+                Component.literal(String.valueOf(rank)).withStyle(ChatFormatting.AQUA)), false), leader);
+        data.updateScreen(clan, leader);
 
         if (target != null) {
             for (UUID memberUUID : clan.members.keySet()) {
@@ -210,7 +224,7 @@ public class CtSManageClanMemberPacket {
     private static void kickMember(UUID targetUUID ,ServerPlayer target, ServerPlayer leader, String morphName, ClanData.Clan clan, ClanData data) {
 
         if (target == leader) {
-            leader.sendSystemMessage(Component.translatable("commands.clan.cant_kick_self").withStyle(ChatFormatting.YELLOW));
+            ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("commands.clan.cant_kick_self"), true), leader);
             return;
         }
 
@@ -220,22 +234,26 @@ public class CtSManageClanMemberPacket {
             } else {
                 data.removeMember(targetUUID, clan.clanUUID);
 
+                String username = data.getPlayer(targetUUID) != null ? data.getPlayer(targetUUID).getUsername() : "player";
+
                 Component playerLeftLog = Component.translatable("clan.player_removed",
                         Component.literal(morphName).withStyle(ChatFormatting.AQUA)
                                 .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                                .append(Component.literal("player").withStyle(ChatFormatting.GRAY))
+                                .append(Component.literal(username).withStyle(ChatFormatting.GRAY))
                                 .append(Component.literal(")").withStyle(ChatFormatting.GRAY)),
                         Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
 
-                data.registerLog(leader.serverLevel().getServer().overworld(), clan.clanUUID, playerLeftLog);
+                data.registerLog(leader.serverLevel().getServer().overworld(), clan.clanUUID, playerLeftLog, ClanObjects.ClanLogEntry.Type.PLAYERS);
             }
             data.setDirty();
 
-            leader.sendSystemMessage(
-                    Component.translatable("clan.player_removed",
-                            Component.literal(morphName).withStyle(ChatFormatting.GOLD),
-                            Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)))
-            );
+
+            ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.player_removed",
+                    Component.literal(morphName).withStyle(ChatFormatting.GOLD),
+                    Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color))), false), leader);
+            data.updateScreen(clan, leader);
+
+
         }
 
     }
@@ -243,7 +261,7 @@ public class CtSManageClanMemberPacket {
     private static void changePerms(UUID targetUUID, ServerPlayer target, ServerPlayer leader, String morphName,ClanData.ClanPermissions perms , ClanData.Clan clan, ClanData data) {
 
         if (target == leader) {
-            leader.sendSystemMessage(Component.translatable("clan.cant_change_own_perms").withStyle(ChatFormatting.YELLOW));
+            ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.cant_change_own_perms"), true), leader);
             return;
         }
 
@@ -253,22 +271,24 @@ public class CtSManageClanMemberPacket {
             } else {
                 data.changeMemberPermissions(targetUUID, clan.clanUUID, perms);
 
+                String username = data.getPlayer(targetUUID) != null ? data.getPlayer(targetUUID).getUsername() : "player";
+
                 Component playerJoinedLog = Component.translatable("clan.member_perms",
                         Component.literal(morphName).withStyle(ChatFormatting.AQUA)
                                 .append(Component.literal("(").withStyle(ChatFormatting.GRAY))
-                                .append(Component.literal("player").withStyle(ChatFormatting.GRAY))
+                                .append(Component.literal(username).withStyle(ChatFormatting.GRAY))
                                 .append(Component.literal(")").withStyle(ChatFormatting.GRAY)),
                         Component.literal(perms.name()).withStyle(ChatFormatting.RED));
 
-                data.registerLog(leader.serverLevel().getServer().overworld(), clan.clanUUID, playerJoinedLog);
+                data.registerLog(leader.serverLevel().getServer().overworld(), clan.clanUUID, playerJoinedLog, ClanObjects.ClanLogEntry.Type.PLAYERS);
             }
             data.setDirty();
 
-            leader.sendSystemMessage(
-                    Component.translatable("clan.member_perms",
-                            Component.literal(morphName).withStyle(ChatFormatting.GOLD),
-                            Component.literal(perms.name()).withStyle(ChatFormatting.RED))
-            );
+            ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.member_perms",
+                    Component.literal(morphName).withStyle(ChatFormatting.GOLD),
+                    Component.literal(perms.name()).withStyle(ChatFormatting.RED)), false), leader);
+            data.updateScreen(clan, leader);
+
         }
 
     }

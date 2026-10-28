@@ -24,7 +24,9 @@ public class FancySelectableButton extends AbstractButton implements SubRenderab
     private BiPredicate<Double, Double> isHoverableIn;
 
     final int originalYPos0;
+    final int originalXPos0;
     final int originalYPos1;
+    final int originalXPos1;
 
     @Override
     public void adjustYPos(int yOffset) {
@@ -44,6 +46,21 @@ public class FancySelectableButton extends AbstractButton implements SubRenderab
     @Override
     public void setClickableIn(BiPredicate<Double, Double> predicate) {
         isClickableIn = predicate;
+    }
+
+    @Override
+    public void adjustXPos(int xOffset) {
+        this.setX(this.originalXPos0 + xOffset);
+    }
+
+    @Override
+    public int getOriginalXPos0() {
+        return originalXPos0;
+    }
+
+    @Override
+    public int getOriginalXPos1() {
+        return originalXPos1;
     }
 
     public void setHoverableIn(BiPredicate<Double, Double> predicate) {
@@ -69,6 +86,7 @@ public class FancySelectableButton extends AbstractButton implements SubRenderab
     private int color = 0xFFFFFF;
     private boolean selected;
     private final String underText;
+    private boolean centered = false;
 
     public FancySelectableButton(int width, int height,
                                  Component text,
@@ -88,12 +106,25 @@ public class FancySelectableButton extends AbstractButton implements SubRenderab
         super(x, y, width, height, text);
         this.originalYPos0 = y;
         this.originalYPos1 = originalYPos0 + height;
+        this.originalXPos0 = x;
+        this.originalXPos1 = originalXPos0 + width;
 
         this.onPress = onPress;
         this.textScale = textScale;
         this.color = color;
         this.underText = underText;
 
+    }
+
+    public FancySelectableButton(int width, int height,
+                                 int x, int y,
+                                 Component text,
+                                 PressAction onPress,
+                                 float textScale, int color,
+                                 String underText, boolean centered) {
+
+        this(width, height, x, y, text, onPress,  textScale, color, underText);
+        this.centered = centered;
     }
 
     public boolean isSelected() {
@@ -129,7 +160,7 @@ public class FancySelectableButton extends AbstractButton implements SubRenderab
     @Override
     protected void renderWidget(GuiGraphics pGuiGraphics, int mouseX, int mouseY, float partialTicks) {
 
-        boolean hovered = this.isHovered() && this.isHoverableIn(mouseX, mouseY);
+        boolean hovered = this.isHovered() && this.isHoverableIn(mouseX, mouseY) && this.active;
 
         int alpha = 0x55;
         int colorGradient = this.isSelected() ? 0xFFC9B763 : (alpha << 24) | (0xFFE6D1A5 & 0xFFFFFF);
@@ -183,16 +214,27 @@ public class FancySelectableButton extends AbstractButton implements SubRenderab
         int yMiddlePos = (this.getY() + (this.height - 5) / 2);
         int yPos = (this.getY() + 4);
         int finalYPos = this.underText.isEmpty() ? yMiddlePos : yPos;
-        pGuiGraphics.pose().translate((this.getX() + 5), finalYPos, 0);
+        int msgXPos = this.centered ? (this.getX() + getWidth() / 2) : (this.getX() + 5);
+        pGuiGraphics.pose().translate(msgXPos, finalYPos, 0);
         pGuiGraphics.pose().scale(scale, scale, 1.0f);
-        pGuiGraphics.drawString(
-                Minecraft.getInstance().font,
-                this.getMessage(),
-                0,
-                0,
-                this.active ? (hovered ? 0xFFFFA0 : 0xF2DCAE) : 0xFF555555
-        );
 
+        if (centered) {
+            pGuiGraphics.drawCenteredString(
+                    Minecraft.getInstance().font,
+                    this.getMessage(),
+                    0,
+                    0,
+                    this.active ? (hovered ? 0xFFFFA0 : 0xF2DCAE) : 0xFF555555
+            );
+        } else {
+            pGuiGraphics.drawString(
+                    Minecraft.getInstance().font,
+                    this.getMessage(),
+                    0,
+                    0,
+                    this.active ? (hovered ? 0xFFFFA0 : 0xF2DCAE) : 0xFF555555
+            );
+        }
 
         pGuiGraphics.pose().popPose();
 

@@ -1,18 +1,15 @@
 package net.snowteb.warriorcats_events.entity.custom.wcat;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.client.DialogueMessageDistributor;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import static net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity.Rank.APPRENTICE;
 import static net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity.Rank.KIT;
 
 public class DialoguesModule {

@@ -78,14 +78,14 @@ public class Chills extends Disease<Chills> {
     @Override
     public Sequence diseaseHealingSequence(ServerLevel sLevel, LivingEntity entity) {
         return new Sequence(sLevel)
-                .thenEveryFor(20, 120, () -> {
+                .thenEveryFor(20, 120, (lvl) -> {
                     sLevel.sendParticles(
                             ParticleTypes.HAPPY_VILLAGER,
                             entity.getX(), entity.getY(), entity.getZ(),
                             2, 0.2, 0.2, 0.2, 0.02
                     );
                 })
-                .then(() -> {
+                .then((lvl) -> {
                     this.shouldHeal = true;
                     if (entity instanceof ServerPlayer player) {
                         player.displayClientMessage(

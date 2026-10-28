@@ -226,7 +226,6 @@ public class TerritoryMapScreen extends Screen {
 
     @Override
     public void onClose() {
-        super.onClose();
         Minecraft.getInstance().setScreen(parent);
     }
 

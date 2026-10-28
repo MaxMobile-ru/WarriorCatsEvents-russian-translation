@@ -6,6 +6,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -13,10 +14,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.client.ClanInfo;
+import net.snowteb.warriorcats_events.clan.ClanObjects;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.client.ClientClans;
 import net.snowteb.warriorcats_events.diseases.DiseaseRegistry;
 import net.snowteb.warriorcats_events.diseases.DiseaseType;
 import net.snowteb.warriorcats_events.diseases.Diseaseable;
@@ -32,13 +35,67 @@ import net.snowteb.warriorcats_events.network.packet.s2c.clan.*;
 import net.snowteb.warriorcats_events.network.packet.s2c.others.OpenPlayerCatDataScreenPacket;
 import net.snowteb.warriorcats_events.skills.PlayerSkill;
 import net.snowteb.warriorcats_events.skills.PlayerSkillProvider;
+import net.snowteb.warriorcats_events.wcedatabase.DataManager;
 import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
 import tocraft.walkers.api.PlayerShape;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class WCECommandHandles {
+
+    public static int reloadContributors(CommandSourceStack source) {
+        MinecraftServer server = source.getServer();
+
+        DataManager.getContributors(uuids -> server.execute(() -> {
+            if (uuids.isEmpty()) {
+                source.sendFailure(Component.literal("Couldn't reload contributors.").withStyle(ChatFormatting.RED));
+                return;
+            }
+            var list = WarriorCatsEvents.Collaborators.getList();
+            list.clear();
+            list.addAll(uuids);
+            source.sendSuccess(() -> Component.literal("Reloaded contributors: " + uuids.size()).withStyle(ChatFormatting.GREEN), true);
+        }));
+
+        source.sendSuccess(() -> Component.literal("Reloading...").withStyle(ChatFormatting.YELLOW), false);
+        return 1;
+    }
+
+    public static int toggleClanChat(ServerPlayer player) {
+        ServerLevel overworld = player.level().getServer().overworld();
+
+        UUID clanUUID = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
+                .map(WCEPlayerData::getCurrentClanUUID).orElse(ClanData.EMPTY_UUID);
+
+        ClanData data = ClanData.get(overworld);
+        ClanData.Clan clan = data.getClan(clanUUID);
+
+        boolean toSet = !player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
+                .map(WCEPlayerData::isInClanChat).orElse(false);
+
+        if (clan == null) {
+            player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.GRAY));
+            player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA).ifPresent(cap -> {
+                cap.setInClanChat(false);
+            });
+            return 0;
+        }
+
+        player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA).ifPresent(cap -> {
+            cap.setInClanChat(toSet);
+        });
+
+        if (toSet) {
+            player.sendSystemMessage(Component.translatable("clan.toggle_clan_chat_on", toSet).withStyle(ChatFormatting.GREEN));
+        } else {
+            player.sendSystemMessage(Component.translatable("clan.toggle_clan_chat_off", toSet).withStyle(ChatFormatting.RED));
+        }
+
+        return 1;
+    }
 
     public static int carryRequestAccept(CommandSourceStack source) throws CommandSyntaxException {
         ServerPlayer player = source.getPlayerOrException();
@@ -241,6 +298,8 @@ public class WCECommandHandles {
                 sPlayer.sendSystemMessage(Component.translatable("clan.no_permissions").withStyle(ChatFormatting.YELLOW));
                 return 0;
             }
+        } else {
+            return 0;
         }
 
         if (targetPlayer == sPlayer) {
@@ -261,10 +320,10 @@ public class WCECommandHandles {
         int deputies = 0;
         int medicine = 0;
         int medicineApp = 0;
-        for (Map.Entry<UUID, ClanData.ClanPlayerRank> entry : targetClan.members.entrySet()) {
-            if (entry.getValue() == ClanData.ClanPlayerRank.DEPUTY) deputies++;
-            if (entry.getValue() == ClanData.ClanPlayerRank.MEDICINE) medicine++;
-            if (entry.getValue() == ClanData.ClanPlayerRank.MEDICINEAPP) medicineApp++;
+        for (Map.Entry<UUID, ClanData.Clan.Member> entry : targetClan.members.entrySet()) {
+            if (entry.getValue().getRank() == ClanData.ClanPlayerRank.DEPUTY) deputies++;
+            if (entry.getValue().getRank() == ClanData.ClanPlayerRank.MEDICINE) medicine++;
+            if (entry.getValue().getRank() == ClanData.ClanPlayerRank.MEDICINEAPP) medicineApp++;
         }
 
         if (newRank == ClanData.ClanPlayerRank.DEPUTY && deputies >= 1) {
@@ -293,7 +352,7 @@ public class WCECommandHandles {
             data.changeMemberRank(targetPlayer, targetClanId, newRank);
             data.setDirty();
 
-            String morphName = data.playerMorphNames.getOrDefault(targetPlayer.getUUID(), Component.translatable("generic.wcat.unnamedcat").getString());
+            String morphName = data.getPlayer(targetPlayer).getMorphName();
 
             Component message = Component.translatable("clan.player_role_promoted",
                     Component.literal(morphName).withStyle(ChatFormatting.GOLD),
@@ -428,69 +487,125 @@ public class WCECommandHandles {
         return 1;
     }
 
-    public static int clanList(ServerPlayer player, boolean seeingMyClan, boolean territoryMap) {
-
+    public static int clans(ServerPlayer player, boolean seeingMyClan, boolean territoryMap) {
         ServerLevel level = player.serverLevel().getServer().overworld();
         ClanData data = ClanData.get(level);
 
-        List<ClanInfo> list = new ArrayList<>();
+        List<ClientClans.Entry> list = new ArrayList<>();
 
         for (ClanData.Clan clan : data.clans.values()) {
-
-            List<String> morphNames = clan.members.keySet().stream()
-                    .map(uuid -> data.playerMorphNames.getOrDefault(uuid, "Unknown"))
-                    .collect(Collectors.toList());
-
-
-            List<ClanInfo.ClientClanCat> clientCats = new ArrayList<>();
-
-            for (ClanData.ClanCat cat : clan.clanCats.values()) {
-                clientCats.add(new ClanInfo.ClientClanCat(
-                        cat.catUUID,
-                        cat.catName.getString(),
-                        cat.catGender,
-                        cat.catRank,
-                        cat.catAge.getString(),
-                        cat.catVariant,
-                        cat.catParents.getString(),
-
-                        cat.onGeneticalSkin,
-                        cat.genetics,
-                        cat.chimeraGenetics,
-                        cat.variants,
-                        cat.chimeraVariants,
-                        cat.catGenderValue
-                ));
-            }
-
-            List<ClanInfo.ClientLogEntry> clientLogList = new ArrayList<>();
-
-            for (ClanData.ClanLogEntry log : clan.logs) {
-                clientLogList.add(new ClanInfo.ClientLogEntry(log.gameTimeID, log.message));
-            }
-
             boolean canManage = data.canManage(clan, player.getUUID());
+            Map<UUID, ClanObjects.Player> members = new HashMap<>();
 
-            list.add(new ClanInfo(
-                    clan.clanUUID,
-                    clan.name,
-                    clan.color,
-                    clan.leaderName,
-                    clan.clanBioSentence,
-                    canManage,
-                    clan.members.size(),
-                    morphNames,
-                    clientCats,
-                    clientLogList,
-                    clan.clanSymbolIndex
-            ));
+            for (UUID uuid : clan.members.keySet()) {
+                members.put(uuid, data.getPlayer(uuid));
+            }
 
+            ClientClans.Entry entry = new ClientClans.Entry(clan, canManage, members);
+
+            list.add(entry);
         }
 
+        List<List<ClientClans.Entry>> packages = new ArrayList<>();
+        int packageMaxSize = 4;
+        for (int i = 0; i < list.size(); i += packageMaxSize) {
+            packages.add(new ArrayList<>(list.subList(i, Math.min(i + packageMaxSize, list.size()))));
+        }
+        if (packages.isEmpty()) {
+            packages.add(new ArrayList<>());
+        }
 
-        ModPackets.sendToPlayer(new S2CClanListPacket(list, seeingMyClan, territoryMap), player);
+        sendClansPackage(player, packages, 0, seeingMyClan, territoryMap);
+
         return 1;
     }
+
+    private static void sendClansPackage(ServerPlayer player, List<List<ClientClans.Entry>> batches, int index,
+                                      boolean seeingMyClan, boolean territoryMap) {
+
+        if (!player.connection.isAcceptingMessages()) {
+            return;
+        }
+
+        boolean isLast = index == batches.size() - 1;
+
+        ModPackets.sendToPlayer(
+                new S2CClanPackagePacket(batches.get(index), index, isLast, seeingMyClan, territoryMap),
+                player
+        );
+
+        if (!isLast) {
+            CompletableFuture
+                    .delayedExecutor(50, TimeUnit.MILLISECONDS)
+                    .execute(() -> player.getServer().execute(
+                            () -> sendClansPackage(player, batches, index + 1, seeingMyClan, territoryMap)
+                    ));
+        }
+    }
+
+//    public static int clanList(ServerPlayer player, boolean seeingMyClan, boolean territoryMap) {
+//
+//        ServerLevel level = player.serverLevel().getServer().overworld();
+//        ClanData data = ClanData.get(level);
+//
+//        List<ClanInfo> list = new ArrayList<>();
+//
+//        for (ClanData.Clan clan : data.clans.values()) {
+//
+//            List<String> morphNames = clan.members.keySet().stream()
+//                    .map(uuid -> data.getPlayer(uuid).getMorphName())
+//                    .collect(Collectors.toList());
+//
+//
+//            List<ClanInfo.ClientClanCat> clientCats = new ArrayList<>();
+//
+//            for (ClanData.ClanCat cat : clan.clanCats.values()) {
+//                clientCats.add(new ClanInfo.ClientClanCat(
+//                        cat.catUUID,
+//                        cat.catName.getString(),
+//                        cat.catGender,
+//                        cat.catRank,
+//                        cat.catAge.getString(),
+//                        cat.catVariant,
+//                        cat.catParents.getString(),
+//
+//                        cat.onGeneticalSkin,
+//                        cat.genetics,
+//                        cat.chimeraGenetics,
+//                        cat.variants,
+//                        cat.chimeraVariants,
+//                        cat.catGenderValue
+//                ));
+//            }
+//
+//            List<ClanInfo.ClientLogEntry> clientLogList = new ArrayList<>();
+//
+//            for (ClanObjects.ClanLogEntry log : clan.logs) {
+//                clientLogList.add(new ClanInfo.ClientLogEntry(log.gameTimeID, log.message));
+//            }
+//
+//            boolean canManage = data.canManage(clan, player.getUUID());
+//
+//            list.add(new ClanInfo(
+//                    clan.clanUUID,
+//                    clan.name,
+//                    clan.color,
+//                    clan.leaderName,
+//                    clan.clanBioSentence,
+//                    canManage,
+//                    clan.members.size(),
+//                    morphNames,
+//                    clientCats,
+//                    clientLogList,
+//                    clan.clanSymbolIndex
+//            ));
+//
+//        }
+//
+//
+//        ModPackets.sendToPlayer(new S2CClanListPacket(list, seeingMyClan, territoryMap), player);
+//        return 1;
+//    }
 
     public static int diseaseGive(CommandSourceStack source, Collection<? extends Entity> entities, String disease) throws CommandSyntaxException {
 
@@ -604,7 +719,8 @@ public class WCECommandHandles {
 
         ClanData.Clan clan = data.getClan(clanUUID);
         if (clan != null) {
-            boolean can = clan.memberPerms.get(player.getUUID()) == ClanData.ClanPermissions.OWNER;
+            boolean can = clan.members.containsKey(player.getUUID()) &&
+                    clan.members.get(player.getUUID()).getPermissions() == ClanData.ClanPermissions.OWNER;
             if (can) {
                 data.deleteClan(level, clan.clanUUID);
                 player.sendSystemMessage(
@@ -979,8 +1095,10 @@ public class WCECommandHandles {
             }
         }
 
-        boolean isOwner = (targetClan.members.get(sPlayer.getUUID()) == ClanData.ClanPlayerRank.LEADER)
-                && (targetClan.memberPerms.get(sPlayer.getUUID()) == ClanData.ClanPermissions.OWNER);
+        boolean isOwner = targetClan.members.containsKey(sPlayer.getUUID()) &&
+                ((targetClan.members.get(sPlayer.getUUID()).getRank() == ClanData.ClanPlayerRank.LEADER)
+                        && (targetClan.members.get(sPlayer.getUUID()).getPermissions() == ClanData.ClanPermissions.OWNER));
+
         if (isOwner) {
             sPlayer.sendSystemMessage(Component.translatable("clan.cant_leave_when_leader").withStyle(ChatFormatting.YELLOW));
             return 0;
@@ -1008,65 +1126,6 @@ public class WCECommandHandles {
         }
 
         return 1;
-    }
-
-    public static int manageClan(CommandSourceStack source, ServerPlayer player) {
-
-        ClanData data = ClanData.get(player.serverLevel().getServer().overworld());
-
-        UUID clanUUID = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
-                .map(WCEPlayerData::getCurrentClanUUID).orElse(ClanData.EMPTY_UUID);
-
-        if (clanUUID.equals(ClanData.EMPTY_UUID)) {
-            player.sendSystemMessage(
-                    Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.GRAY)
-            );
-        }
-
-        ClanData.Clan clan = data.getClan(clanUUID);
-        if (clan != null) {
-            boolean can = data.canManage(clan, player.getUUID());
-            if (can) {
-
-                Map<UUID, ClanInfo.Member> playersInClan = new HashMap<>();
-                for (UUID uuid : clan.members.keySet()) {
-                    ServerPlayer clanMember = player.serverLevel().getServer()
-                            .getPlayerList().getPlayer(uuid);
-
-                    String morphName = data.playerMorphNames.getOrDefault(uuid, "Unknown");
-                    WCGenetics.PackedGeneticData morphData = data.playerMorphData.getOrDefault(uuid, WCGenetics.PackedGeneticData.empty());
-                    String rank = String.valueOf(clan.members.get(uuid));
-                    String perms = String.valueOf(clan.memberPerms.get(uuid));
-                    String age = "Undefined";
-                    boolean isOnline = false;
-
-                    if (clanMember != null) {
-                        age = String.valueOf(clanMember.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
-                                .map(WCEPlayerData::getMorphAge).orElse(WCEPlayerData.Age.ADULT));
-                        isOnline = true;
-                    }
-
-                    ClanInfo.Member member = new ClanInfo.Member(uuid, morphName, rank, perms, age, isOnline,
-                            morphData.genetics, morphData.variants, morphData.chimerasGenetics, morphData.chimeraVariants,
-                            morphData.onGeneticalSkin, morphData.morphSkin);
-
-                    playersInClan.put(uuid, member);
-                }
-
-
-                ClanInfo clanInfo = new ClanInfo(clan.clanUUID, clan.name, clan.color, clan.leaderName, clan.clanBioSentence,
-                        clan.members.size(), playersInClan, clan.clanSymbolIndex);
-
-                ModPackets.sendToPlayer(new S2CManageClanPacket(clanInfo), player);
-
-                return 1;
-
-            } else {
-                player.sendSystemMessage(Component.translatable("clan.no_permissions").withStyle(ChatFormatting.RED));
-
-            }
-        }
-        return 0;
     }
 
     public static int mateAccept(CommandSourceStack source) throws CommandSyntaxException {
@@ -1396,7 +1455,7 @@ public class WCECommandHandles {
         player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA).ifPresent(cap -> {
             cap.reset();
             ModPackets.sendToPlayer(new S2CSyncClanDataPacket(cap), player);
-            data.playerMorphNames.put(player.getUUID(), cap.getMorphName());
+            data.getPlayer(player).setMorphName(cap.getMorphName());
 
             WCGenetics.PackedGeneticData morphData =
                     new WCGenetics.PackedGeneticData(cap.getPlayerGenetics(),
@@ -1405,7 +1464,7 @@ public class WCECommandHandles {
                             cap.getPlayerChimeraVariants(),
                             cap.isOnGeneticalSkin(), cap.getVariantData());
 
-            data.playerMorphData.put(player.getUUID(), morphData);
+            data.getPlayer(player).setGenetics(morphData);
             data.setDirty();
         });
 
@@ -1461,8 +1520,10 @@ public class WCECommandHandles {
         }
 
         if (targetClan != null) {
-            boolean canManage = targetClan.members.get(sPlayer.getUUID()) == ClanData.ClanPlayerRank.LEADER
-                    && targetClan.memberPerms.get(sPlayer.getUUID()) == ClanData.ClanPermissions.OWNER;
+            boolean canManage = targetClan.members.containsKey(sPlayer.getUUID()) &&
+                    (targetClan.members.get(sPlayer.getUUID()).getRank() == ClanData.ClanPlayerRank.LEADER
+                    && targetClan.members.get(sPlayer.getUUID()).getPermissions() == ClanData.ClanPermissions.OWNER);
+
             if (!canManage) {
                 sPlayer.sendSystemMessage(Component.translatable("clan.no_permissions").withStyle(ChatFormatting.YELLOW));
                 return 0;
@@ -1485,26 +1546,24 @@ public class WCECommandHandles {
 
         if (targetClan == currentMemberClan && targetClan != null) {
 
-            for (Map.Entry<UUID, ClanData.ClanPlayerRank> entry : targetClan.members.entrySet()) {
-                if (entry.getValue() == ClanData.ClanPlayerRank.LEADER) {
-                    entry.setValue(ClanData.ClanPlayerRank.WARRIOR);
+            for (Map.Entry<UUID, ClanData.Clan.Member> entry : targetClan.members.entrySet()) {
+                if (entry.getValue().getRank() == ClanData.ClanPlayerRank.LEADER) {
+                    entry.getValue().setRank(ClanData.ClanPlayerRank.WARRIOR);
+                }
+                if (entry.getValue().getPermissions() == ClanData.ClanPermissions.OWNER) {
+                    entry.getValue().setPermissions(ClanData.ClanPermissions.ADMIN);
                 }
             }
 
-            for (Map.Entry<UUID, ClanData.ClanPermissions> entry : targetClan.memberPerms.entrySet()) {
-                if (entry.getValue() == ClanData.ClanPermissions.OWNER) {
-                    entry.setValue(ClanData.ClanPermissions.MEMBER);
-                }
-            }
 
 
             data.changeMemberRank(targetPlayer, targetClanId, ClanData.ClanPlayerRank.LEADER);
             data.changeMemberPermissions(targetPlayer, targetClanId, ClanData.ClanPermissions.OWNER);
 
-            targetClan.leaderName = hostMorphName;
+            targetClan.leaderName = targetMorphName;
             data.setDirty();
 
-            String morphName = data.playerMorphNames.getOrDefault(targetPlayer.getUUID(), "Unknown");
+            String morphName = data.getPlayer(targetPlayer).getMorphName();
 
             sPlayer.sendSystemMessage(
                     Component.translatable("clan.given_leadership",

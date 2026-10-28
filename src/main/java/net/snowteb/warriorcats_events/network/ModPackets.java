@@ -7,6 +7,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
+import net.snowteb.warriorcats_events.battlemoves.network.CtSLaunchMovePacket;
 import net.snowteb.warriorcats_events.network.packet.c2s.cats.*;
 import net.snowteb.warriorcats_events.network.packet.c2s.clan.*;
 import net.snowteb.warriorcats_events.network.packet.c2s.others.*;
@@ -256,12 +257,6 @@ public class ModPackets {
                 .consumerMainThread(StCKitCreateScreenPacket::handle)
                 .add();
 
-        net.messageBuilder(CtSCreateAndSpawnKitPacket.class, 34, NetworkDirection.PLAY_TO_SERVER)
-                .decoder(CtSCreateAndSpawnKitPacket::new)
-                .encoder(CtSCreateAndSpawnKitPacket::toBytes)
-                .consumerMainThread(CtSCreateAndSpawnKitPacket::handle)
-                .add();
-
         net.messageBuilder(KittingInteractionPacket.class, 35, NetworkDirection.PLAY_TO_SERVER)
                 .decoder(KittingInteractionPacket::decode)
                 .encoder(KittingInteractionPacket::encode)
@@ -286,11 +281,11 @@ public class ModPackets {
                 .consumerMainThread(CommandCatsPacket::handle)
                 .add();
 
-        net.messageBuilder(S2CClanListPacket.class, 39, NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(S2CClanListPacket::decode)
-                .encoder(S2CClanListPacket::encode)
-                .consumerMainThread(S2CClanListPacket::handle)
-                .add();
+//        net.messageBuilder(S2CClanListPacket.class, 39, NetworkDirection.PLAY_TO_CLIENT)
+//                .decoder(S2CClanListPacket::decode)
+//                .encoder(S2CClanListPacket::encode)
+//                .consumerMainThread(S2CClanListPacket::handle)
+//                .add();
 
         net.messageBuilder(C2SRegisterClanPacket.class, 40, NetworkDirection.PLAY_TO_SERVER)
                 .decoder(C2SRegisterClanPacket::decode)
@@ -304,12 +299,6 @@ public class ModPackets {
                 .consumerMainThread(S2COpenRegisterClanScreenPacket::handle)
                 .add();
 
-        net.messageBuilder(S2CManageClanPacket.class, 42, NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(S2CManageClanPacket::decode)
-                .encoder(S2CManageClanPacket::encode)
-                .consumerMainThread(S2CManageClanPacket::handle)
-                .add();
-
         net.messageBuilder(CtSManageClanMemberPacket.class, 43, NetworkDirection.PLAY_TO_SERVER)
                 .decoder(CtSManageClanMemberPacket::decode)
                 .encoder(CtSManageClanMemberPacket::encode)
@@ -320,12 +309,6 @@ public class ModPackets {
                 .decoder(CtSRegisterLogPacket::decode)
                 .encoder(CtSRegisterLogPacket::encode)
                 .consumerMainThread(CtSRegisterLogPacket::handle)
-                .add();
-
-        net.messageBuilder(CtSRequestManageScreenPacket.class, 45, NetworkDirection.PLAY_TO_SERVER)
-                .decoder(CtSRequestManageScreenPacket::decode)
-                .encoder(CtSRequestManageScreenPacket::encode)
-                .consumerMainThread(CtSRequestManageScreenPacket::handle)
                 .add();
 
         net.messageBuilder(SavePlayerGeneticsPacket.class, 46, NetworkDirection.PLAY_TO_SERVER)
@@ -540,6 +523,61 @@ public class ModPackets {
                 .consumerMainThread(SendDialoguePacket::handle)
                 .add();
 
+        net.messageBuilder(S2CClanPackagePacket.class, 81, NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(S2CClanPackagePacket::decode)
+                .encoder(S2CClanPackagePacket::encode)
+                .consumerMainThread(S2CClanPackagePacket::handle)
+                .add();
+
+
+
+        net.messageBuilder(ManageJoinRequestPacket.class, 82, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ManageJoinRequestPacket::decode)
+                .encoder(ManageJoinRequestPacket::encode)
+                .consumerMainThread(ManageJoinRequestPacket::handle)
+                .add();
+
+        net.messageBuilder(RequestClanJoinPacket.class, 83, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(RequestClanJoinPacket::decode)
+                .encoder(RequestClanJoinPacket::encode)
+                .consumerMainThread(RequestClanJoinPacket::handle)
+                .add();
+
+        net.messageBuilder(DisplayClanMenuMessage.class, 84, NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(DisplayClanMenuMessage::new)
+                .encoder(DisplayClanMenuMessage::toBytes)
+                .consumerMainThread(DisplayClanMenuMessage::handle)
+                .add();
+
+        net.messageBuilder(UpdateClanEntryPacket.class, 85, NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(UpdateClanEntryPacket::new)
+                .encoder(UpdateClanEntryPacket::toBytes)
+                .consumerMainThread(UpdateClanEntryPacket::handle)
+                .add();
+
+        net.messageBuilder(ManageClanPacket.class, 86, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ManageClanPacket::decode)
+                .encoder(ManageClanPacket::encode)
+                .consumerMainThread(ManageClanPacket::handle)
+                .add();
+
+        net.messageBuilder(CtSRenameTerritoryChunk.class, 87, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(CtSRenameTerritoryChunk::decode)
+                .encoder(CtSRenameTerritoryChunk::encode)
+                .consumerMainThread(CtSRenameTerritoryChunk::handle)
+                .add();
+
+        net.messageBuilder(SendBubbleMessagePacket.class, 88, NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SendBubbleMessagePacket::new)
+                .encoder(SendBubbleMessagePacket::toBytes)
+                .consumerMainThread(SendBubbleMessagePacket::handle)
+                .add();
+
+        net.messageBuilder(CtSLaunchMovePacket.class, 89, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(CtSLaunchMovePacket::decode)
+                .encoder(CtSLaunchMovePacket::encode)
+                .consumerMainThread(CtSLaunchMovePacket::handle)
+                .add();
 
     }
 

@@ -1,0 +1,24 @@
+{
+
+
+  "name": "- Травы путника",
+  "icon": "warriorcats_events:traveling_herbs",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Пакет трав, включающий кислый щавель, кровохлёбку, маргаритку, цветок ромашки и обёрнутый листьями щавеля. Этот набор можно съесть прямо перед долгим путешествием. Его можно приготовить с помощью камня трав.",
+      "title": "Травы путника"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/traveling_herbs.png"
+      ],
+      "title": "Травы путника"
+    }
+
+  ]
+
+
+}

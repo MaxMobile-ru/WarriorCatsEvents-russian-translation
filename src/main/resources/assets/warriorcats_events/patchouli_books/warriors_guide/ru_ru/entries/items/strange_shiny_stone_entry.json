@@ -1,0 +1,22 @@
+{
+
+
+  "name": "- Загадочный блест. камень",
+  "icon": "warriorcats_events:strange_shiny_stone",
+  "category": "warriorcats_events:items_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/items/strange_shiny_stone.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Это особый загадочный камень, который можно получить крайне необычным способом. $(br2)Как вы знаете, в этом мире существует много разных ценных камней! Ключ к получению этого камня заключается в том, чтобы аккуратно бросить алмаз и изумруд под покровом ночи один на другой. Результатом будет один из этих уникальных камней!$(br)",
+      "title": "Загадочный блестящий камень"
+    }
+  ]
+
+
+}

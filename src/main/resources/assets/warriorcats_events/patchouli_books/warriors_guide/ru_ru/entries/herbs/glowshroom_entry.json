@@ -1,0 +1,24 @@
+{
+
+
+  "name": "- Светящиеся грибы",
+  "icon": "warriorcats_events:glowshroom",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Светящиеся грибы, на самом деле, не являются целебными травами, но их всё ещё можно назвать полезным растением. Светящиеся грибы каким-то образом излучают свет! Мы часто их используем для освещения лагеря, а вы бы стали?",
+      "title": "Светящиеся грибы"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/glowshroom.png"
+      ],
+      "title": "Светящиеся грибы"
+    }
+
+  ]
+
+
+}

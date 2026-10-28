@@ -1,0 +1,21 @@
+{
+
+
+  "name": "- Когти",
+  "icon": "warriorcats_events:claws",
+  "category": "warriorcats_events:features_category",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "warriorcats_events:claws",
+      "text": "$(8)Со временем когти тупятся. $(br2)Вы можете заточить свои когти, нажав ПКМ на блоке бревна, это восстановит их урон. $(br2)Вы также можете использовать когти в качестве щита, чтобы заблокировать атаку, для это удерживаете ПКМ. Почти так же, как если бы вы использовали обычный щит.$(br)",
+      "title": "Использование когтей"
+    },
+    {
+      "type": "patchouli:empty",
+      "draw_filler": false
+    }
+  ]
+
+
+}

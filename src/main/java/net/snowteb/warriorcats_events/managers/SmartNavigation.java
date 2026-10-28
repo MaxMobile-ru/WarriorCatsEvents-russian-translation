@@ -44,7 +44,7 @@
 //        data.worldPaths.put(id, node);
 //    }
 //
-//    public static void tick(ServerLevel level, ServerPlayer player) {
+//    public static void tickkkk(ServerLevel level, ServerPlayer player) {
 //        if (level.dimension() != Level.OVERWORLD) return;
 //
 //        BlockPos location = player.blockPosition();

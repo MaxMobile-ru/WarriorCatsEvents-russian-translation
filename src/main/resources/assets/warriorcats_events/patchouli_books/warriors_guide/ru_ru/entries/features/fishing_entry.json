@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Рыбалка",
+  "icon": "minecraft:cod",
+  "category": "warriorcats_events:features_category",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "warriorcats_events:claws",
+      "text": "$(8)Систему рыбалки можно использовать с самого начала игры.$(br2)Чтобы начать рыбалку, нужно нажать Shift + ПКМ, смотря на водоём или океан и выбрав предмет когтей. $(br2)Вы не сможете рыбачить в маленьких лужах или неглубоких водоёмах, так что если собрались рыбачить, то выбирайте хороший водоём или океан.$(br)",
+      "title": "Рыбалка"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/features/fishing_system1.png",
+        "warriorcats_events:textures/book/features/fishing_system2.png"
+      ],
+      "text": "$(8)Рыбалка всегда поможет вам найти еду, где бы вы ни были!"
+    }
+  ]
+
+
+}

@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Цветок ромашки",
+  "icon": "warriorcats_events:chamomile",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Цветки ромашки можно получить из стеблей ромашки. Эта трава укрепляет сердце и успокаивает разум. Цветок ромашки также используется как трава путника.",
+      "title": "Цветок ромашки"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/chamomile_stage3.png",
+        "warriorcats_events:textures/book/herbs/chamomile.png"
+      ],
+      "title": "Цветок ромашки"
+    }
+
+  ]
+
+
+}

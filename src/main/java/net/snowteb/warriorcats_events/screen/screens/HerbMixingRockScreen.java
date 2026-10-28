@@ -12,22 +12,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.block.custom.HerbMixingRockBlock;
-import net.snowteb.warriorcats_events.block.entity.HerbMixingRockBlockEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.recipes.HerbsRecipe;
 import net.snowteb.warriorcats_events.recipes.WCERecipes;
 import net.snowteb.warriorcats_events.screen.menus.HerbMixingMenu;
-import net.snowteb.warriorcats_events.screen.menus.StoneCleftMenu;
 import net.snowteb.warriorcats_events.screen.screens.createmorph.FancySimpleButton;
 import net.snowteb.warriorcats_events.screen.screens.createmorph.FancyStringWidget;
 import net.snowteb.warriorcats_events.screen.screens.createmorph.SubRenderable;
 import net.snowteb.warriorcats_events.screen.widgets.FancyHerbsRecipeScrollList;
 
 import java.util.List;
-import java.util.Optional;
 
 public class HerbMixingRockScreen extends AbstractContainerScreen<HerbMixingMenu> {
     private static final ResourceLocation TEXTURE =
@@ -154,7 +149,7 @@ public class HerbMixingRockScreen extends AbstractContainerScreen<HerbMixingMenu
 
         for (Renderable renderable : this.renderables) {
             if (renderable instanceof SubRenderable sub) {
-                sub.tick();
+                sub.tickkkk();
             }
         }
     }

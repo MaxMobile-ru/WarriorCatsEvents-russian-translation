@@ -1,0 +1,21 @@
+{
+  "name": "- Следы",
+  "icon": "minecraft:bone",
+  "category": "warriorcats_events:features_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(8)Каждое существо оставляет следы. Чтобы увидеть их, вам нужно находиться под эффектом Острого чутья. Чтобы получить эффект, используйте способность формы, предусмотренную модом Woodwalkers.$(br)",
+      "title": "Следы"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/features/footprints.png"
+      ],
+      "text": "$(8)Следы исчезают спустя время"
+    }
+  ]
+
+
+}

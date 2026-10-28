@@ -1,0 +1,31 @@
+{
+  "name": "- Озноб",
+  "icon": "warriorcats_events:poppy_seeds",
+  "category": "warriorcats_events:diseases_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Озноб может появиться у кота по самым разным причинам... Озноб обычно ассоциируется с очень низкой температурой тела, но в действительности причинами озноба также могут быть сильные ранения и другие состояния.$(br)",
+      "title": "Озноб"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "warriorcats_events:feverfew_leaves",
+      "title": "Озноб",
+      "text": "Озноб можно убрать с помощью Пижмы, эта трава прекрасно помогает с регулированием температуры тела.$(br)"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "warriorcats_events:poppy_seeds",
+      "title": "Озноб",
+      "text": "В состоянии шока у котов также может появиться озноб, Семена мака тоже могут помочь успокоить котов и убрать озноб.$(br)"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "warriorcats_events:juniper_berries",
+      "title": "Озноб",
+      "text": "Такая универсальная трава, как Можжевельник, тоже может помочь справиться с ознобом.$(br)"
+    }
+  ]
+
+}

@@ -1,0 +1,23 @@
+{
+
+
+  "name": "- Древний посох",
+  "icon": "warriorcats_events:ancient_stick",
+  "category": "warriorcats_events:items_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/items/ancient_stick.png"
+      ]
+    },
+    {
+      "type": "patchouli:crafting",
+      "text": "Это очень редкий и загадочный посох, покрытый следами когтей, которые выглядят так, будто коты оставили эти отметины много лет назад. $(br2)Коты склонны уважать обладателя посоха и подчиняться ему, кем бы тот ни был.$(br)",
+      "title": "Древний посох",
+      "recipe": "warriorcats_events:ancient_stick"
+    }
+  ]
+
+
+}

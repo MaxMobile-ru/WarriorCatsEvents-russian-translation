@@ -1,0 +1,22 @@
+{
+
+
+  "name": "- Когти",
+  "icon": "warriorcats_events:claws",
+  "category": "warriorcats_events:skills_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/skills/skill_damage.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Наточив свои когти с помощью деревянных брёвен и шкур поверженных врагов, вы заметите, что они стали острее! Чем острее когти, тем больше урона вы наносите в сражениях и тем более грозным и пугающим становитесь вы для врагов.",
+      "title": "Когти"
+    }
+  ]
+
+
+}

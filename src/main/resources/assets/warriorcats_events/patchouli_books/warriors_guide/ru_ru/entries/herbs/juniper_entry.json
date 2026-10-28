@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Можжевельник",
+  "icon": "warriorcats_events:juniper_berries",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Ягоды можжевельника можно получить с кустов можжевельника. Эти синие ягоды можно использовать для лечения множества разных состояний; например: кашель, шок и многое другое.",
+      "title": "Можжевельник"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/juniper_stage3.png",
+        "warriorcats_events:textures/book/herbs/juniper_berries.png"
+      ],
+      "title": "Можжевельник"
+    }
+
+  ]
+
+
+}

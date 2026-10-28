@@ -1,11 +1,9 @@
 package net.snowteb.warriorcats_events.managers;
 
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
 
 /** Sequences by Klyonstar
  * This class allows to program sequences to run. Includes wait ticks,
@@ -23,23 +21,39 @@ import java.util.List;
 
 public class SequenceManager {
 
-    private static final List<Sequence> active = new ArrayList<>();
+    private static final class Side {
+        final List<Sequence> active = new ArrayList<>();
+        final List<Sequence> pending = new ArrayList<>();
 
-    public static void add(Sequence seq) {
-        active.add(seq);
+        void tick(Level level) {
+            active.addAll(pending);
+            pending.clear();
+            active.removeIf(seq -> {
+                if (seq.getLevel() != level) return false;
+                seq.tick(level);
+                return seq.isFinished();
+            });
+        }
+
+        void clear(Level level) {
+            active.removeIf(s -> s.getLevel() == level);
+            pending.removeIf(s -> s.getLevel() == level);
+        }
     }
 
-    public static void tick(ServerLevel level) {
-        Iterator<Sequence> it = active.iterator();
+    private static final Side SERVER = new Side();
+    private static final Side CLIENT = new Side();
 
-        while (it.hasNext()) {
-            Sequence seq = it.next();
+    public static void add(Sequence seq) {
+        (seq.getLevel().isClientSide() ? CLIENT : SERVER).pending.add(seq);
+    }
 
-            seq.tick(level);
+    public static void tick(Level level) {
+        (level.isClientSide() ? CLIENT : SERVER).tick(level);
+    }
 
-            if (seq.isFinished()) {
-                it.remove();
-            }
-        }
+    public static void clearLevel(Level level) {
+        SERVER.clear(level);
+        CLIENT.clear(level);
     }
 }

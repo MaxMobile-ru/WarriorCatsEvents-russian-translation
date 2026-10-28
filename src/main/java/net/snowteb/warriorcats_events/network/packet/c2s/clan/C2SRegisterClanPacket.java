@@ -8,8 +8,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clan.ClanObjects;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.s2c.clan.S2CSyncClanDataPacket;
@@ -86,11 +87,11 @@ public class C2SRegisterClanPacket {
                     ClanData.logFormattedPlayerName(player),
                     Component.literal(clan.name).withStyle(Style.EMPTY.withColor(clan.color)));
 
-            data.registerLog(level, clan.clanUUID, clanCreatedLog);
+            data.registerLog(level, clan.clanUUID, clanCreatedLog, ClanObjects.ClanLogEntry.Type.CUSTOM);
 
             level.getAllEntities().forEach(entity -> {
                 if (entity instanceof WCatEntity cat) {
-                    if (cat.isOwnedBy(player)) {
+                    if (cat.isOwnedBy(player) && cat.getRank() != WCatEntity.Rank.NONE) {
                         cat.setClanUUID(clan.clanUUID);
                         data.addClanCat(clan, cat);
 
@@ -100,7 +101,7 @@ public class C2SRegisterClanPacket {
 
 
                         if (cat.level() instanceof ServerLevel serverLevel) {
-                            data.registerLog(serverLevel, clan.clanUUID, catJoinedClanLog);
+                            data.registerLog(serverLevel, clan.clanUUID, catJoinedClanLog, ClanObjects.ClanLogEntry.Type.OTHERS);
                         }
                     }
                 }

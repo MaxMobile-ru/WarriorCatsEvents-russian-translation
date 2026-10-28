@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Мак",
+  "icon": "minecraft:poppy",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Семена мака можно получить из цветков мака. С помощью камня трав вы можете извлечь семена, которые способны успокоить котов и помочь им со сном.",
+      "title": "Мак"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/poppy.png",
+        "warriorcats_events:textures/book/herbs/poppy_seeds.png"
+      ],
+      "title": "Мак"
+    }
+
+  ]
+
+
+}

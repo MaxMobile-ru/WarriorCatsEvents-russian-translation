@@ -55,7 +55,7 @@ public class AddSubRenderables {
                         screen.genetics.bobtail = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setBobtail : CreateMorphConstants.setFulltail;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.bobtailSwitch, yPos);
 
@@ -65,7 +65,7 @@ public class AddSubRenderables {
                         screen.genetics.chestFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.chestFurSwitch, yPos);
 
@@ -75,7 +75,7 @@ public class AddSubRenderables {
                         screen.genetics.bellyFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.bellyFurSwitch, yPos);
 
@@ -85,7 +85,7 @@ public class AddSubRenderables {
                         screen.genetics.legsFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.legsFurSwitch, yPos);
 
@@ -95,7 +95,7 @@ public class AddSubRenderables {
                         screen.genetics.headFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.headFurSwitch, yPos);
 
@@ -105,7 +105,7 @@ public class AddSubRenderables {
                         screen.genetics.cheekFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.cheekFurSwitch, yPos);
 
@@ -115,7 +115,7 @@ public class AddSubRenderables {
                         screen.genetics.backFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.backFurSwitch, yPos);
 
@@ -125,7 +125,7 @@ public class AddSubRenderables {
                         screen.genetics.tailFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.tailFurSwitch, yPos);
 
@@ -220,7 +220,7 @@ public class AddSubRenderables {
                                     Component.translatable("screen.message.orange_pattern_available"),
                                     false, 100);
                         }
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.orangeSwitch, yPos);
 
@@ -240,7 +240,7 @@ public class AddSubRenderables {
                     screen.removeSubRenderable(w.tortieVariantsText, screen.otherListHeight);
                 }
                 screen.recalculateListHeight();
-            }, 0xFFE6D1A5, scale);
+            }, scale);
 
             yPos = screen.addSubRenderable(w.tortieSwitch, yPos);
 
@@ -504,7 +504,7 @@ public class AddSubRenderables {
                     b -> {
                         screen.genetics.dilute = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setDilute : CreateMorphConstants.setNonDilute;
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(diluteSwitch, yPos);
 
@@ -576,7 +576,7 @@ public class AddSubRenderables {
                         }
 
                         screen.recalculateListHeight();
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.agoutiSwitch, yPos);
 
@@ -717,7 +717,7 @@ public class AddSubRenderables {
                         }
 
                         screen.recalculateListHeight();
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.silverSwitch, yPos);
 
@@ -839,7 +839,7 @@ public class AddSubRenderables {
                         }
 
                         screen.recalculateListHeight();
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.heterochromiaSwitch, yPos);
 
@@ -1067,7 +1067,7 @@ public class AddSubRenderables {
                         }
 
                         screen.recalculateListHeight();
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.chimeraSwitch, yPos);
 
@@ -1137,7 +1137,7 @@ public class AddSubRenderables {
                         screen.genetics.bobtail = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setBobtail : CreateMorphConstants.setFulltail;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.bobtailSwitch, yPos);
 
@@ -1147,7 +1147,7 @@ public class AddSubRenderables {
                         screen.genetics.chestFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.chestFurSwitch, yPos);
 
@@ -1157,7 +1157,7 @@ public class AddSubRenderables {
                         screen.genetics.bellyFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.bellyFurSwitch, yPos);
 
@@ -1167,7 +1167,7 @@ public class AddSubRenderables {
                         screen.genetics.legsFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.legsFurSwitch, yPos);
 
@@ -1177,7 +1177,7 @@ public class AddSubRenderables {
                         screen.genetics.headFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.headFurSwitch, yPos);
 
@@ -1187,7 +1187,7 @@ public class AddSubRenderables {
                         screen.genetics.cheekFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.cheekFurSwitch, yPos);
 
@@ -1197,7 +1197,7 @@ public class AddSubRenderables {
                         screen.genetics.backFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.backFurSwitch, yPos);
 
@@ -1207,7 +1207,7 @@ public class AddSubRenderables {
                         screen.genetics.tailFur = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setLongFur : CreateMorphConstants.setShortFur;
 
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.tailFurSwitch, yPos);
 
@@ -1501,7 +1501,7 @@ public class AddSubRenderables {
                             w.orangeList.setSelected(w.orangeList.getEntryByKey(String.valueOf(screen.chimeraVariants.orangeVar)));
                             screen.recalculateListHeight();
                         }
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.orangeSwitch, yPos);
 
@@ -1518,7 +1518,7 @@ public class AddSubRenderables {
                     screen.removeSubRenderable(w.tortieVariantsText, screen.otherListHeight);
                 }
                 screen.recalculateListHeight();
-            }, 0xFFE6D1A5, scale);
+            }, scale);
 
             yPos = screen.addSubRenderable(w.tortieSwitch, yPos);
 
@@ -1783,7 +1783,7 @@ public class AddSubRenderables {
                     b -> {
                         screen.chimeraGenetics.dilute = ((FancySwitchButton) b).getValue()
                                 ? CreateMorphConstants.setDilute : CreateMorphConstants.setNonDilute;
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(diluteSwitch, yPos);
 
@@ -1855,7 +1855,7 @@ public class AddSubRenderables {
                         }
 
                         screen.recalculateListHeight();
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.agoutiSwitch, yPos);
 
@@ -1996,7 +1996,7 @@ public class AddSubRenderables {
                         }
 
                         screen.recalculateListHeight();
-                    }, 0xFFE6D1A5, scale);
+                    }, scale);
 
             yPos = screen.addSubRenderable(w.silverSwitch, yPos);
 

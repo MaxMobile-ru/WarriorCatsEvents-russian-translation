@@ -1,0 +1,23 @@
+{
+
+
+  "name": "- Когти",
+  "icon": "warriorcats_events:claws",
+  "category": "warriorcats_events:items_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/items/claws.png"
+      ]
+    },
+    {
+      "type": "patchouli:crafting",
+      "text": "Это ваши когти! Они острые, так ведь? Ваши когти можно использовать для многих целей. Начиная с самозащиты и заканчивая даже получением некоторых вещей без того, чтобы их ломать! Когти - это самое ценное, что есть у вас. Не забывайте их точить о кору деревьев, когда есть возможность!",
+      "title": "Когти",
+      "recipe": "warriorcats_events:claws"
+    }
+  ]
+
+
+}

@@ -22,8 +22,11 @@ import net.snowteb.warriorcats_events.block.ModBlocks;
 import net.snowteb.warriorcats_events.block.custom.TreeStumpBlock;
 import net.snowteb.warriorcats_events.block.entity.TreeStumpBlockEntity;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clan.ClanObjects;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.network.ModPackets;
+import net.snowteb.warriorcats_events.network.packet.s2c.clan.DisplayClanMenuMessage;
 import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
 
 import java.util.UUID;
@@ -37,7 +40,7 @@ public class CtSClaimTerritory {
     }
 
     public static CtSClaimTerritory decode(FriendlyByteBuf buf) {
-        String name = buf.readUtf();
+        String name = buf.readUtf(30);
         return new CtSClaimTerritory(name);
     }
 
@@ -55,16 +58,14 @@ public class CtSClaimTerritory {
             UUID uuid = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
                     .map(WCEPlayerData::getCurrentClanUUID).orElse(ClanData.EMPTY_UUID);
 
-            String morphName = player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA)
-                    .map(WCEPlayerData::getMorphName).orElse(player.getGameProfile().getName());
 
             if (player.level().dimension() != Level.OVERWORLD) {
-                player.sendSystemMessage(Component.translatable("territory.not_available_in_dimensions").withStyle(ChatFormatting.RED));
+                ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("territory.not_available_in_dimensions"),true), player);
                 return;
             }
 
             if (uuid.equals(ClanData.EMPTY_UUID)) {
-                player.sendSystemMessage(Component.translatable("clan.player_not_clan").withStyle(ChatFormatting.RED));
+                ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.player_not_clan"),true), player);
                 return;
             }
 
@@ -78,12 +79,12 @@ public class CtSClaimTerritory {
             ChunkPos currentPosition = player.chunkPosition();
 
             if (!data.canManage(clan, player.getUUID())) {
-                player.sendSystemMessage(Component.translatable("clan.no_permissions").withStyle(ChatFormatting.RED));
+                ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.no_permissions"),true), player);
                 return;
             }
 
             if (clan.claimedTerritory.containsKey(currentPosition)) {
-                player.sendSystemMessage(Component.translatable("clan.territory_already_claimed").withStyle(ChatFormatting.RED));
+                ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("clan.territory_already_claimed"),true), player);
                 return;
             }
 
@@ -93,12 +94,12 @@ public class CtSClaimTerritory {
                     || overworldLevel.getBlockState(player.blockPosition()).is(Blocks.GRASS)
             )
                     || !overworldLevel.getBlockState(player.blockPosition().below()).isSolid()) {
-                player.sendSystemMessage(Component.translatable("territory.invalid_position").withStyle(ChatFormatting.RED));
+                ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("territory.invalid_position"),true), player);
                 return;
             }
 
             if (clan.claimedTerritory.size() >= WCEServerConfig.SERVER.MAX_TERRITORY_SIZE.get()) {
-                player.sendSystemMessage(Component.translatable("territory.max_territory").withStyle(ChatFormatting.RED));
+                ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("territory.max_territory"),true), player);
                 return;
             }
 
@@ -118,12 +119,12 @@ public class CtSClaimTerritory {
 
                 boolean success = data.claimChunk(clan.clanUUID, currentPosition, packet.name);
                 if (success) {
-                    data.registerLog(overworldLevel, clan.clanUUID, log);
+                    data.registerLog(overworldLevel, clan.clanUUID, log, ClanObjects.ClanLogEntry.Type.OTHERS);
                     clan.coreTerritory = currentPosition;
-                    player.sendSystemMessage(Component.translatable("territory.core_territory_claimed"));
+                    ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("territory.core_territory_claimed"),false), player);
                     handled = true;
                 } else {
-                    player.sendSystemMessage(Component.translatable("territory.territory_already_claimed").withStyle(ChatFormatting.RED));
+                    ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("territory.territory_already_claimed"),true), player);
                     player.giveExperiencePoints(450);
                 }
 
@@ -159,16 +160,16 @@ public class CtSClaimTerritory {
 
                     boolean result = data.claimChunk(clan.clanUUID, currentPosition, packet.name);
                     if (result) {
-                        data.registerLog(overworldLevel, clan.clanUUID, log);
-                        player.sendSystemMessage(Component.translatable("territory.new_territory_succesfully_claimed"));
+                        data.registerLog(overworldLevel, clan.clanUUID, log, ClanObjects.ClanLogEntry.Type.OTHERS);
+                        ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("territory.new_territory_succesfully_claimed"),false), player);
                         handled = true;
                     } else {
-                        player.sendSystemMessage(Component.translatable("territory.territory_already_claimed").withStyle(ChatFormatting.RED));
+                        ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("territory.territory_already_claimed"),true), player);
                         player.giveExperiencePoints(850);
                     }
 
                 } else {
-                    player.sendSystemMessage(Component.translatable("territory.territory_not_connected").withStyle(ChatFormatting.RED));
+                    ModPackets.sendToPlayer(new DisplayClanMenuMessage(Component.translatable("territory.territory_not_connected"),true), player);
                     player.giveExperiencePoints(850);
                 }
             }

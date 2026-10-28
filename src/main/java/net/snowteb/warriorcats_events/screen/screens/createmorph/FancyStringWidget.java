@@ -26,7 +26,9 @@ public class FancyStringWidget implements Renderable, SubRenderable, GuiEventLis
     private final boolean centered;
 
     private final int originalY0;
+    private final int originalX0;
     private final int originalY1;
+    private final int originalX1;
 
     private final int hoverAreaYExtension;
 
@@ -42,6 +44,8 @@ public class FancyStringWidget implements Renderable, SubRenderable, GuiEventLis
 
         this.originalY0 = y0;
         this.originalY1 = y1;
+        this.originalX0 = x0;
+        this.originalX1 = x1;
 
         this.hoverAreaYExtension = hoverAreaYExtension;
     }
@@ -138,6 +142,22 @@ public class FancyStringWidget implements Renderable, SubRenderable, GuiEventLis
 
     @Override
     public void setClickableIn(BiPredicate<Double, Double> predicate) {
+    }
+
+    @Override
+    public void adjustXPos(int xOffset) {
+        this.x0 = originalX0 + xOffset;
+        this.x1 = originalX1 + xOffset;
+    }
+
+    @Override
+    public int getOriginalXPos0() {
+        return originalX0;
+    }
+
+    @Override
+    public int getOriginalXPos1() {
+        return originalX1;
     }
 
     @Override

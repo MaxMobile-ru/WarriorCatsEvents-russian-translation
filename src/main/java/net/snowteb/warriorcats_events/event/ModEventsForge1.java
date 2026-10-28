@@ -22,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -32,19 +33,20 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clan.ClanObjects;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.commands.*;
 import net.snowteb.warriorcats_events.diseases.kinds.BrokenPaw;
 import net.snowteb.warriorcats_events.diseases.DiseaseTypes;
 import net.snowteb.warriorcats_events.diseases.Diseaseable;
-import net.snowteb.warriorcats_events.entity.custom.EagleEntity;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.item.ModItems;
@@ -135,13 +137,17 @@ public class ModEventsForge1 {
 
 
     @SubscribeEvent
+    public static void onLevelUnload(LevelEvent.Unload event) {
+        SequenceManager.clearLevel((Level) event.getLevel());
+    }
+
+    @SubscribeEvent
     public static void worldTick(TickEvent.LevelTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
-        if (event.level.isClientSide) return;
 
-        if (event.level instanceof ServerLevel serverLevel) {
-            SequenceManager.tick(serverLevel);
-        }
+        SequenceManager.tick(event.level);
+
+        if (event.level.isClientSide) return;
 
         boolean isNightTime = event.level.isNight();
 
@@ -294,9 +300,7 @@ public class ModEventsForge1 {
                         PlayerSkill.reviveAttributes(player, newStore);
 
                         ModPackets.sendToPlayer(
-                                new SyncSkillDataPacket(newStore.getSpeedLevel(), newStore.getHPLevel(),
-                                        newStore.getDMGLevel(), newStore.getJumpLevel(), newStore.getArmorLevel()
-                                , newStore.isClimbUnlocked()),
+                                new SyncSkillDataPacket((PlayerSkill) newStore),
                                 player
                         );
                     }
@@ -388,7 +392,7 @@ public class ModEventsForge1 {
             event.player.getCapability(PlayerThirstProvider.PLAYER_THIRST).ifPresent(thirst -> {
                 if (WCEServerConfig.SERVER.THIRST.get() && PlayerShape.getCurrentShape(player) instanceof Animal) {
                     /**
-                    * Every tick, a 0.000357 chance of decreasing thirst.
+                    * Every tickkkk, a 0.000357 chance of decreasing thirst.
                     * Which means, on average every 2-3 minutes
                     * Then sync it.
                     */
@@ -580,6 +584,8 @@ public class ModEventsForge1 {
         if(!event.getLevel().isClientSide()) {
             if(event.getEntity() instanceof ServerPlayer player) {
 
+                ClanObjects.JoinRequest.onPlayerJoinLevel((ServerLevel) event.getLevel(), player);
+
                 {
                     boolean skillTree = WCEServerConfig.SERVER.SKILL_TREE_SERVER.get();
                     player.getCapability(PlayerSkillProvider.SKILL_DATA).ifPresent(skillData -> {
@@ -594,8 +600,7 @@ public class ModEventsForge1 {
                 }
 
                 player.getCapability(PlayerSkillProvider.SKILL_DATA).ifPresent(cap -> {
-                   ModPackets.sendToPlayer(new SyncSkillDataPacket(cap.getSpeedLevel(), cap.getHPLevel(),
-                           cap.getDMGLevel(), cap.getJumpLevel(), cap.getArmorLevel(), cap.isClimbUnlocked()), player);
+                   ModPackets.sendToPlayer(new SyncSkillDataPacket((PlayerSkill) cap), player);
                 });
 
                 player.getCapability(PlayerThirstProvider.PLAYER_THIRST).ifPresent(thirst -> {
@@ -722,7 +727,7 @@ public class ModEventsForge1 {
             player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA).ifPresent(cap -> {
                 ModPackets.sendToPlayer(new S2CSyncClanDataPacket(cap), sPlayer);
 
-                clanData.playerMorphNames.put(player.getUUID(), cap.getMorphName());
+                clanData.getPlayer(player).setMorphName(cap.getMorphName());
                 WCGenetics.PackedGeneticData morphData =
                         new WCGenetics.PackedGeneticData(cap.getPlayerGenetics(),
                                 cap.getPlayerGeneticalVariants(),
@@ -730,7 +735,7 @@ public class ModEventsForge1 {
                                 cap.getPlayerChimeraVariants(),
                                 cap.isOnGeneticalSkin(), cap.getVariantData());
 
-                clanData.playerMorphData.put(player.getUUID(), morphData);
+                clanData.getPlayer(player).setGenetics(morphData);
 
                 clanData.setDirty();
             });

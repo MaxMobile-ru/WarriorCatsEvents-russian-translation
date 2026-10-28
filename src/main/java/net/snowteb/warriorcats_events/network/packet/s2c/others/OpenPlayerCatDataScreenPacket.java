@@ -2,7 +2,7 @@ package net.snowteb.warriorcats_events.network.packet.s2c.others;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
 import net.snowteb.warriorcats_events.client.ClientPacketHandles;
 
 import java.util.UUID;

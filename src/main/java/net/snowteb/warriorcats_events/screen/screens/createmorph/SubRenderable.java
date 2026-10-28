@@ -11,11 +11,15 @@ public interface SubRenderable {
 
     void setClickableIn(BiPredicate<Double, Double> predicate);
 
-    default void tick(){}
+    default void tickkkk(){}
 
     default int getWidgetHeight() {
         return getOriginalYPos1() - getOriginalYPos0();
     }
+
+    void adjustXPos(int xOffset);
+    int getOriginalXPos0();
+    int getOriginalXPos1();
 
     @Nullable
     BiPredicate<Double, Double> isClickableIn();

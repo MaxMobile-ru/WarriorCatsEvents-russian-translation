@@ -1,8 +1,10 @@
 package net.snowteb.warriorcats_events.network.packet.s2c.skilltree;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.skills.ISkillData;
+import net.snowteb.warriorcats_events.skills.PlayerSkill;
 import net.snowteb.warriorcats_events.skills.PlayerSkillProvider;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -12,38 +14,23 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 
 public class SyncSkillDataPacket {
-    private final int speedLevel;
-    private final int hpLevel;
-    private final int dmgLevel;
-    private final int jumpLevel;
-    private final int armorLevel;
-    private final boolean climbUnlocked;
+    private final PlayerSkill playerSkill;
 
-    public SyncSkillDataPacket(int speedLevel, int hpLevel, int dmgLevel, int jumpLevel, int armorLevel, boolean climbUnlocked) {
-        this.speedLevel = speedLevel;
-        this.hpLevel = hpLevel;
-        this.dmgLevel = dmgLevel;
-        this.jumpLevel = jumpLevel;
-        this.armorLevel = armorLevel;
-        this.climbUnlocked = climbUnlocked;
+    public SyncSkillDataPacket(PlayerSkill playerSkill) {
+        this.playerSkill = playerSkill;
     }
 
     public SyncSkillDataPacket(FriendlyByteBuf buf) {
-        this.speedLevel = buf.readInt();
-        this.hpLevel = buf.readInt();
-        this.dmgLevel = buf.readInt();
-        this.jumpLevel = buf.readInt();
-        this.armorLevel = buf.readInt();
-        this.climbUnlocked = buf.readBoolean();
+        CompoundTag tag = buf.readNbt();
+        PlayerSkill playerSkill = new PlayerSkill();
+        if (tag != null){
+            playerSkill.deserializeNBT(tag);
+        }
+        this.playerSkill = playerSkill;
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeInt(speedLevel);
-        buf.writeInt(hpLevel);
-        buf.writeInt(dmgLevel);
-        buf.writeInt(jumpLevel);
-        buf.writeInt(armorLevel);
-        buf.writeBoolean(climbUnlocked);
+        buf.writeNbt(playerSkill.serializeNBT());
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
@@ -54,17 +41,8 @@ public class SyncSkillDataPacket {
 
             LazyOptional<ISkillData> cap = player.getCapability(PlayerSkillProvider.SKILL_DATA);
             cap.ifPresent(data -> {
-                data.setSpeedLevel(speedLevel);
-                data.setHPLevel(hpLevel);
-                data.setDMGLevel(dmgLevel);
-                data.setJumpLevel(jumpLevel);
-                data.setArmorLevel(armorLevel);
-                data.setClimbUnlocked(climbUnlocked);
+                data.copyFrom(playerSkill);
             });
-
-
-
-
 
         });
         return true;

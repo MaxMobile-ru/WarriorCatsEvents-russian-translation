@@ -68,8 +68,7 @@ public class CtSUnlockClimbPacket {
                     player.giveExperiencePoints(-cost);
 
                     cap.setClimbUnlocked(true);
-                    ModPackets.sendToPlayer(new SyncSkillDataPacket(cap.getSpeedLevel(), cap.getHPLevel(),
-                            cap.getDMGLevel(), cap.getJumpLevel(), cap.getArmorLevel(), cap.isClimbUnlocked()), player);
+                    ModPackets.sendToPlayer(new SyncSkillDataPacket((PlayerSkill) cap), player);
 
                     MinecraftServer server = player.getServer();
                     if (server != null) {

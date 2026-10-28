@@ -14,15 +14,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.BiPredicate;
 
-/**
- * A custom button that allows to have a custom texture and other aesthetic settings.
- */
 public class FancySelectableSquareButton extends AbstractButton implements SubRenderable {
 
     private BiPredicate<Double, Double> isClickableIn;
 
     final int originalYPos0;
+    final int originalXPos0;
     final int originalYPos1;
+    final int originalXPos1;
 
     @Override
     public void adjustYPos(int yOffset) {
@@ -45,6 +44,21 @@ public class FancySelectableSquareButton extends AbstractButton implements SubRe
     }
 
     @Override
+    public void adjustXPos(int xOffset) {
+        this.setX(originalXPos0 + xOffset);
+    }
+
+    @Override
+    public int getOriginalXPos0() {
+        return originalXPos0;
+    }
+
+    @Override
+    public int getOriginalXPos1() {
+        return originalXPos1;
+    }
+
+    @Override
     public @Nullable BiPredicate<Double, Double> isClickableIn() {
         return isClickableIn;
     }
@@ -62,6 +76,8 @@ public class FancySelectableSquareButton extends AbstractButton implements SubRe
         super(x, y, size, size/2, Component.empty());
         this.originalYPos0 = y;
         this.originalYPos1 = originalYPos0 + height;
+        this.originalXPos0 = x;
+        this.originalXPos1 = originalXPos0 + width;
 
         this.onPress = onPress;
         this.color = color;

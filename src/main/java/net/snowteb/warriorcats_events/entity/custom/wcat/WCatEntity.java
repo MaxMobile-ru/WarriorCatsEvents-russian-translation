@@ -3,7 +3,6 @@ package net.snowteb.warriorcats_events.entity.custom.wcat;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +10,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -26,14 +24,11 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -42,63 +37,42 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PacketDistributor;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.block.ModBlocks;
-import net.snowteb.warriorcats_events.block.custom.LavenderPetalsBlock;
+import net.snowteb.warriorcats_events.battlemoves.BattleMoveType;
 import net.snowteb.warriorcats_events.block.custom.NestBlock;
-import net.snowteb.warriorcats_events.block.entity.FreshkillPileBlockEntity;
 import net.snowteb.warriorcats_events.block.entity.NestBlockEntity;
-import net.snowteb.warriorcats_events.block.entity.TreeStumpBlockEntity;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.client.LeapClientState;
+import net.snowteb.warriorcats_events.clan.ClanObjects;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.damagesources.WCEDamageTypes;
 import net.snowteb.warriorcats_events.diseases.*;
 import net.snowteb.warriorcats_events.diseases.kinds.BrokenPaw;
-import net.snowteb.warriorcats_events.effect.ModEffects;
 import net.snowteb.warriorcats_events.entity.ModEntities;
 import net.snowteb.warriorcats_events.entity.client.WCModel;
 import net.snowteb.warriorcats_events.entity.custom.*;
-import net.snowteb.warriorcats_events.event.ModEventsForge1;
 import net.snowteb.warriorcats_events.item.ModItems;
 import net.snowteb.warriorcats_events.managers.ClimbDataAccessor;
-import net.snowteb.warriorcats_events.network.ModPackets;
-import net.snowteb.warriorcats_events.network.packet.s2c.cats.OpenCatDataScreenPacket;
-import net.snowteb.warriorcats_events.network.packet.s2c.clan.S2CSyncClanDataPacket;
-import net.snowteb.warriorcats_events.network.packet.s2c.others.SyncDiseasesPacket;
 import net.snowteb.warriorcats_events.particles.WCEParticles;
-import net.snowteb.warriorcats_events.screen.menus.WCatMenu;
 import net.snowteb.warriorcats_events.sound.ModSounds;
-import net.snowteb.warriorcats_events.util.GeneticsForVariant;
 import net.snowteb.warriorcats_events.util.ModTags;
 import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
 import org.jetbrains.annotations.Nullable;
@@ -112,7 +86,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import tocraft.walkers.api.PlayerShape;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 import static net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity.Rank.*;
 
@@ -297,9 +270,6 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
     public void setAgeInMoons(float i) {
         this.entityData.set(AGE_SYNC, i);
     }
-
-    //    @Nullable
-//    private Vec3 leaderCallTarget;
 
 
     private static final EntityDataAccessor<Boolean> ATTACKING =
@@ -495,6 +465,12 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
     private static final EntityDataAccessor<Boolean> BROKEN_PAW =
             SynchedEntityData.defineId(WCatEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> WRAPED_PAW =
+            SynchedEntityData.defineId(WCatEntity.class, EntityDataSerializers.BOOLEAN);
+
+
+    public static final EntityDataAccessor<String> MOVE_ANIMATION_KEY =
+            SynchedEntityData.defineId(WCatEntity.class, EntityDataSerializers.STRING);
+    public static final EntityDataAccessor<Boolean> MOVE_ANIMATION_LOOPS =
             SynchedEntityData.defineId(WCatEntity.class, EntityDataSerializers.BOOLEAN);
 
     private int restingForTicks = 0;
@@ -1469,7 +1445,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
                         mateName.copy(),
                         thisName.copy());
 
-        this.registerClanLog(message);
+        this.registerClanLog(message, ClanObjects.ClanLogEntry.Type.OTHERS);
 
         if (Objects.equals(partner.getMate(), Component.literal("None"))) {
             partner.setMate(this.getCustomName());
@@ -1483,7 +1459,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
 
 
     /**
-     * Called every tick.
+     * Called every tickkkk.
      */
     @Override
     public void aiStep() {
@@ -1904,12 +1880,18 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
         this.writeDiseasesNBT(tag);
 
         this.embeddedAccessories().save(tag);
+
+
+
+        tag.putString("MoveAnimationKey", this.entityData.get(MOVE_ANIMATION_KEY));
+        tag.putBoolean("MoveAnimationLoops", this.entityData.get(MOVE_ANIMATION_LOOPS));
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
 
+        this.getGeneticsModule().loadGeneticsNBT(tag);
 
         if (tag.contains("Family")) {
             CompoundTag family = tag.getCompound("Family");
@@ -2069,9 +2051,6 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
             this.setClanUUID(ClanData.EMPTY_UUID);
         }
 
-
-        this.getGeneticsModule().loadGeneticsNBT(tag);
-
         if (tag.contains("StoredFatherGenetics")) {
 
             CompoundTag fatherTag = tag.getCompound("StoredFatherGenetics");
@@ -2120,6 +2099,14 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
         this.loadDiseasesNBT(tag);
 
         this.embeddedAccessories().load(tag);
+
+
+        if (tag.contains("MoveAnimationKey")) {
+            this.entityData.set(MOVE_ANIMATION_KEY, tag.getString("MoveAnimationKey"));
+        }
+        if (tag.contains("MoveAnimationLoops")) {
+            this.entityData.set(MOVE_ANIMATION_LOOPS, tag.getBoolean("MoveAnimationLoops"));
+        }
 
     }
 
@@ -2295,6 +2282,19 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
         }
 
         if (this.isAnImage()) return PlayState.STOP;
+
+
+        if (!this.getMoveAnimation().isEmpty() && !this.getPlayerBoundUuid().equals(ClanData.EMPTY_UUID)) {
+            Animation.LoopType type = this.getMoveAnimation().loops() ? Animation.LoopType.LOOP : Animation.LoopType.PLAY_ONCE;
+
+            tAnimationState.getController().setAnimation(RawAnimation.begin()
+                    .then(this.getMoveAnimation().animation(), type));
+            tAnimationState.getController().setAnimationSpeed(1f);
+
+            return PlayState.CONTINUE;
+        }
+
+
 
         LivingEntity cat = (LivingEntity) tAnimationState.getAnimatable();
         double speed = cat.getDeltaMovement().length();
@@ -2542,6 +2542,16 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
         return PlayState.CONTINUE;
     }
 
+    public BattleMoveType.MoveAnimation getMoveAnimation() {
+        return new BattleMoveType.MoveAnimation(this.entityData.get(MOVE_ANIMATION_KEY), this.entityData.get(MOVE_ANIMATION_LOOPS));
+    }
+
+    public void setMoveAnimation(BattleMoveType.MoveAnimation animation) {
+        this.entityData.set(MOVE_ANIMATION_KEY, animation.animation());
+        this.entityData.set(MOVE_ANIMATION_LOOPS, animation.loops());
+    }
+
+
 
     public void setIdlePose(int i) {
         this.entityData.set(IDLE_POSE, Math.min(i, WCGenetics.Constants.MAX_IDLE_POSES -1));
@@ -2701,7 +2711,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
                         (this.hasCustomName() ? this.getCustomName().copy() : Component.translatable("generic.a_she_cat")),
                         litterSize);
 
-        this.registerClanLog(message);
+        this.registerClanLog(message, ClanObjects.ClanLogEntry.Type.OTHERS);
 
 
         for (int i = 0; i < litterSize; i++) {
@@ -2757,7 +2767,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
 
                     /**
                      * This is so that kits born in the same litter dont have the same prefix when they are born.
-                     * Since all this can happen in the same tick, then they all might share the same name, that's why this exists.
+                     * Since all this can happen in the same tickkkk, then they all might share the same name, that's why this exists.
                      */
                     if (prefixSet[k].equals(lastPrefix)) {
                         k = (int) (kit.random.nextInt(prefixSet.length) / 1.5F);
@@ -2784,7 +2794,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
                             Component.empty());
 
                     owner.sendSystemMessage(messageKit);
-                    this.registerClanLog(messageKit);
+                    this.registerClanLog(messageKit, ClanObjects.ClanLogEntry.Type.OTHERS);
 
                     kit.rewardGeneticsAdvancements();
 
@@ -2799,7 +2809,6 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
 
                 kit.setHomePosition(this.getHomePosition());
                 kit.setClan(this.getClan());
-                kit.setClanUUID(this.getClanUUID());
 
                 LivingEntity father = this.getMateEntity();
 
@@ -2823,6 +2832,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
                     kit.setForbiddingFutureGensFromMatingPlayer(true);
                 }
 
+                kit.setClanUUID(this.getClanUUID());
 
                 server.addFreshEntity(kit);
             }
@@ -2869,7 +2879,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
             }
 
             this.updateClanCatData();
-            this.registerClanLog(message);
+            this.registerClanLog(message, ClanObjects.ClanLogEntry.Type.OTHERS);
 
 
             this.updateNest();
@@ -3010,6 +3020,9 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
 
         this.entityData.define(BROKEN_PAW, false);
         this.entityData.define(WRAPED_PAW, false);
+
+        this.entityData.define(MOVE_ANIMATION_KEY, "");
+        this.entityData.define(MOVE_ANIMATION_LOOPS, false);
 
         this.embeddedAccessories().defineSyncedData();
 
@@ -3450,7 +3463,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
         }
 
         this.updateClanCatData();
-        this.registerClanLog(message);
+        this.registerClanLog(message, ClanObjects.ClanLogEntry.Type.OTHERS);
 
 
         this.updateNest();
@@ -3770,18 +3783,29 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
         return super.isInvulnerableTo(source);
     }
 
-    public void registerClanLog(Component message) {
+    public void registerClanLog(Component message, ClanObjects.ClanLogEntry.Type type) {
 
         if (this.level() instanceof ServerLevel sLevel) {
             ClanData data = ClanData.get(sLevel);
             ClanData.Clan clan = data.getClan(this.getClanUUID());
 
             if (clan != null) {
-                data.registerLog(sLevel, clan.clanUUID, message);
+                data.registerLog(sLevel, clan.clanUUID, message, type);
                 data.setDirty();
             }
         }
 
+    }
+
+    public void disown() {
+        this.setTame(false);
+        this.setOwnerUUID(null);
+        this.setClanUUID(ClanData.EMPTY_UUID);
+        this.setClan(Component.translatable("generic.no_clan"));
+        this.setRank(NONE);
+        this.setHomePosition(null);
+        this.mode = CatMode.WANDER;
+        this.updateClanCatData();
     }
 
     public void updateClanCatData() {
@@ -3793,8 +3817,10 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
                 if (this.getRank() != NONE) {
                     data.addClanCat(clan, this);
                 } else {
-                    data.removeClanCatFromClan(clan.clanUUID, this);
-                    this.setClan(Component.empty());
+                    if (clan.clanCats.containsKey(this.getUUID())) {
+                        data.removeClanCatFromClan(clan.clanUUID, this);
+                        this.setClan(Component.empty());
+                    }
                 }
             }
         }
@@ -3924,7 +3950,7 @@ public class WCatEntity extends TamableAnimal implements GeoEntity, Diseaseable<
                 .append(". At: ")
                 .append(Component.literal(String.format("X=%.0f, Y=%.0f, Z=%.0f",
                         this.getX(), this.getY(), this.getZ())));
-        this.registerClanLog(ClanData.plainComponent(message));
+        this.registerClanLog(ClanData.plainComponent(message), ClanObjects.ClanLogEntry.Type.DEATHS);
 
         if (this.level() instanceof ServerLevel sLevel) {
             if (!this.getClanUUID().equals(ClanData.EMPTY_UUID)) {

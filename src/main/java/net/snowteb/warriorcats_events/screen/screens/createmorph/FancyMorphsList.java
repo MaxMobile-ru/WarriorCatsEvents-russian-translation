@@ -18,13 +18,17 @@ import java.util.function.BiPredicate;
 public class FancyMorphsList extends AbstractSelectionList<FancyMorphsList.Entry> implements SubRenderable {
 
     final int originalYPos0;
+    final int originalXPos0;
     final int originalYPos1;
+    final int originalXPos1;
     private BiPredicate<Double, Double> isClickableIn;
 
     public FancyMorphsList(Minecraft mc, int width, int height, int top, int bottom, int itemHeight) {
         super(mc, width, height, top, bottom, itemHeight);
         originalYPos0 = top;
         originalYPos1 = bottom;
+        originalXPos0 = 0;
+        originalXPos1 = width;
     }
 
     public void addMorph(@NotNull String name, ClientStoredMorphs.MorphsFile.MorphData morphData, Runnable onClick) {
@@ -231,10 +235,25 @@ public class FancyMorphsList extends AbstractSelectionList<FancyMorphsList.Entry
     }
 
     @Override
-    public void tick() {
+    public void tickkkk() {
         for (Entry entry : this.children()) {
-            entry.button.tick();
+            entry.button.tickkkk();
         }
+    }
+
+    @Override
+    public void adjustXPos(int xOffset) {
+        this.setLeftPos(this.originalXPos0 + xOffset);
+    }
+
+    @Override
+    public int getOriginalXPos0() {
+        return originalXPos0;
+    }
+
+    @Override
+    public int getOriginalXPos1() {
+        return originalXPos1;
     }
 
     public class Entry extends AbstractSelectionList.Entry<Entry> {

@@ -1,0 +1,23 @@
+{
+
+
+  "name": "- Учтивый жест!",
+  "icon": "warriorcats_events:freshkill_and_herbs",
+  "category": "warriorcats_events:items_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/items/freshkill_and_herbs.png"
+      ],
+      "title": "Свежая добыча и травы"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Ещё в давние времена мы имели обычай предлагать это одиноким котам. Они всегда принимали предложенное, становились нашими близкими друзьями и даже присоединялись к племени. Уверен, нет ни одного кота, который бы отказался от такого подарка.",
+      "title": "Свежая добыча и травы"
+    }
+  ]
+
+
+}

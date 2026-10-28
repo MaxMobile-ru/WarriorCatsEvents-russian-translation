@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Маргаритка",
+  "icon": "warriorcats_events:daisy_leaves",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Листья маргаритки можно получить из растений маргаритки. Их можно использовать для утоления боли в суставах. Также относится к травам путника.",
+      "title": "Маргаритка"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/daisy_stage3.png",
+        "warriorcats_events:textures/book/herbs/daisy_leaves.png"
+      ],
+      "title": "Маргаритка"
+    }
+
+  ]
+
+
+}

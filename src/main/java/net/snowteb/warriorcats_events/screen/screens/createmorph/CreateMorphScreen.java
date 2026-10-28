@@ -25,6 +25,7 @@ import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.network.packet.c2s.cats.SummonCustomCatPacket;
 import net.snowteb.warriorcats_events.network.packet.c2s.clan.SavePlayerGeneticsPacket;
 import net.snowteb.warriorcats_events.network.packet.c2s.others.CtSShareMorphToChat;
+import net.snowteb.warriorcats_events.network.packet.c2s.others.CtSTeleportToLocationPacket;
 import net.snowteb.warriorcats_events.screen.screens.SpawnLocationScreen;
 import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
 import tocraft.walkers.api.PlayerShape;
@@ -34,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static net.snowteb.warriorcats_events.screen.screens.CreateClanScreen.BG_TEXTURE;
+import static net.snowteb.warriorcats_events.screen.screens.clan.FancyCreateClanScreen.BG_TEXTURE;
 
 public class CreateMorphScreen extends BaseMorphScreen {
 
@@ -120,7 +121,7 @@ public class CreateMorphScreen extends BaseMorphScreen {
 
                 drawSubRenderables(true);
                 this.onGeneticalSkin = switchButton.getValue();
-            }, 0xFFE6D1A5, scale);
+            }, scale);
 
             this.addRenderableWidget(switchButton);
         }
@@ -247,8 +248,12 @@ public class CreateMorphScreen extends BaseMorphScreen {
 
         this.minecraft.setScreen(null);
         if (!ClientClanData.get().isFirstLoginHandled()) {
-            if (WCEServerConfig.SERVER.TELEPORT_WHEN_JOIN.get()) this.minecraft.setScreen(new SpawnLocationScreen());
-            else this.minecraft.setScreen(null);
+            if (WCEServerConfig.SERVER.TELEPORT_WHEN_JOIN.get()) {
+                this.minecraft.setScreen(new SpawnLocationScreen());
+            } else {
+                this.minecraft.setScreen(null);
+                ModPackets.sendToServer(new CtSTeleportToLocationPacket(0));
+            }
         }
     }
 

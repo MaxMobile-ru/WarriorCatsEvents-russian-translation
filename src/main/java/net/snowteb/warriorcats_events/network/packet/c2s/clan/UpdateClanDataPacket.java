@@ -11,8 +11,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.network.NetworkEvent;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.entity.ModEntities;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
@@ -141,14 +141,14 @@ public class UpdateClanDataPacket {
             ClanData data = ClanData.get(player.serverLevel());
 
             player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA).ifPresent(cap -> {
-                data.playerMorphNames.put(player.getUUID(), cap.getMorphName());
+                data.getPlayer(player).setMorphName(cap.getMorphName());
                 WCGenetics.PackedGeneticData morphData =
                         new WCGenetics.PackedGeneticData(cap.getPlayerGenetics(),
                                 cap.getPlayerGeneticalVariants(),
                                 cap.getPlayerChimeraGenetics(),
                                 cap.getPlayerChimeraVariants(),
                                 cap.isOnGeneticalSkin(), cap.getVariantData());
-                data.playerMorphData.put(player.getUUID(), morphData);
+                data.getPlayer(player).setGenetics(morphData);
                 data.setDirty();
             });
 

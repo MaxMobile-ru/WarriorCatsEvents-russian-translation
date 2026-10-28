@@ -1,0 +1,26 @@
+{
+
+
+  "name": "- Окопник",
+  "icon": "warriorcats_events:comfrey_leaves",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Из растения окопника можно получить листья и корень окопника. Из них можно сделать компресс, который способен помочь с лечением сломанных костей.",
+      "title": "Окопник"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/comfrey_stage3.png",
+        "warriorcats_events:textures/book/herbs/comfrey_leaves.png",
+        "warriorcats_events:textures/book/herbs/comfrey_root.png"
+      ],
+      "title": "Окопник"
+    }
+
+  ]
+
+
+}

@@ -1,5 +1,7 @@
 package net.snowteb.warriorcats_events.skills;
 
+import net.snowteb.warriorcats_events.battlemoves.PlayerBattleMovesStore;
+
 public interface ISkillData {
 
     int getSpeedLevel();
@@ -27,4 +29,6 @@ public interface ISkillData {
 
     boolean isClimbUnlocked();
     void setClimbUnlocked(boolean climbUnlocked);
+
+    PlayerBattleMovesStore getBattleMovesStore();
 }

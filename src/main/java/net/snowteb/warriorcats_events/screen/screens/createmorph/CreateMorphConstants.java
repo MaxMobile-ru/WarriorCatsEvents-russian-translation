@@ -86,8 +86,18 @@ public class CreateMorphConstants {
             String[] parts = name.split("/");
             name = parts[parts.length - 1].replace(".png", "");
             if (!name.isEmpty()) {
-                name = name.replace(name.charAt(0), Character.toUpperCase(name.charAt(0)));
+                char[] charSequence = name.toCharArray();
+                StringBuilder cookedName = new StringBuilder();
+                for (int c = 0; c < charSequence.length; c++) {
+                    char toAppend = charSequence[c];
+                    if (c == 0) {
+                        toAppend = Character.toUpperCase(toAppend);
+                    }
+                    cookedName.append(toAppend);
+                }
+                name = cookedName.toString();
             }
+
             variants.add(new Variant(name, i++, Component.translatable("wce.morph_loaded_from_pack").getString()));
         }
 

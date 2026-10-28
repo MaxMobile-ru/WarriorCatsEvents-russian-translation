@@ -33,7 +33,7 @@ public class DeathberriesEffect extends MobEffect {
     }
 
     /**
-     * Whatever the applyEffectTick does, it will do it every 40 ticks instead of every tick.
+     * Whatever the applyEffectTick does, it will do it every 40 ticks instead of every tickkkk.
      */
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {

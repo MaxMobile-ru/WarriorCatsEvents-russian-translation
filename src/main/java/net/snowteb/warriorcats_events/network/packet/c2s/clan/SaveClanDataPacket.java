@@ -8,13 +8,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.network.NetworkEvent;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataUtils;
+import net.snowteb.warriorcats_events.clan.ClanObjects;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataUtils;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 import net.snowteb.warriorcats_events.network.packet.s2c.clan.S2CSyncClanDataPacket;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.entity.ModEntities;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.network.ModPackets;
 import net.snowteb.warriorcats_events.skills.PlayerSkill;
@@ -82,7 +82,7 @@ public class SaveClanDataPacket {
             ClanData data = ClanData.get(player.serverLevel().getServer().overworld());
 
             player.getCapability(WCEPlayerDataProvider.PLAYER_CLAN_DATA).ifPresent(cap -> {
-                data.playerMorphNames.put(player.getUUID(), cap.getMorphName());
+                data.getPlayer(player).setMorphName(cap.getMorphName());
 
                 WCGenetics.PackedGeneticData morphData =
                         new WCGenetics.PackedGeneticData(cap.getPlayerGenetics(),
@@ -91,7 +91,7 @@ public class SaveClanDataPacket {
                                 cap.getPlayerChimeraVariants(),
                                 cap.isOnGeneticalSkin(), cap.getVariantData());
 
-                data.playerMorphData.put(player.getUUID(), morphData);
+                data.getPlayer(player).setGenetics(morphData);
 
                 ClanData.Clan clan = data.getClan(cap.getCurrentClanUUID());
                 if (clan != null) {
@@ -100,9 +100,9 @@ public class SaveClanDataPacket {
                             Component.literal(oldMorphName).withStyle(ChatFormatting.AQUA),
                             Component.literal(cap.getMorphName()).withStyle(ChatFormatting.AQUA));
 
-                    data.registerLog(player.serverLevel().getServer().overworld(), clan.clanUUID, message);
+                    data.registerLog(player.serverLevel().getServer().overworld(), clan.clanUUID, message, ClanObjects.ClanLogEntry.Type.PLAYERS);
 
-                    if (clan.members.get(player.getUUID()) == ClanData.ClanPlayerRank.LEADER) {
+                    if (clan.members.containsKey(player.getUUID()) && clan.members.get(player.getUUID()).getRank() == ClanData.ClanPlayerRank.LEADER) {
                         clan.leaderName = cap.getMorphName();
                     }
 

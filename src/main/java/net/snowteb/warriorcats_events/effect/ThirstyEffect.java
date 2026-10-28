@@ -33,7 +33,7 @@ public class ThirstyEffect extends MobEffect {
     }
 
     /**
-     * Whatever the applyEfectTick does, it will do it every 40 ticks instead of every tick.
+     * Whatever the applyEfectTick does, it will do it every 40 ticks instead of every tickkkk.
      */
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {

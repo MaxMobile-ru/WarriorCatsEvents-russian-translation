@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
 
-import static net.snowteb.warriorcats_events.clan.ClanData.isInEnemyTerritory;
+import static net.snowteb.warriorcats_events.clan.ClanData.getOwnerOfTerritory;
 
 @Mod.EventBusSubscriber(modid = WarriorCatsEvents.MODID)
 public class ClanTerritoryEvents {
@@ -30,7 +30,8 @@ public class ClanTerritoryEvents {
         if (player.hasPermissions(2)) return;
 
         ChunkPos pos = new ChunkPos(event.getPos());
-        if (isInEnemyTerritory(player, pos)) {
+        ClanData.Clan ownerClan = getOwnerOfTerritory(player, pos);
+        if (ownerClan != null && ownerClan.protectTerritory) {
             player.displayClientMessage(Component.translatable("clan.cannot_break_blocks").withStyle(ChatFormatting.RED), true);
             event.setCanceled(true);
         }
@@ -49,7 +50,8 @@ public class ClanTerritoryEvents {
         if (player.hasPermissions(2)) return;
 
         ChunkPos pos = new ChunkPos(event.getPos());
-        if (isInEnemyTerritory(player, pos)) {
+        ClanData.Clan ownerClan = getOwnerOfTerritory(player, pos);
+        if (ownerClan != null && ownerClan.protectTerritory) {
             player.displayClientMessage(Component.translatable("clan.cannot_place_blocks").withStyle(ChatFormatting.RED), true);
 
             event.setCanceled(true);
@@ -67,13 +69,16 @@ public class ClanTerritoryEvents {
         if (player.hasPermissions(2)) return;
 
         ChunkPos pos = new ChunkPos(event.getPos());
-        if (isInEnemyTerritory(player, pos)) {
-            if (player.serverLevel().getBlockEntity(event.getPos()) != null) {
+        ClanData.Clan ownerClan = ClanData.getOwnerOfTerritory(player, pos);
+        if (ownerClan != null) {
+            if (player.serverLevel().getBlockEntity(event.getPos()) != null && ownerClan.protectContainers) {
                 player.displayClientMessage(Component.translatable("clan.cannot_open_containers").withStyle(ChatFormatting.RED), true);
-            } else if (!event.getItemStack().isEmpty()) {
+                event.setCanceled(true);
+            } else if (!event.getItemStack().isEmpty() && ownerClan.protectTerritory) {
                 player.displayClientMessage(Component.translatable("clan.cannot_place_blocks").withStyle(ChatFormatting.RED), true);
+                event.setCanceled(true);
             }
-            event.setCanceled(true);
+
         }
     }
 

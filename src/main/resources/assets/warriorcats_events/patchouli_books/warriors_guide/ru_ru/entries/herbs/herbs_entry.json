@@ -1,0 +1,39 @@
+{
+
+
+  "name": "- Травы: вступление",
+  "priority": true,
+  "icon": "minecraft:writable_book",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Гуляя по миру, вы можете встретить особые растения, которые можно использовать для различных целей. Мы называем их травами или целебными травами. Часто они обладают специфичным и характерным ароматом, но могут выглядеть почти неотличимо друг от друга! Одни травы способны очень сильно вам помочь, другие настолько опасны, что вам даже не следует прикасаться к ним."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Травы можно найти повсюду. Они встречаются в таких биомах, как лес и равнина; растут всегда небольшими участками на определённом расстоянии друг от друга. Не стоит надеяться на удачу в поисках необходимых трав, лучше изучите, где каждое из них может расти! $(br2)Знания о собирательстве трав поможет вам не раз. Будьте осторожны с ними, убедитесь в том, что вы их именно собираете, а не ломаете. Иначе вам останется только надеяться на их возвращение.$(br)"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/burnet_stage3.png",
+        "warriorcats_events:textures/book/herbs/catmint_stage3.png",
+        "warriorcats_events:textures/book/herbs/chamomile_stage3.png",
+        "warriorcats_events:textures/book/herbs/daisy_stage3.png",
+        "warriorcats_events:textures/book/herbs/deathberries_stage3.png",
+        "warriorcats_events:textures/book/herbs/dock_stage3.png",
+        "warriorcats_events:textures/book/herbs/sorrel_stage3.png",
+        "warriorcats_events:textures/book/herbs/yarrow_stage3.png"
+      ],
+      "title": "Травы в дикой природе",
+      "text": "Посмотрите внимательно! Это то, как травы обычно выглядят."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Одни растения растут по одиночке, другие - группами, но все они располагаются на неких участках, разбросанных по миру. Учитесь узнавать их по форме и цвету, больше подробностей об их особенностях вы найдёте в прочих записях раздела!"
+    }
+  ]
+
+
+}

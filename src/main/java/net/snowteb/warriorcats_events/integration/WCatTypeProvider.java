@@ -7,12 +7,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.snowteb.warriorcats_events.clan.ClanData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataUtils;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataUtils;
 import net.snowteb.warriorcats_events.diseases.DiseaseManager;
 import net.snowteb.warriorcats_events.entity.client.WCModel;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 import tocraft.walkers.api.variant.TypeProvider;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
@@ -49,7 +48,7 @@ public class WCatTypeProvider extends TypeProvider<WCatEntity> {
                                 cap.getPlayerChimeraVariants(),
                                 cap.isOnGeneticalSkin(), cap.getVariantData());
 
-                clanData.playerMorphData.put(player.getUUID(), morphData);
+                clanData.getPlayer(player).setGenetics(morphData);
             });
 
             clanData.setDirty();

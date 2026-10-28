@@ -1,0 +1,23 @@
+{
+
+
+  "name": "- Букет из редких цветов",
+  "icon": "warriorcats_events:rare_flowers_bouquet",
+  "category": "warriorcats_events:items_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/items/rare_flowers_bouquet.png"
+      ]
+    },
+    {
+      "type": "patchouli:crafting",
+      "text": "Это очень редкий набор цветов, который, кажется, переливается при лунном свете. $(br2)Букет настолько красив, что некоторые коты как будто заворожены им. Если вы действительно любите кота/кошку, то вам определённо стоит преподнести его в качестве подарка!$(br)",
+      "title": "Букет из редких цветов",
+      "recipe": "warriorcats_events:rare_flowers_bouquet"
+    }
+  ]
+
+
+}

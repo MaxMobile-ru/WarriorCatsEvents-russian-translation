@@ -4,8 +4,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
-import net.snowteb.warriorcats_events.clan.WCEPlayerDataUtils;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataUtils;
 import tocraft.walkers.api.PlayerShape;
 
 import java.util.function.Supplier;

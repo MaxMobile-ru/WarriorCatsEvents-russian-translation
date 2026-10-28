@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
+import net.snowteb.warriorcats_events.clan.ClanObjects;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 
 import java.util.function.Supplier;
@@ -67,7 +68,7 @@ public class CtSNameKitPacket {
                                     .append(Component.literal(sPlayer.getName().getString()).withStyle(ChatFormatting.GRAY))
                                     .append(Component.literal(")").withStyle(ChatFormatting.GRAY)));
 
-                    kit.registerClanLog(messageLog);
+                    kit.registerClanLog(messageLog, ClanObjects.ClanLogEntry.Type.OTHERS);
 
                     sPlayer.sendSystemMessage(
                             Component.translatable("item.warriorcats_events.kit.kit_born",

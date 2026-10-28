@@ -18,7 +18,9 @@ import java.util.function.BiPredicate;
 public class FancyButtonScrollList extends AbstractSelectionList<FancyButtonScrollList.Entry> implements SubRenderable {
 
     final int originalYPos0;
+    final int originalXPos0;
     final int originalYPos1;
+    final int originalXPos1;
     private BiPredicate<Double, Double> isClickableIn;
 
 
@@ -26,6 +28,8 @@ public class FancyButtonScrollList extends AbstractSelectionList<FancyButtonScro
         super(mc, width, height, top, bottom, itemHeight);
         originalYPos0 = top;
         originalYPos1 = bottom;
+        originalXPos0 = 0;
+        originalXPos1 = width;
     }
 
     public void addButton(@NotNull Component label, Runnable action,
@@ -216,6 +220,21 @@ public class FancyButtonScrollList extends AbstractSelectionList<FancyButtonScro
     @Override
     public void setClickableIn(BiPredicate<Double, Double> predicate) {
         isClickableIn = predicate;
+    }
+
+    @Override
+    public void adjustXPos(int xOffset) {
+        this.setLeftPos(originalXPos0 + xOffset);
+    }
+
+    @Override
+    public int getOriginalXPos0() {
+        return originalXPos0;
+    }
+
+    @Override
+    public int getOriginalXPos1() {
+        return originalXPos1;
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class ServerPlayerMorphsCache {
-    private static Map<String, ServerMorphData> MORPHS = new HashMap<>();
+    private static final Map<String, ServerMorphData> MORPHS = new HashMap<>();
 
     public static Map<String, ServerMorphData> getMorphsCache() {
         return MORPHS;

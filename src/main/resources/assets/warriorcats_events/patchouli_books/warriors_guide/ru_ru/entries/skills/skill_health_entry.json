@@ -1,0 +1,23 @@
+{
+
+
+  "name": "- Здоровье",
+  "icon": "minecraft:golden_apple",
+  "category": "warriorcats_events:skills_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/skills/skill_health.png",
+        "warriorcats_events:textures/book/skills/skill_health2.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Вам предстоит много сражений, и наступит день, когда полученные раны больше не будут причинять вам такой сильной боли. Со временем ваше тело станет более крепким, и вы сможете выдерживать больше ударов, чем раньше!",
+      "title": "Здоровье"
+    }
+  ]
+
+
+}

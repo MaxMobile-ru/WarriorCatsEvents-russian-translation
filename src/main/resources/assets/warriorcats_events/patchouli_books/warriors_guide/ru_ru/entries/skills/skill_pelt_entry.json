@@ -1,0 +1,23 @@
+{
+
+
+  "name": "- Шерсть",
+  "icon": "minecraft:shield",
+  "category": "warriorcats_events:skills_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/skills/skill_pelt.png",
+        "warriorcats_events:textures/book/skills/skill_pelt2.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Время и опыт сделают вашу шерсть более густой. А чем более густая она, тем лучше вы защищены. Когти и зубы больше не смогут так легко вонзиться в ваше тело.",
+      "title": "Шерсть"
+    }
+  ]
+
+
+}

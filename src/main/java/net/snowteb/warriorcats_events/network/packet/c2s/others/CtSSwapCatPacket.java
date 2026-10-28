@@ -9,8 +9,8 @@
 //import net.minecraft.world.level.Level;
 //import net.minecraftforge.network.NetworkEvent;
 //import net.snowteb.warriorcats_events.clan.ClanData;
-//import net.snowteb.warriorcats_events.clan.WCEPlayerData;
-//import net.snowteb.warriorcats_events.clan.WCEPlayerDataProvider;
+//import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
+//import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerDataProvider;
 //import net.snowteb.warriorcats_events.diseases.DiseaseManager;
 //import net.snowteb.warriorcats_events.entity.ModEntities;
 //import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;

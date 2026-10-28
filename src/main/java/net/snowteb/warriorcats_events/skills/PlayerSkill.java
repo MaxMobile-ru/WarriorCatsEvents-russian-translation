@@ -1,10 +1,13 @@
 package net.snowteb.warriorcats_events.skills;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.snowteb.warriorcats_events.battlemoves.PlayerBattleMovesStore;
 import net.snowteb.warriorcats_events.util.ModAttributes;
 import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
+import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.UUID;
 
@@ -15,6 +18,8 @@ public class PlayerSkill implements ISkillData {
     public static final double damageMultiplier = 0.09;
     public static final double jumpMultiplier = 0.093;
     public static final double armorMultiplier = 2.5;
+
+    private PlayerBattleMovesStore battleMovesStore = new PlayerBattleMovesStore();
 
     public static int getDefaultSpeedCost() {
         return (int) (30 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
@@ -44,6 +49,9 @@ public class PlayerSkill implements ISkillData {
         return (int) (1800 * WCEServerConfig.SERVER.SKILL_COST_MULTIPLIER.get());
     }
 
+    public PlayerBattleMovesStore getBattleMovesStore() {
+        return battleMovesStore;
+    }
 
     public static int maxSpeedLevel = 10;
     public static int maxHPLevel = 5;
@@ -163,6 +171,7 @@ public class PlayerSkill implements ISkillData {
         this.jumpLevel = other.getJumpLevel();
         this.armorLevel = other.getArmorLevel();
         this.climbUnlocked = other.isClimbUnlocked();
+        this.battleMovesStore = other.getBattleMovesStore();
     }
 
 
@@ -266,6 +275,36 @@ public class PlayerSkill implements ISkillData {
         if (armorAttr != null) {
             armorAttr.removeModifier(PlayerSkill.ARMOR_SKILL_UUID);
         }
+    }
+
+    public @UnknownNullability CompoundTag serializeNBT() {
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("speedLevel", getSpeedLevel());
+        tag.putInt("hpLevel", getHPLevel());
+        tag.putInt("dmgLevel", getDMGLevel());
+        tag.putInt("jumpLevel", getJumpLevel());
+        tag.putInt("armorLevel", getArmorLevel());
+        tag.putBoolean("climbUnlocked", isClimbUnlocked());
+
+        this.battleMovesStore.serialize(tag);
+
+        return tag;
+    }
+
+    public void deserializeNBT(CompoundTag tag) {
+        setSpeedLevel(tag.getInt("speedLevel"));
+        setHPLevel(tag.getInt("hpLevel"));
+        setDMGLevel(tag.getInt("dmgLevel"));
+        setJumpLevel(tag.getInt("jumpLevel"));
+        setArmorLevel(tag.getInt("armorLevel"));
+        setClimbUnlocked(tag.getBoolean("climbUnlocked"));
+
+        this.battleMovesStore = PlayerBattleMovesStore.deserialize(tag);
+
+    }
+
+    public void skillTick() {
+        this.battleMovesStore.storeTick();
     }
 
 }

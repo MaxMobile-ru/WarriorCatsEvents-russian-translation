@@ -1,0 +1,26 @@
+{
+
+
+  "name": "- Щавель",
+  "icon": "warriorcats_events:dock_leaves",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:crafting",
+      "text": "Листья щавеля - один из самых распространённых видов трав, их часто используют, чтобы оборачивать другие травы и вещи! Из них также делается компресс, который помогает уменьшить боль и излечить раны и больные подушечки.",
+      "title": "Щавель",
+      "recipe": "warriorcats_events:dock_poultice"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/dock_stage3.png",
+        "warriorcats_events:textures/book/herbs/dock_leaves.png"
+      ],
+      "title": "Щавель"
+    }
+
+  ]
+
+
+}

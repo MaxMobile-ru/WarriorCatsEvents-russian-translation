@@ -1,13 +1,14 @@
 package net.snowteb.warriorcats_events.managers;
 
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.function.Consumer;
 
 /** Sequences by Klyonstar
- * This class allows to program sequences to run. Includes wait ticks,
+ * This class allows to program sequences to run. Includes thenWait ticks,
  * <p>
  * running code every X ticks, or running code every Y ticks for X times, etc.
  * <p>
@@ -23,11 +24,13 @@ public class Sequence {
 
     private final Queue<SequenceStep> steps = new LinkedList<>();
     private SequenceStep current;
+    private final Level level;
 
-    public Sequence(ServerLevel level) {
+    public Sequence(Level level) {
+        this.level = level;
     }
 
-    public Sequence then(Runnable r) {
+    public Sequence then(Consumer<Level> r) {
         steps.add(level -> {
             run(r);
 
@@ -36,12 +39,12 @@ public class Sequence {
         return this;
     }
 
-    public Sequence wait(int ticks) {
+    public Sequence thenWait(int ticks) {
         steps.add(new SequenceStep() {
             int time = ticks;
 
             @Override
-            public boolean tick(ServerLevel level) {
+            public boolean tick(Level level) {
                 time--;
                 return time <= 0;
             }
@@ -49,11 +52,11 @@ public class Sequence {
         return this;
     }
 
-    public Sequence then(int ticks, Runnable r) {
+    public Sequence then(int ticks, Consumer<Level> r) {
         steps.add(new SequenceStep() {
             int time = ticks;
             @Override
-            public boolean tick(ServerLevel level) {
+            public boolean tick(Level level) {
                 run(r);
 
                 time--;
@@ -64,16 +67,16 @@ public class Sequence {
         return this;
     }
 
-    public Sequence thenEveryFor(int everyTicks, int forTicks, Runnable r) {
+    public Sequence thenEveryFor(int everyTicks, int forTicks, Consumer<Level> r) {
         steps.add(new SequenceStep() {
             int time = forTicks;
             int counter = 0;
 
             @Override
-            public boolean tick(ServerLevel level) {
+            public boolean tick(Level level) {
                 counter++;
 
-                if (counter % everyTicks == 0) {
+                if (counter % Math.max(1, everyTicks) == 0) {
                     run(r);
                 }
 
@@ -84,15 +87,15 @@ public class Sequence {
         return this;
     }
 
-    public Sequence thenEveryForTimes(int everyTicks, int times, Runnable r) {
+    public Sequence thenEveryForTimes(int everyTicks, int times, Consumer<Level> r) {
         steps.add(new SequenceStep() {
             int remaining = times;
             int counter = 0;
             @Override
-            public boolean tick(ServerLevel level) {
+            public boolean tick(Level level) {
                 counter++;
 
-                if (counter % everyTicks == 0) {
+                if (counter % Math.max(1, everyTicks) == 0) {
                     run(r);
                     remaining--;
                 }
@@ -107,13 +110,14 @@ public class Sequence {
         return this;
     }
 
-    public void tick(ServerLevel level) {
-        if (current == null) {
-            current = steps.poll();
-            if (current == null) return;
-        }
+    public void tick(Level level) {
+        while (true) {
+            if (current == null) {
+                current = steps.poll();
+                if (current == null) return;
+            }
 
-        if (current.tick(level)) {
+            if (!current.tick(level)) return;
             current = null;
         }
     }
@@ -122,13 +126,16 @@ public class Sequence {
         return current == null && steps.isEmpty();
     }
 
-    public void run(Runnable r) {
+    private void run(Consumer<Level> r) {
         try {
-            r.run();
+            r.accept(this.level);
         } catch (Exception e) {
             WarriorCatsEvents.LOGGER.warn("A Sequence step has thrown an exception: ", e);
-
         }
+    }
+
+    public Level getLevel() {
+        return this.level;
     }
 
     // Example of use
@@ -137,13 +144,13 @@ public class Sequence {
 //        level.sendParticles(ParticleTypes.SPLASH, player.getX(),player.getY() + 0.4, player.getZ(),
 //                10, 0.3, 0.2, 0.3, 0.01);
 //    })
-//    .wait(40)
+//    .thenWait(40)
 //    .thenEveryForTimes(20, 10, () -> {
 //        level.sendParticles(ParticleTypes.SMALL_FLAME, player.getX(),player.getY() + 0.4,
 //                player.getZ(), 10, 0.3, 0.2, 0.3,
 //                0.01);
 //    })
-//    .wait(10)
+//    .thenWait(10)
 //    .then(() -> {
 //        level.playSound(null, player.blockPosition(), SoundEvents.CAT_HISS, SoundSource.PLAYERS, 0.2f ,1.5f);
 //    })

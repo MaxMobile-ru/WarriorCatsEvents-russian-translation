@@ -1,0 +1,316 @@
+{
+
+
+  "name": "- Титры",
+  "priority": true,
+  "icon": "minecraft:enchanted_book",
+  "category": "warriorcats_events:credits_category",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:music_disc_cat",
+      "text": "$(8)Спасибо Sharon Hurvitz за то, что позволила мне имплементировать её великолепную музыку в мод! $(br2)Если у вас будет возможность, обратите внимание на другие её музыкальные работы!",
+      "title": "Sharon Hurvitz"
+    },
+    {
+      "type": "patchouli:link",
+      "url": "https://linktr.ee/sharonhurvitz",
+      "link_text": "Linktree",
+      "text": "$(8) $(br2)''Sharon Hurvitz - выдающийся звукорежиссёр и композитор, она получила свою известность за создание иммерсивных звуковых окружений и фантастических саундтреков. Её работы варьируются от мягких и минималистичных композиций до величественной и сильной оркестровой музыки.''",
+      "title": "Sharon Hurvitz"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:music_disc_cat",
+      "text": "$(8)Спасибо Joabi за то, что позволил мне имплементировать его прекрасную и глубокую музыку в мод! $(br2)Если у вас будет возможность, обратите внимание на другие его работы!",
+      "title": "Joabi"
+    },
+    {
+      "type": "patchouli:link",
+      "url": "https://www.youtube.com/channel/UC11MxpwJFbUGkoUr3ZIJwgQ",
+      "link_text": "Youtube",
+      "text": "$(8) $(br2)''Joabi - британский композитор, который специализируется на электронной, кинематографичной и эмбиентной музыке. На его Youtube канале около 100 композиций и более 1 миллиона просмотров.''",
+      "title": "Joabi"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:12,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Chestnutpatch",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Bookwom' за то, что Chestnutpatch стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:13,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Ratstar",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Telefonjoker' за то, что Ratstar стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:14,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Twitchstream",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Cat' за то, что Twitchstream стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:15,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Blazepit",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Cat' за то, что Blazepit стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:17,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Sparrowstar",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Whale_shark' за то, что Sparrowstar стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:18,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Foxeater",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Sejr' за то, что Foxeater стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:19,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Willowsong",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Sejr' за то, что Willowsong стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:36,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Caramel",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'CoffeeCat' за то, что Caramel стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:31,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Bengal",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'CoffeeCat' за то, что Bengal стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:43,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Mothpaw",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'CoffeeCat' за то, что Mothpaw стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:30,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Albino",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'CoffeeCat' за то, что Albino стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:46,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Short hair",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'CoffeeCat' за то, что Short hair стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:39,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Hailflake",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'pvppet' за то, что Hailflake стал частью мода, и 'Mswolfy81' за создание модели!"
+    },    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:45,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Salem",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'CoffeeCat' за то, что Salem стал частью мода, и 'Mswolfy81' за создание модели!"
+    },    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:32,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Brindle tortie",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Mswolfy81' за то, что Brindle tortie стал частью мода!"
+    },
+
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:50,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Violetdew",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'bem te vi' за то, что Violetdew стал частью мода, и 'Mswolfy81' за создание модели!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:49,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Turtleheart",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'RainbowServal' за то, что Turtleheart стал частью мода, и 'Mswolfy81' за создание модели!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:38,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Gray-white Tabby",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Slay' за то, что Gray-white tabby стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:47,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Stoneflare",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Feathered Melodica' за то, что Stoneflare стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:51,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Patch",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Feathered Melodica' за то, что Patch стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:33,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Brown and Cream Calico",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Lightley' за то, что Brown and Cream Calico стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:35,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Light Brown and Cream Calico",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Lightley' за то, что Light Brown and Cream Calico стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:34,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Dark Brown and Cream Calico",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'Lightley' за то, что Dark Brown and Cream Calico стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:42,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Longtail",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'whitenoisewife' за то, что Longtail стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:37,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Frostdawn",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'whitenoisewife' за то, что Frostdawn стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:44,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Redtail",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'whitenoisewife' за то, что Redtail стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:41,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Leafstar",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'whitenoisewife' за то, что Leafstar стал частью мода!"
+    },
+
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:40,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Karpati",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'whitenoisewife' за то, что Karpati стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:48,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Tortoiseshell point",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'whitenoisewife' за то, что Tortoiseshell point стал частью мода!"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:warrior_cat{Variant:52,OnGround:1b,IsAnImage:1b}",
+      "rotate": false,
+      "title": "Parlee",
+      "default_rotation": -30,
+      "text": "$(8)Спасибо 'PsychicStudios' за то, что Parlee стал частью мода, и 'CoffeeCat' за создание модели. Может, настоящий Parlee всегда враждует со Звёздным племенем.$(br)"
+    },
+
+
+
+
+
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:nether_star",
+      "title": "Спасибо за помощь",
+      "text": "$(8)Спасибо 'Boxfish' за тестирование мода и внесение весомого вклада в создание мода.$(br2)Спасибо 'The Artificer's Throne' за блестящие идеи и помощь в улучшении мода.$(br)"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:nether_star",
+      "title": "Спасибо за помощь",
+      "text": "$(8)Спасибо 'Mswolfy81' за её блестящие идеи, поддержку, помощь и за весомый вклад в развитие сообщества. $(br2)Спасибо каждому, кто следил за этим проектом с самого начала.$(br)"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:nether_star",
+      "title": "Спасибо за помощь",
+      "text": "$(8)Спасибо 'Lightley' за создание моделей и текстур для таких предметов, как [Одуванчик у ушка] и [Цветок у ушка]$(br)"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:nether_star",
+      "title": "Спасибо за помощь",
+      "text": "$(8)Спасибо 'Mswolfy81' за создание системы генетики, предоставление текстур для неё и постоянное оказание помощи в процессе разработки. $(br2)Без её помощи система генетики была бы невозможна.$(br)"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Символы племён",
+      "text": "$(8)Все символы племён были получены из 'symbols.png' от официальных ресурсов проекта Clangen и принадлежат Clangen и её разработчиками. Все ресурсы лицензируются по CC BY-NC 4.0 license.$(br2) $(l:https://creativecommons.org/licenses/by-nc/4.0/)Ссылка на лицензию$(/l) $(br)"
+    },
+    {
+      "type": "patchouli:text",
+      "text": ""
+    }
+  ]
+
+
+}

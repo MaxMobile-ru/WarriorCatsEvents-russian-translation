@@ -11,13 +11,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.snowteb.warriorcats_events.clan.WCEPlayerData;
+import net.snowteb.warriorcats_events.clanplayerdata.WCEPlayerData;
 import net.snowteb.warriorcats_events.diseases.Diseaseable;
 import net.snowteb.warriorcats_events.entity.custom.EagleEntity;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
 import net.snowteb.warriorcats_events.screen.menus.SetPoseMenu;
 import net.snowteb.warriorcats_events.screen.screens.*;
+import net.snowteb.warriorcats_events.screen.screens.clan.FancyClanListScreen;
+import net.snowteb.warriorcats_events.screen.screens.clan.FancyCreateClanScreen;
+import net.snowteb.warriorcats_events.screen.screens.clan.FancySpecificClanScreen;
 import net.snowteb.warriorcats_events.screen.screens.createmorph.CreateMorphScreen;
 
 import java.util.List;
@@ -76,13 +79,13 @@ public class ClientPacketHandles {
             Minecraft mc = Minecraft.getInstance();
             if (mc.level == null) return;
 
-            mc.setScreen(new CreateClanScreen(morphName));
+            mc.setScreen(new FancyCreateClanScreen(morphName));
         });
 
     }
 
     public static void openClanListScreen(boolean seeingMyClan, boolean territoryMap) {
-        Screen parent = new ClanListScreen(seeingMyClan);
+        Screen parent = new FancyClanListScreen(seeingMyClan);
 
         if (territoryMap) {
             Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(new TerritoryMapScreen(parent)));
@@ -92,16 +95,12 @@ public class ClientPacketHandles {
         Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(parent));
     }
 
-    public static void openManageClanScreen(ClanInfo info) {
-        Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(new ManageClanScreen(info)));
-    }
-
-    public static void openSpecificClan(String clanName, UUID clanUUID) {
+    public static void openSpecificClan(ClientClans.Entry entry) {
         Minecraft.getInstance().execute(() -> {
             Minecraft mc = Minecraft.getInstance();
             if (mc.level == null) return;
 
-            mc.setScreen(new SpecificClanScreen(clanName, clanUUID));
+            mc.setScreen(new FancySpecificClanScreen(entry));
         });
 
     }
@@ -195,6 +194,31 @@ public class ClientPacketHandles {
                 DialogueMessage.send(sender, message, (WCatEntity) cat);
             });
         }
+    }
+
+    public static void displayScreenMessage(boolean error, Component message) {
+        Minecraft.getInstance().execute(() -> {
+           if (Minecraft.getInstance().screen instanceof AbstractWCEScreen screen) {
+               screen.displayMessage(message, error);
+           }
+        });
+    }
+
+    public static void updateClanEntry(ClientClans.Entry entry) {
+        Minecraft.getInstance().execute(() -> {
+            ClientClans.addClan(entry);
+
+            if (Minecraft.getInstance().screen instanceof FancySpecificClanScreen screen) {
+                screen.setClan(entry);
+            }
+        });
+    }
+
+    public static void addBubbleMessage(UUID sender, Component message) {
+        Minecraft.getInstance().execute(() -> {
+            int time = (int) (200 + message.getString().length()*0.7f);
+            EntityChatBubbleManager.add(sender, message, time);
+        });
     }
 }
 

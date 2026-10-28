@@ -1,40 +1,23 @@
 package net.snowteb.warriorcats_events.screen.screens.createmorph;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.snowteb.warriorcats_events.WCEClient;
 import net.snowteb.warriorcats_events.WarriorCatsEvents;
-import net.snowteb.warriorcats_events.client.ClientClanData;
-import net.snowteb.warriorcats_events.client.ClientStoredMorphs;
 import net.snowteb.warriorcats_events.entity.ModEntities;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCGenetics;
 import net.snowteb.warriorcats_events.entity.custom.wcat.WCatEntity;
-import net.snowteb.warriorcats_events.network.ModPackets;
-import net.snowteb.warriorcats_events.network.packet.c2s.cats.SummonCustomCatPacket;
-import net.snowteb.warriorcats_events.network.packet.c2s.clan.SavePlayerGeneticsPacket;
-import net.snowteb.warriorcats_events.network.packet.c2s.others.CtSShareMorphToChat;
-import net.snowteb.warriorcats_events.screen.screens.SpawnLocationScreen;
-import net.snowteb.warriorcats_events.zconfig.WCEServerConfig;
-import tocraft.walkers.api.PlayerShape;
 
-import java.nio.file.Path;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
-import static net.snowteb.warriorcats_events.screen.screens.CreateClanScreen.BG_TEXTURE;
+import static net.snowteb.warriorcats_events.screen.screens.clan.FancyCreateClanScreen.BG_TEXTURE;
 
 public class CreateMorphChimeraScreen extends BaseMorphScreen {
 

@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Система жажды",
+  "icon": "minecraft:potion{Potion:'minecraft:water'}",
+  "category": "warriorcats_events:features_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(8)Система жажды работает почти так же, как и система голода. $(br2)Жажду можно утолить с помощью кнопки питья воды (по умолчанию B), когда вы находитесь рядом с водой и смотрите на неё. $(br2)Если шкала жажды достигнет нуля, вы, будучи обезвоженным, начнёте получать урон, и длиться это будет до тех пор, пока вы либо не умрёте, либо не утолите жажду.$(br)",
+      "title": "Система жажды"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/features/thirst_system.png",
+        "warriorcats_events:textures/book/features/thirst_system2.png",
+        "warriorcats_events:textures/book/features/thirst_system3.png"
+      ],
+      "text": "$(8)Жажда может иметь всего 20 очков (столько же, сколько и ванильная система голода)"
+    }
+  ]
+
+
+}

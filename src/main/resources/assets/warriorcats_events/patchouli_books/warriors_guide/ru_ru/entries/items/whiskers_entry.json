@@ -1,0 +1,24 @@
+{
+
+
+  "name": "- Усы",
+  "icon": "warriorcats_events:whiskers",
+  "category": "warriorcats_events:items_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/items/whiskers.png"
+      ],
+      "title": "Усы"
+    },
+    {
+      "type": "patchouli:crafting",
+      "text": "Это ваши усы! Используйте их, чтобы узнать самую важную информацию о своих соплеменниках.",
+      "title": "Усы",
+      "recipe": "warriorcats_events:whiskers"
+    }
+  ]
+
+
+}

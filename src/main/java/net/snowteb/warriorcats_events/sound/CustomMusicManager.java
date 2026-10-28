@@ -75,7 +75,7 @@ public class CustomMusicManager {
 
             if (current instanceof BGMusicSoundInstance) {
                 if (!mc.getSoundManager().isActive(current)) {
-                    musicManager.stopPlaying();
+                    Minecraft.getInstance().execute(musicManager::stopPlaying);
                 }
             }
 
@@ -97,11 +97,13 @@ public class CustomMusicManager {
 
             if (isJukeboxPlaying(engine)) {
                 if (access.wce$isPlaylistPlaying(getPlaylistTracks())) {
-                    if (current instanceof BGMusicSoundInstance bgMusicSoundInstance) {
-                        bgMusicSoundInstance.stop();
-                    } else {
-                        musicManager.stopPlaying();
-                    }
+                    Minecraft.getInstance().execute(() -> {
+                        if (current instanceof BGMusicSoundInstance bgMusicSoundInstance) {
+                            bgMusicSoundInstance.stop();
+                        } else {
+                            musicManager.stopPlaying();
+                        }
+                    });
                 }
                 return;
             }
@@ -125,21 +127,25 @@ public class CustomMusicManager {
                         toPlay = candidates.get(random.nextInt(candidates.size()));
                     }
 
-                    musicManager.stopPlaying();
+                    Minecraft.getInstance().execute(() -> {
+                        musicManager.stopPlaying();
+                        access.wce$playBackgroundSong(toPlay.music());
+                        HUDClientMessage.send(toPlay.message());
+                    });
 
-                    access.wce$playBackgroundSong(toPlay.music());
                     nextSongDelay = Mth.nextInt(random, toPlay.music().getMinDelay(), toPlay.music().getMaxDelay());
-                    HUDClientMessage.send(toPlay.message());
                 }
             } else {
                 if (nextSongDelay > 0) nextSongDelay = 0;
 
                 if (access.wce$isPlaylistPlaying(getPlaylistTracks())) {
-                    if (current instanceof BGMusicSoundInstance bgMusicSoundInstance) {
-                        bgMusicSoundInstance.stop();
-                    } else {
-                        musicManager.stopPlaying();
-                    }
+                    Minecraft.getInstance().execute(() -> {
+                        if (current instanceof BGMusicSoundInstance bgMusicSoundInstance) {
+                            bgMusicSoundInstance.stop();
+                        } else {
+                            musicManager.stopPlaying();
+                        }
+                    });
                 }
             }
         }

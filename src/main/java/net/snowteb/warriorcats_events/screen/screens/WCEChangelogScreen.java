@@ -20,7 +20,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.snowteb.warriorcats_events.screen.screens.CreateClanScreen.BG_TEXTURE;
+import static net.snowteb.warriorcats_events.screen.screens.clan.FancyCreateClanScreen.BG_TEXTURE;
 
 @OnlyIn(Dist.CLIENT)
 public class WCEChangelogScreen extends Screen {
@@ -166,43 +166,32 @@ public class WCEChangelogScreen extends Screen {
     }
 
     private void defineChangelogLines() {
-        lines.add("$(##) 1.12.2 | Fixed crashes when opening clan list, and other issues");
-
-        lines.add("$(#) 1.12.0 | Dock bags, first person paw, and more!");
-        lines.add("Greetings, I took and i'm still on a break to focus more on my personal life, but i'm still here.\n" +
+        lines.add("$(#) 1.13.0 | Clans Rework and more");
+        lines.add("Greetings, it has been a long time since the last update released. Life has been busy and it will be even more busy the following month, but hope to be able to still be here.\n" +
                 "\n" +
-                "This update is mostly focused on fixes of some translation keys and other issues, but also includes the very much requested Dock bags!\n" +
+                "This update isn't as big as expected. It was decided to release what's important now and take more time to finish some big additions that are planned. But it is something, hope it is appreciated for now.\n" +
                 "\n" +
-                "Dock bags can be crafted from the Herb Rock, these work as any other backpack. You can put items in them and carry them anywhere.\n" +
+                "This update offers a rework for how clans are viewed and managed. As well as some new fields and options for clans, and other adjustments in the backend.\n" +
                 "\n" +
-                "This update also introduces background music for territories! Whenever you are in a clan territory, tracks from a internal playlist will play. Special thanks to Sharon Hurvitz and Joabi for allowing their songs to be part of this.");
+                "This update also features the new Russian translation, provided by Max_Mobile. We thank them for this contribution, and hope all the Russian players will have a better experience now.");
         lines.add("$(##) Changelog");
 
-        lines.add("- Added Bee Costume");
-        lines.add("- Added Morph Cosmetics for contributors (more to come in the future)");
-        lines.add("- Added Levitating emote for contributors.");
-        lines.add("- Added Paw Bracelets");
-        lines.add("- Fixed Golden Eagles. They will no longer fly away, no longer eat double food, and will now be able to stay or wander.");
-        lines.add("- Fixed Moss balls, can no longer be filled with lava.");
-        lines.add("- Added Dock Bags, they can be equipped as a chest armor piece, and as a curio.");
-        lines.add("- Added config field for tree stump cooldowns.");
-        lines.add("- Added background music for clan territories.");
-        lines.add("- The lock on target button for leap is now a configurable keybind.");
-        lines.add("- Jumping while leaping will now longer reset the leap, but decrease it instead.");
-        lines.add("- Blocked monster spawn in clan territories.");
-        lines.add("- The paw of you character will now render in first person instead of the old two-leg hand.");
-        lines.add("- Changed the position in which held items render in first person.");
-        lines.add("- Improved the client config menu.");
-        lines.add("- Replaced the morph pose menu with the new morph cosmetics menu.");
-        lines.add("- Fixed probably all of the issues with translation keys.");
-        lines.add("- Improved horizontal momentum while jumping with the Jump skill.");
-        lines.add("- Fall damage adjusted and fixed.");
-        lines.add("- Added Collar and Paw Bracelets recipes to vanilla recipe book.");
-        lines.add("- Adjustements to Broken paws, now they shouldn't be as annoying as before.");
-        lines.add("- Added config field to allow or unallow anyone from creating a clan.");
-        lines.add("- Replaced the way NPCs display their dialogues.");
-        lines.add("- Removed Herobrinepaw");
-        lines.add("- Other minor adjustements and fixes");
+        lines.add("- Reworked clan list, clan menu, and the clan manage menu.");
+        lines.add("- Removed clan manage menu and integrated inside the clan menu options.");
+        lines.add("- Added different logs category and more info displayed in clan menus.");
+        lines.add("- Added new fields and options for clans.");
+        lines.add("- Added join requests to clans.");
+        lines.add("- Fixed issue that makes cats and players move their paw while on first person.\n");
+        lines.add("- Added clan chat, use /wce clan toggleClanChat");
+        lines.add("- Added Russian translation.");
+        lines.add("- Adjusted targetting rules for wolves.");
+        lines.add("- Fixed issues with changing names of NPCs");
+        lines.add("- Added command /wce reloadContributors");
+        lines.add("- Adjustements to the command for setting new leader.");
+        lines.add("- Adjustements to how clans are synced to the client.");
+        lines.add("- Fixed other issues of clan territories.");
+        lines.add("- Fixed crashes caused by KittypetBowl");
+        lines.add("- Other minor fixes and adjustements.");
 
 
         lines.add("$(##) Discord Boosters");

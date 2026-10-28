@@ -1,6 +1,7 @@
 package net.snowteb.warriorcats_events.screen.screens.createmorph;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
@@ -19,6 +20,7 @@ public class FancySubRenderablesSquare implements Renderable, SubRenderable, Gui
     private int height;
 
     private final int originalY0;
+    private final int originalX0;
     private final int originalY1;
     private BiPredicate<Double, Double> isClickableIn;
 
@@ -26,6 +28,8 @@ public class FancySubRenderablesSquare implements Renderable, SubRenderable, Gui
     private GuiEventListener focused;
     private boolean dragging;
 
+    private int zTranslate = 0;
+    private boolean active = true;
 
     public FancySubRenderablesSquare(int x0, int y0, int width, int height) {
         this.x0 = x0;
@@ -34,20 +38,25 @@ public class FancySubRenderablesSquare implements Renderable, SubRenderable, Gui
         this.height = height;
 
         this.originalY0 = y0;
+        this.originalX0 = x0;
         this.originalY1 = originalY0 + height;
+    }
+
+    public void setZ(int zTranslate) {
+        this.zTranslate = zTranslate;
     }
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         pGuiGraphics.pose().pushPose();
-        pGuiGraphics.pose().translate(0, 0, 1000);
+        pGuiGraphics.pose().translate(0, 0, 1000 + zTranslate);
         this.renderSquare(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         pGuiGraphics.pose().translate(0,0,200);
         this.renderWidgets(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         pGuiGraphics.pose().popPose();
     }
 
-    private void renderSquare(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    protected void renderSquare(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         boolean isMouseOver = pMouseX > x0 - 1 && pMouseX < x0 + width
                 && pMouseY > y0 - 1 && pMouseY < y0 + height;
 
@@ -81,7 +90,7 @@ public class FancySubRenderablesSquare implements Renderable, SubRenderable, Gui
                 0, 0, gradientColor);
     }
 
-    private void renderWidgets(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    protected void renderWidgets(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         for (Renderable renderable :  this.getWidgets()) {
             renderable.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         }
@@ -99,11 +108,15 @@ public class FancySubRenderablesSquare implements Renderable, SubRenderable, Gui
 
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+        this.setDragging(false);
+        if (!this.active) return false;
+
         for (Renderable renderable :  this.getWidgets()) {
             if (renderable instanceof GuiEventListener listener) {
                 if (listener.mouseClicked(pMouseX, pMouseY, pButton)) {
                     listener.setFocused(true);
                     this.setFocusedWidget(listener);
+                    this.setDragging(true);
                     return true;
                 }
             }
@@ -120,24 +133,38 @@ public class FancySubRenderablesSquare implements Renderable, SubRenderable, Gui
                     && pMouseY > y0 - 1 && pMouseY < y0 + height;
             return isMouseOver;
         }
+
         return false;
+    }
+
+    public void setActive(boolean pActive) {
+        this.active = pActive;
+        for (Renderable renderable :  this.getWidgets()) {
+            if (renderable instanceof AbstractWidget widget) {
+                widget.active = pActive;
+            }
+        }
+    }
+
+    public boolean isSquareActive() {
+        return this.active;
     }
 
     @Override
     public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
-        for (Renderable renderable :  this.getWidgets()) {
-            if (renderable instanceof GuiEventListener listener) {
-                if (listener.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY)) return true;
-            }
+        if (this.focused != null && this.dragging && pButton == 0) {
+            return this.focused.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
         }
-        return GuiEventListener.super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
+        return false;
     }
 
     @Override
     public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
         for (Renderable renderable :  this.getWidgets()) {
             if (renderable instanceof GuiEventListener listener) {
-                if (listener.mouseScrolled(pMouseX, pMouseY, pDelta)) return true;
+                if (listener.isMouseOver(pMouseX, pMouseY)) {
+                    if (listener.mouseScrolled(pMouseX, pMouseY, pDelta)) return true;
+                }
             }
         }
         return GuiEventListener.super.mouseScrolled(pMouseX, pMouseY, pDelta);
@@ -145,6 +172,7 @@ public class FancySubRenderablesSquare implements Renderable, SubRenderable, Gui
 
     @Override
     public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
+        this.setDragging(false);
         for (Renderable renderable :  this.getWidgets()) {
             if (renderable instanceof GuiEventListener listener) {
                 if (listener.mouseReleased(pMouseX, pMouseY, pButton)) return true;
@@ -232,6 +260,12 @@ public class FancySubRenderablesSquare implements Renderable, SubRenderable, Gui
     @Override
     public void adjustYPos(int yOffset) {
         this.y0 = originalY0 + yOffset;
+
+        for (Renderable renderable : this.getWidgets()) {
+            if (renderable instanceof SubRenderable sub) {
+                sub.adjustYPos(yOffset);
+            }
+        }
     }
 
     @Override
@@ -273,7 +307,49 @@ public class FancySubRenderablesSquare implements Renderable, SubRenderable, Gui
 
     @Override
     public void setFocused(boolean pFocused) {
+    }
 
+    @Override
+    public void tickkkk() {
+        for (Renderable renderable :  this.getWidgets()) {
+            if (renderable instanceof SubRenderable sub) {
+                sub.tickkkk();
+            }
+        }
+    }
+
+    @Override
+    public void adjustXPos(int xOffset) {
+        this.x0 = originalX0 + xOffset;
+        for (Renderable renderable : this.getWidgets()) {
+            if (renderable instanceof SubRenderable sub) sub.adjustXPos(xOffset);
+        }
+    }
+
+    @Override
+    public int getOriginalXPos0() {
+        return originalX0;
+    }
+
+    @Override
+    public int getOriginalXPos1() {
+        return originalX0 + width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getY0() {
+        return y0;
+    }
+
+    public int getX0() {
+        return x0;
     }
 
     @Override

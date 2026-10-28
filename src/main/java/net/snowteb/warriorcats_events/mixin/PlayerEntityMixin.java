@@ -1,6 +1,7 @@
 package net.snowteb.warriorcats_events.mixin;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -118,13 +119,6 @@ public class PlayerEntityMixin implements Diseaseable<Player> {
         this.loadDiseasesNBT(pCompound);
     }
 
-    @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void syncedData(CallbackInfo ci) {
-        Player player =  (Player) (Object) this;
-//        player.getEntityData().define(BROKEN_PAW, false);
-//        player.getEntityData().define(WRAPPED_PAW, false);
-    }
-
     @Override
     public void onChange() {
         if (getEntity() instanceof ServerPlayer player) {
@@ -146,7 +140,6 @@ public class PlayerEntityMixin implements Diseaseable<Player> {
     @Unique
     public void wce$setBrokenPaw(Player player) {
         boolean isBrokenPaw = this.hasDisease(DiseaseTypes.BROKEN_PAW);
-//        player.getEntityData().set(BROKEN_PAW, isBrokenPaw);
         if (player instanceof ServerPlayer sPlayer) {
             if (PlayerShape.getCurrentShape(player) instanceof WCatEntity cat) {
                 cat.setBrokenPaw(isBrokenPaw);
@@ -160,7 +153,6 @@ public class PlayerEntityMixin implements Diseaseable<Player> {
         boolean isPawWrapped = false;
         if (this.getDisease(DiseaseTypes.BROKEN_PAW) instanceof BrokenPaw brokenPaw) {
             isPawWrapped = brokenPaw.isBoneWrapped();
-//            player.getEntityData().set(WRAPPED_PAW, isPawWrapped);
         }
         if (player instanceof ServerPlayer sPlayer) {
             if (PlayerShape.getCurrentShape(player) instanceof WCatEntity cat) {

@@ -45,9 +45,6 @@ public class SpawnLocationScreen extends Screen {
     }
 
 
-    private static final ResourceLocation BANNER =
-            ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/gui/clan_setup/banner.png");
-
     private static final ResourceLocation BG_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(WarriorCatsEvents.MODID, "textures/gui/clan_setup/background_scene.png");
 

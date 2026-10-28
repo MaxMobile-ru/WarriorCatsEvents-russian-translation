@@ -187,14 +187,14 @@ public class Disease<T extends Disease<T>> {
 
     public Sequence diseaseHealingSequence(ServerLevel sLevel, LivingEntity entity) {
         return new Sequence(sLevel)
-                .thenEveryFor(20, 300, () -> {
+                .thenEveryFor(20, 300, (lvl) -> {
                     sLevel.sendParticles(
                             ParticleTypes.HAPPY_VILLAGER,
                             entity.getX(), entity.getY(), entity.getZ(),
                             5, 0.2, 0.2, 0.2, 0.02
                     );
                 })
-                .then(() -> {
+                .then((lvl) -> {
                     if (heal(entity)) {
                         if (this.getType().getMaxHealLevel() > 1){
                             entity.sendSystemMessage(

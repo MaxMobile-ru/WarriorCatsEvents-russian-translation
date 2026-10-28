@@ -1,0 +1,17 @@
+{
+
+
+  "name": "- Смешивание трав",
+  "icon": "warriorcats_events:dock_poultice",
+  "category": "warriorcats_events:features_category",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "warriorcats_events:herb_rock",
+      "text": "$(8)Чтобы смешивать травы, вам нужен Камень трав. Эти камни были специально созданы для смешивания трав наиболее удобным образом. $(br2)Нажмите ПКМ на блоке, чтобы открыть меню и увидеть список доступных рецептов.",
+      "title": "Смешивание трав"
+    }
+  ]
+
+
+}

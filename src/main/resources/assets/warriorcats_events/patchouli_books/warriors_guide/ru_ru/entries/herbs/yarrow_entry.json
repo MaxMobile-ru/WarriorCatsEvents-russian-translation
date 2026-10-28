@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Тысячелистник",
+  "icon": "warriorcats_events:yarrow_leaves",
+  "category": "warriorcats_events:herbs_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Листья тысячелистника можно получить из растений тысячелистника. Тысячелистник - это одна из самых отвратительных трав. Его вкус настолько ужасен, что он может даже вызвать рвотный рефлекс! Может оказаться очень полезным, когда организм отравлен смертельно опасным токсином.",
+      "title": "Тысячелистник"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/herbs/yarrow_stage3.png",
+        "warriorcats_events:textures/book/herbs/yarrow_leaves.png"
+      ],
+      "title": "Тысячелистник"
+    }
+
+  ]
+
+
+}

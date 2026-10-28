@@ -1,0 +1,22 @@
+{
+
+
+  "name": "- Скорость",
+  "icon": "minecraft:sugar",
+  "category": "warriorcats_events:skills_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/skills/skill_speed.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Проведя некоторое время в лесу, вы заметите, что постоянные погони за добычей сделали ваши лапы сильнее. Тренируя навык скорости, вы не только приобретаете возможность быстро убежать от опасности, но и сами становитесь более смертоносным противником!",
+      "title": "Скорость"
+    }
+  ]
+
+
+}

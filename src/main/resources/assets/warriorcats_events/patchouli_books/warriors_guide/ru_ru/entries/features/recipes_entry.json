@@ -1,0 +1,118 @@
+{
+
+
+  "name": "- Рецепты",
+  "icon": "minecraft:brewing_stand",
+  "category": "warriorcats_events:features_category",
+  "pages": [
+    {
+      "type": "patchouli:crafting",
+      "title": "Гнездо из мха",
+      "recipe": "warriorcats_events:moss_bed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Гнездо из сена",
+      "recipe": "warriorcats_events:hay_bed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Гнездо из ламинарии",
+      "recipe": "warriorcats_events:kelp_bed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Гнездо из камня",
+      "recipe": "warriorcats_events:stone_bed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Гнездо из лаванды",
+      "recipe": "warriorcats_events:lavender_bed"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Нательные перья",
+      "recipe": "warriorcats_events:red_parrot_body_feathers"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Носки",
+      "recipe": "warriorcats_events:white_cat_socks"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Дверь из листьев",
+      "recipe": "warriorcats_events:leaf_door"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Люк из листьев",
+      "recipe": "warriorcats_events:leaf_trapdoor"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Цветок у ушка",
+      "recipe": "warriorcats_events:head_flower"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Одуванчик у ушка",
+      "recipe": "warriorcats_events:head_dandelion"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Общая куча",
+      "recipe": "warriorcats_events:fresh_kill_pile"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Цветочный венок",
+      "recipe": "warriorcats_events:flower_crown"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Цветочная броня",
+      "recipe": "warriorcats_events:flower_armor"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Украшенные лианы для хвоста",
+      "recipe": "warriorcats_events:draped_tail_vines"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Лианы для хвоста",
+      "recipe": "warriorcats_events:tail_vines"
+    }
+  ,
+    {
+      "type": "patchouli:crafting",
+      "title": "Кошачий ошейник",
+      "recipe": "warriorcats_events:cat_collar",
+      "text": "$(br)Его можно красить так же, как и кожаную броню. $(br)Ошейник + 1 Колокольчик = Ошейник с колокольчиком$(br)Ошейник + 1 Железный слиток = Ошейник с шипами$(br)Ошейник + 1 Светокаменная пыль/Светящиеся грибы/Светящиеся ягоды = Светящийся ошейник$(br)"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Колокольчик",
+      "recipe": "warriorcats_events:collar_bell"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Светящиеся ягоды у ушка",
+      "recipe": "warriorcats_events:head_glowberry"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Сладкие ягоды у ушка",
+      "recipe": "warriorcats_events:head_sweetberry"
+    },
+    {
+      "type": "patchouli:crafting",
+      "title": "Миска домашней киски",
+      "recipe": "warriorcats_events:red_kittypet_bowl"
+    }
+  ]
+
+
+}

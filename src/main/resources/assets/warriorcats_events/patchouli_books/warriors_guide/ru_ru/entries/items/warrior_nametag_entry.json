@@ -1,0 +1,23 @@
+{
+
+
+  "name": "- Бирка наречения",
+  "icon": "warriorcats_events:warrior_nametag",
+  "category": "warriorcats_events:items_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/items/warrior_nametag.png"
+      ]
+    },
+    {
+      "type": "patchouli:crafting",
+      "text": "Что делать, если вы хотите, чтобы вашего соплеменника звали Колокольчик?... Для таких случаев существует Бирка наречения! Вы можете использовать её, чтобы дать коту любое желаемое имя. $(br2)$(8)Если вы хотите избежать багов, давайте имя на английском в следующем формате. Например: 'Bengal pelt'. Результат: 'Bengalpelt <обозн. пола>'$(br)",
+      "title": "Бирка наречения",
+      "recipe": "warriorcats_events:warrior_nametag"
+    }
+  ]
+
+
+}

@@ -1,0 +1,25 @@
+{
+
+
+  "name": "- Белка",
+  "icon": "warriorcats_events:squirrel_spawn_egg",
+  "category": "warriorcats_events:creatures_category",
+  "pages": [
+    {
+      "type": "patchouli:entity",
+      "entity": "warriorcats_events:squirrel",
+      "rotate": false,
+      "default_rotation": -30,
+      "text": "Это белка. Они известны как невероятно быстрые животные, обладающие пушистым хвостом цвета пламени!"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "warriorcats_events:squirrel",
+      "title": "О белках",
+      "text": "Белок можно найти в таких биомах, как лес и равнина. $(br2)Белки склонны жить близ стволов деревьев, а если напугать их, то они убегут прочь. Они довольно быстрые, так что не пугайте их, а иначе вам придётся пуститься в погоню! $(br2)Белки - это один из самых вкусных видов добычи, которую вы только можете поймать на охоте.$(br)"
+    }
+
+  ]
+
+
+}

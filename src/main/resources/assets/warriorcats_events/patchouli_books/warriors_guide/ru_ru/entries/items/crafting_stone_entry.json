@@ -1,0 +1,24 @@
+{
+
+
+  "name": "- Камень создания",
+  "icon": "warriorcats_events:stone_crafting_table",
+  "category": "warriorcats_events:items_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": [
+        "warriorcats_events:textures/book/items/crafting_stone.png"
+      ],
+      "title": "Камень создания"
+    },
+    {
+      "type": "patchouli:crafting",
+      "text": "Специально для создания всего и вся одними лапами! Идеальные размер и высота позволяют вам создавать всё, что вы только можете захотеть!",
+      "title": "Камень создания",
+      "recipe": "warriorcats_events:stone_crafting_table"
+    }
+  ]
+
+
+}
